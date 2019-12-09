@@ -1,4 +1,4 @@
-package ru.unn.agile.numbersinwords.model;
+package ru.unn.agile.numberstowords.model;
 
 public final class NumberToWordConverter {
     private static final int TEN = 10;
