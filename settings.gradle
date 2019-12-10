@@ -45,8 +45,12 @@ include "code/korniakov-kirill-lab3/Infrastructure"
 project(":code/korniakov-kirill-lab3/Infrastructure").name = "korniakov-kirill-lab3-Infrastructure"
 
 // Алексеев Сергей
-include "code/gameoflife"
-project(":code/gameoflife").name = "GameOfLife-Model"
+include "code/gameoflife/Model"
+project(":code/gameoflife/Model").name = "GameOfLife-Model"
+include "code/gameoflife/ViewModel"
+project(":code/gameoflife/ViewModel").name = "GameOfLife-ViewModel"
+include "code/gameoflife/View"
+project(":code/gameoflife/View").name = "GameOfLife-View"
 // Антипин Никита
 // Ахмедов Саркар
 // temperature-converter

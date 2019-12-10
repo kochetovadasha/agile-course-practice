@@ -1,9 +1,12 @@
-package ru.unn.agile.gameoflife.model;
+package ru.unn.agile.gameoflife.Model;
 
 import org.junit.Test;
-
+import ru.unn.agile.gameoflife.model.GameOfLife;
+import ru.unn.agile.gameoflife.model.GridArray;
+import ru.unn.agile.gameoflife.model.GridString;
 
 import static org.junit.Assert.*;
+
 
 public class GameOfLifeTest {
     @Test

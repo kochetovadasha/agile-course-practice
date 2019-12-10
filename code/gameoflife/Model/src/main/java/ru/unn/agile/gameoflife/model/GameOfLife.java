@@ -2,41 +2,6 @@ package ru.unn.agile.gameoflife.model;
 
 import java.util.Arrays;
 
-interface IGridInput {
-
-    char get(int i, int j);
-}
-
-class GridString implements IGridInput {
-    private String str;
-    private int height;
-    private int width;
-    GridString(final String str, final int height, final int width) {
-        this.height = height;
-        this.width = width;
-        this.str = str;
-    }
-
-    public char get(final int i, final int j) {
-        return str.charAt(i * this.width + j);
-    }
-}
-
-class GridArray implements IGridInput {
-    private char[][] arr;
-    private int height;
-    private int width;
-    GridArray(final char[][] arr, final int height, final int width) {
-        this.height = height;
-        this.width = width;
-        this.arr = arr.clone();
-    }
-
-    public char get(final int i, final int j) {
-        return arr[i][j];
-    }
-}
-
 public class GameOfLife {
     private char[][] grid;
     private int height;
