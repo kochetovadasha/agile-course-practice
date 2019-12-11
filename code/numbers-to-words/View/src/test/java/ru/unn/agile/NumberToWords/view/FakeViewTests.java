@@ -1,4 +1,4 @@
-package ru.unn.agile.numbertoword.view;
+package ru.unn.agile.numberstowords.view;
 
 import org.junit.Ignore;
 import org.junit.Test;

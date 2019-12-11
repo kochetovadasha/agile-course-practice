@@ -4,7 +4,7 @@
     }
 
     apply plugin: 'application'
-    mainClassName = 'ru.unn.agile.NumberToWords.view.Main'
+    mainClassName = 'ru.unn.agile.NumbersToWords.view.Main'
 
     javafx {
         version = "11.0.2"
@@ -12,5 +12,5 @@
     }
 
     dependencies {
-        compile project(':number-to-words-ViewModel')
+        compile project(':numbers-to-words-ViewModel')
 }

@@ -8,5 +8,5 @@
     }
 
     dependencies {
-        compile project(':number-to-words-Model')
+        compile project(':numbers-to-words-Model')
     }

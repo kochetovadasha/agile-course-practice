@@ -1,12 +1,12 @@
 package ru.unn.agile.numberstowords.model;
 
-public final class NumberToWordConverter {
+public final class NumbersToWordsConverter {
     private static final int TEN = 10;
     private static final int TWENTY = 20;
     private static final int HUNDRED = 100;
     private static final int THOUSAND = 1000;
 
-    private NumberToWordConverter() { }
+    private NumbersToWordsConverter() { }
 
     private static String getSpaser(final String firstWord, final String lastWord,
                              final String middleWord) {
