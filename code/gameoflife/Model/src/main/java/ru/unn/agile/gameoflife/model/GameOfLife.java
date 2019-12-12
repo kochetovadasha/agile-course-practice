@@ -63,6 +63,10 @@ public class GameOfLife {
         return this.width;
     }
 
+    public char[][] getGrid() {
+        return grid;
+    }
+
     public boolean isPointOnGrid(final int y, final int x) {
         return ((y >= 0) && (y < this.height) && (x >= 0) && (x < this.width));
     }
