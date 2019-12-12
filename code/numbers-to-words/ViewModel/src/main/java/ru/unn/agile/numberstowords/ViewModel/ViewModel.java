@@ -44,6 +44,7 @@ public class ViewModel {
             status.set(Status.WRONG_INPUT.toString());
         } else {
             int number = Integer.parseInt(numberInput.get());
+            status.set("");
             textOutput.set(NumbersToWordsConverter.toWord(number));
         }
 

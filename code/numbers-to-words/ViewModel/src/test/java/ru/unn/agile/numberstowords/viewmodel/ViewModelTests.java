@@ -29,27 +29,45 @@ public class ViewModelTests {
     @Test
     public void setErrorMessageWithEmptyInput() {
         viewModel.convert();
+
         assertEquals(Status.EMPTY_INPUT.toString(), viewModel.statusProperty().get());
     }
 
     @Test
     public void setErrorMessageWithIncorrectInput() {
         viewModel.numberInputProperty().set("qwe");
+
         viewModel.convert();
+
         assertEquals(Status.WRONG_INPUT.toString(), viewModel.statusProperty().get());
     }
 
     @Test
     public void convertingHasCorrectResult() {
         viewModel.numberInputProperty().set("15");
+
         viewModel.convert();
+
         assertEquals("fifteen", viewModel.textOutputProperty().get());
     }
 
     @Test
     public void setErrorMessageWithNotInteger() {
         viewModel.numberInputProperty().set("15.5");
+
         viewModel.convert();
+
         assertEquals(Status.WRONG_INPUT.toString(), viewModel.statusProperty().get());
+    }
+
+    @Test
+    public void clearErrorMessageWithCorrectInput() {
+        viewModel.numberInputProperty().set("wrong");
+        viewModel.convert();
+
+        viewModel.numberInputProperty().set("1");
+        viewModel.convert();
+
+        assertEquals("", viewModel.statusProperty().get());
     }
 }
