@@ -4,6 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class ViewModelTest {
@@ -55,5 +56,117 @@ public class ViewModelTest {
         viewModel.widthFieldProperty().set("");
 
         assertEquals(Status.WAITING.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void canCreateGrid() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        char[][] grid = {{'.', '.', '.'},{'.', '.', '.'},{'.', '.', '.'}};
+
+        assertArrayEquals(grid, viewModel.gridArrayProperty());
+    }
+
+    @Test
+    public void statusIsWaitingWhenCreateGridWithEmptyFields() {
+        viewModel.createGrid();
+
+        assertEquals(Status.WAITING.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void statusIsInitialiseWhenGridIsCreated() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+
+        assertEquals(Status.INITIALISE.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void canChangeCellStatusToLive() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+
+        assertEquals('*', viewModel.gridArrayProperty()[1][2]);
+    }
+
+    @Test
+    public void canChangeCellStatusToDead() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+        viewModel.changeCellStatus(1, 2);
+
+        assertEquals('.', viewModel.gridArrayProperty()[1][2]);
+    }
+
+    @Test
+    public void statusIsGamingWhenGridIsNotEmpty() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+
+        assertEquals(Status.GAMING.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void statusIsInitialiseWhenGridBecameEmpty() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+        viewModel.changeCellStatus(1, 2);
+
+        assertEquals(Status.INITIALISE.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void canMadeTurn() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+        viewModel.getNextStep();
+        char[][] nextGrid = {{'.', '.', '.'},{'.', '.', '.'},{'.', '.', '.'}};
+
+        assertArrayEquals(nextGrid, viewModel.gridArrayProperty());
+    }
+
+    @Test
+    public void statusIsInitialiseWhenGameIsOver() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+        viewModel.getNextStep();
+
+        assertEquals(Status.INITIALISE.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void canReportBadFormat() {
+        viewModel.heightFieldProperty().set("ab");
+
+        assertEquals(Status.BAD_FORMAT.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void statusIsInvalidInputWhenInputIsNegative() {
+        viewModel.heightFieldProperty().set("-1");
+
+        assertEquals(Status.IVALID_INPUT.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void statusIsInvalidInputWhenInputIsZero() {
+        viewModel.heightFieldProperty().set("0");
+
+        assertEquals(Status.IVALID_INPUT.toString(), viewModel.statusTextProperty().get());
     }
 }
