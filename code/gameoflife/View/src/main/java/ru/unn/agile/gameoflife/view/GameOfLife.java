@@ -34,7 +34,7 @@ public class GameOfLife {
 
     private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
         @Override
-        public void handle(MouseEvent e) {
+        public void handle(final MouseEvent e) {
             Rectangle clickedNode = (Rectangle) e.getPickResult().getIntersectedNode();
             Integer colIndex = GridPane.getColumnIndex(clickedNode);
             Integer rowIndex = GridPane.getRowIndex(clickedNode);
@@ -52,14 +52,14 @@ public class GameOfLife {
 
         int width = Integer.parseInt(viewModel.widthFieldProperty().get());
         int height = Integer.parseInt(viewModel.heightFieldProperty().get());
-        cellWidth = GAME_FIELD_SIZE/width;
-        cellHeight = GAME_FIELD_SIZE/width;
+        cellWidth = GAME_FIELD_SIZE / width;
+        cellHeight = GAME_FIELD_SIZE / width;
 
         gridGame.getChildren().clear();
         gridGame.setOnMouseClicked(mouseHandler);
 
-        for(int y = 0; y < height; y++) {
-            for(int x = 0; x < width; x++) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 if (gridArray[y][x] == '*') {
                     gridGame.add(new Rectangle(cellWidth, cellHeight, Color.BLACK), y, x);
                 } else {
