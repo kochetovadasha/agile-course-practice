@@ -63,7 +63,7 @@ public class ViewModelTest {
         viewModel.heightFieldProperty().set("3");
         viewModel.widthFieldProperty().set("3");
         viewModel.createGrid();
-        char[][] grid = {{'.', '.', '.'},{'.', '.', '.'},{'.', '.', '.'}};
+        char[][] grid = {{'.', '.', '.'}, {'.', '.', '.'}, {'.', '.', '.'}};
 
         assertArrayEquals(grid, viewModel.gridArrayProperty());
     }
@@ -133,7 +133,7 @@ public class ViewModelTest {
         viewModel.createGrid();
         viewModel.changeCellStatus(1, 2);
         viewModel.getNextStep();
-        char[][] nextGrid = {{'.', '.', '.'},{'.', '.', '.'},{'.', '.', '.'}};
+        char[][] nextGrid = {{'.', '.', '.'}, {'.', '.', '.'}, {'.', '.', '.'}};
 
         assertArrayEquals(nextGrid, viewModel.gridArrayProperty());
     }
