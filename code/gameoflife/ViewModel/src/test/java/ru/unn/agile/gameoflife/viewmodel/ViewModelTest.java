@@ -4,8 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ViewModelTest {
     private ViewModel viewModel;
@@ -168,5 +167,63 @@ public class ViewModelTest {
         viewModel.heightFieldProperty().set("0");
 
         assertEquals(Status.IVALID_INPUT.toString(), viewModel.statusTextProperty().get());
+    }
+
+    @Test
+    public void defaultCanNotStartCreateGrid() {
+        assertTrue(viewModel.couldNotCreateProperty().get());
+    }
+
+    @Test
+    public void canStartCreateGridWhenFieldsIsNotEmpty() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+
+        assertFalse(viewModel.couldNotCreateProperty().get());
+    }
+
+    @Test
+    public void canNotStartCreateGridWhenFieldsBecameEmpty() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.heightFieldProperty().set("");
+        viewModel.widthFieldProperty().set("");
+
+        assertTrue(viewModel.couldNotCreateProperty().get());
+    }
+
+    @Test
+    public void defaultCanNotStartGame() {
+        assertTrue(viewModel.couldNotGetNextStepProperty().get());
+    }
+
+    @Test
+    public void canNotStartGameWithoutInitialiseLiveCells() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+
+        assertTrue(viewModel.couldNotGetNextStepProperty().get());
+    }
+
+    @Test
+    public void canStartGameWhenGridIsNotEmpty() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+
+        assertFalse(viewModel.couldNotGetNextStepProperty().get());
+    }
+
+    @Test
+    public void canNotGetNextStepWhenGameOver() {
+        viewModel.heightFieldProperty().set("3");
+        viewModel.widthFieldProperty().set("3");
+        viewModel.createGrid();
+        viewModel.changeCellStatus(1, 2);
+        viewModel.getNextStep();
+
+        assertTrue(viewModel.couldNotGetNextStepProperty().get());
     }
 }

@@ -1,5 +1,6 @@
 package ru.unn.agile.gameoflife.viewmodel;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -13,6 +14,8 @@ public class ViewModel {
     private SimpleStringProperty heightField = new SimpleStringProperty();
     private SimpleStringProperty widthField = new SimpleStringProperty();
     private SimpleStringProperty statusText = new SimpleStringProperty();
+    private SimpleBooleanProperty couldNotCreate = new SimpleBooleanProperty();
+    private SimpleBooleanProperty couldNotGetNextStep = new SimpleBooleanProperty();
 
     private GameOfLife gameOfLife;
     private char[][] gridArray;
@@ -20,9 +23,11 @@ public class ViewModel {
     private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
 
     public ViewModel() {
+        statusText.set(Status.WAITING.toString());
+        couldNotGetNextStep.set(true);
+        couldNotCreate.set(true);
         heightField.set("");
         widthField.set("");
-        statusText.set(Status.WAITING.toString());
 
         final List<StringProperty> fields = new ArrayList<StringProperty>() { {
             add(heightField);
@@ -48,14 +53,20 @@ public class ViewModel {
         return statusText;
     }
 
+    public SimpleBooleanProperty couldNotCreateProperty() {
+        return couldNotCreate;
+    }
+
+    public SimpleBooleanProperty couldNotGetNextStepProperty() {
+        return couldNotGetNextStep;
+    }
+
     public char[][] gridArrayProperty() {
         return gridArray;
     }
 
     public void createGrid() {
-        if (widthField.get().isEmpty() || heightField.get().isEmpty()) {
-            statusText.set(Status.WAITING.toString());
-        } else {
+        if (!couldNotCreate.get()) {
             gameOfLife = new GameOfLife(Integer.parseInt(widthField.get()),
                                         Integer.parseInt(heightField.get()));
 
@@ -81,6 +92,7 @@ public class ViewModel {
 
         if (isGridEmpty) {
             statusText.set(Status.INITIALISE.toString());
+            couldNotGetNextStep.set(true);
         }
     }
 
@@ -89,6 +101,7 @@ public class ViewModel {
             gameOfLife.setCell(y, x);
             gridArray = gameOfLife.getGrid().clone();
             statusText.set(Status.GAMING.toString());
+            couldNotGetNextStep.set(false);
         } else {
             gameOfLife.deleteCell(y, x);
             gameOverCheck();
@@ -104,22 +117,27 @@ public class ViewModel {
 
     private Status getInputStatus() {
         Status inputStatus = Status.READY;
+        couldNotCreate.set(false);
         if (widthField.get().isEmpty() || heightField.get().isEmpty()) {
             inputStatus = Status.WAITING;
+            couldNotCreate.set(true);
         }
         try {
             if (!widthField.get().isEmpty()) {
                 if (Integer.parseInt(widthField.get()) <= 0) {
                     inputStatus = Status.IVALID_INPUT;
+                    couldNotCreate.set(true);
                 }
             }
             if (!heightField.get().isEmpty()) {
                 if (Integer.parseInt(heightField.get()) <= 0) {
                     inputStatus = Status.IVALID_INPUT;
+                    couldNotCreate.set(true);
                 }
             }
         } catch (NumberFormatException nfe) {
             inputStatus = Status.BAD_FORMAT;
+            couldNotCreate.set(true);
         }
 
         return inputStatus;
