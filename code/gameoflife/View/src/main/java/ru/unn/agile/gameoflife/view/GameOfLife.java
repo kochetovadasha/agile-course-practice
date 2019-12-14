@@ -74,6 +74,8 @@ public class GameOfLife {
         txtHeight.textProperty().bindBidirectional(viewModel.heightFieldProperty());
         txtwidth.textProperty().bindBidirectional(viewModel.widthFieldProperty());
         txtStatus.textProperty().bindBidirectional(viewModel.statusTextProperty());
+        btnCreate.disableProperty().bindBidirectional(viewModel.couldNotCreateProperty());
+        btnNext.disableProperty().bindBidirectional(viewModel.couldNotGetNextStepProperty());
 
         btnCreate.setOnAction(new EventHandler<ActionEvent>() {
             @Override
