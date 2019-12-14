@@ -1,11 +1,11 @@
 // apply from:   rootDir.getAbsolutePath() + '/config/scripts/javafx.plugin'
 plugins {
-  id 'application'
-  id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.8'
 }
 
 apply plugin: 'application'
-mainClassName = 'ru.unn.agile.datastructure.set.view.Main'
+mainClassName = 'ru.unn.agile.calc.view.StringCalcApp'
 
 javafx {
     version = "11.0.2"
@@ -13,5 +13,5 @@ javafx {
 }
 
 dependencies {
-    compile project(':datastructure-set-ViewModel')
+    compile project(':string-calculator-viewmodel')
 }

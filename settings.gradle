@@ -72,9 +72,13 @@ include "code/sorting/View"
 project(":code/sorting/View").name = "sorting-View"
 include "code/sorting/ViewModel"
 project(":code/sorting/ViewModel").name = "sorting-ViewModel"
-// Кальянов Дмитрий
-include "code/string-calculator"
-project(":code/string-calculator").name = "string-calculator-Model"
+// string-calculator
+include "code/string-calculator/model"
+project(":code/string-calculator/model").name = "string-calculator-model"
+include "code/string-calculator/viewmodel"
+project(":code/string-calculator/viewmodel").name = "string-calculator-viewmodel"
+include "code/string-calculator/view"
+project(":code/string-calculator/view").name = "string-calculator-view"
 // Карев Борис
 include "code/length-converter/Model"
 project(":code/length-converter/Model").name = "length-converter-Model"
@@ -84,19 +88,35 @@ project(":code/length-converter/View").name = "length-converter-View"
 
 include "code/length-converter/ViewModel"
 project(":code/length-converter/ViewModel").name = "length-converter-ViewModel"
-// Кильдишев Максим
+// Figures Volume Calculator
 include "code/figures-volume-calculator"
 project(":code/figures-volume-calculator").name = "figures-volume-calculator-Model"
+// Vectors Distances Calculator
+include "code/vectors-distances-calculator/Model"
+project(":code/vectors-distances-calculator/Model").name = "vectors-distances-calculator-Model"
+include "code/vectors-distances-calculator/ViewModel"
+project(":code/vectors-distances-calculator/ViewModel").name = "vectors-distances-calculator-ViewModel"
+include "code/vectors-distances-calculator/View"
+project(":code/vectors-distances-calculator/View").name = "vectors-distances-calculator-View"
 // Киселева Ольга
 // Конева Александра
 include "code/numbers-in-words"
 project(":code/numbers-in-words").name = "numbers-in-words-Model"
-// Коневский Виталий
-include "code/deposit-calculator"
-project(":code/deposit-calculator").name = "deposit-calculator-Model"
+
+// Deposit Calculator
+include "code/deposit-calculator/model"
+project(":code/deposit-calculator/model").name = "deposit-calculator-model"
+include "code/deposit-calculator/view"
+project(":code/deposit-calculator/view").name = "deposit-calculator-view"
+include "code/deposit-calculator/viewmodel"
+project(":code/deposit-calculator/viewmodel").name = "deposit-calculator-viewmodel"
 // Кочетова Дарья
-include "code/kochetova-dasha-lab1-matrix"
-project(":code/kochetova-dasha-lab1-matrix").name = "kochetova-dasha-lab1-matrix"
+include "code/matrix/Model"
+project(":code/matrix/Model").name = "matrix-model"
+include "code/matrix/view"
+project(":code/matrix/view").name = "matrix-view"
+include "code/matrix/viewmodel"
+project(":code/matrix/viewmodel").name = "matrix-viewmodel"
 // Красильников Михаил
 include "code/salary-calculator"
 project(":code/salary-calculator").name = "salary-calculator"
@@ -111,9 +131,13 @@ include "code/complex-number-calculator/ViewModel"
 project(":code/complex-number-calculator/ViewModel").name = "complex-number-calculator-ViewModel"
 // Купцова Алеся
 // Кучков Иван
-// Лапин Артем
-include "code/quadratic-equasion"
-project(":code/quadratic-equasion").name = "quadratic-equasion-Model"
+// quadratic equation
+include "code/quadratic-equation/Model"
+project(":code/quadratic-equation/Model").name = "quadratic-equation-Model"
+include "code/quadratic-equation/ViewModel"
+project(":code/quadratic-equation/ViewModel").name = "quadratic-equation-ViewModel"
+include "code/quadratic-equation/View"
+project(":code/quadratic-equation/View").name = "quadratic-equation-View"
 // Triangle
 include "code/triangle/Model"
 project(":code/triangle/Model").name = "triangle-Model"
@@ -121,9 +145,13 @@ include "code/triangle/ViewModel"
 project(":code/triangle/ViewModel").name = "triangle-ViewModel"
 include "code/triangle/View"
 project(":code/triangle/View").name = "triangle-View"
-// Миронова Анна
-include "code/statistics-calculation"
-project(":code/statistics-calculation").name = "statistics-calculation-Model"
+// statistics-calculation
+include "code/statistics-calculation/Model"
+project(":code/statistics-calculation/Model").name = "statistics-calculation-Model"
+include "code/statistics-calculation/ViewModel"
+project(":code/statistics-calculation/ViewModel").name = "statistics-calculation-ViewModel"
+include "code/statistics-calculation/View"
+project(":code/statistics-calculation/View").name = "statistics-calculation-View"
 // Queue
 include "code/queue/Model"
 project(":code/queue/Model").name = "queue-Model"
@@ -132,6 +160,8 @@ project(":code/queue/View").name = "queue-View"
 include "code/queue/ViewModel"
 project(":code/queue/ViewModel").name = "queue-ViewModel"
 // Нестеров Александр
+include "code/bit-array"
+project(":code/bit-array").name = "bit-array-Model"
 // Нечесанов Владимир
 // Овчарук Олег
 include "code/polynomialcalculator"
@@ -144,9 +174,13 @@ include "code/red-black-tree"
 project(":code/red-black-tree").name = "red-black-tree-Model"
 // Попков Кирилл
 // Разин Вячеслав
-// Сизова Ксения
-include "code/binary-search"
-project(":code/binary-search").name = "binary-search-Model"
+// binary-search
+include "code/binary-search/Model"
+project(":code/binary-search/Model").name = "binary-search-Model"
+include "code/binary-search/View"
+project(":code/binary-search/View").name = "binary-search-View"
+include "code/binary-search/ViewModel"
+project(":code/binary-search/ViewModel").name = "binary-search-ViewModel"
 // Students Performance
 include "code/students-performance/model"
 project(":code/students-performance/model").name = "students-performance-model"

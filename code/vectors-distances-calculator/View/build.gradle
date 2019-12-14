@@ -5,7 +5,7 @@ plugins {
 }
 
 apply plugin: 'application'
-mainClassName = 'ru.unn.agile.datastructure.set.view.Main'
+mainClassName = 'ru.unn.agile.vectorsdistancescalculator.view.Main'
 
 javafx {
     version = "11.0.2"
@@ -13,5 +13,5 @@ javafx {
 }
 
 dependencies {
-    compile project(':datastructure-set-ViewModel')
+    compile project(':vectors-distances-calculator-ViewModel')
 }
