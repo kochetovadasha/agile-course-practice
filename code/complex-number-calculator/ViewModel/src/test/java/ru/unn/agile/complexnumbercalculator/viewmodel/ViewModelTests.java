@@ -7,6 +7,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import ru.unn.agile.complexnumbercalculator.viewmodel.ViewModel.Operations;
 
+import java.util.List;
+
 public class ViewModelTests {
     private ViewModel viewModel;
     private static final int ENTER = 10;
@@ -533,5 +535,12 @@ public class ViewModelTests {
         } catch (IllegalArgumentException ex) {
             assertEquals("Logger parameter can't be null", ex.getMessage());
         }
+    }
+
+    @Test
+    public void canGetEmptyLogByDefault() {
+        List<String> log = viewModel.getLog();
+
+        assertEquals(0, log.size());
     }
 }

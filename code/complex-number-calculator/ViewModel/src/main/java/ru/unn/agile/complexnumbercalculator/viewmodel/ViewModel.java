@@ -3,6 +3,7 @@ package ru.unn.agile.complexnumbercalculator.viewmodel;
 import ru.unn.agile.complexnumbercalculator.model.ComplexNumber;
 import ru.unn.agile.complexnumbercalculator.model.ComplexNumberCalculator;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -308,5 +309,9 @@ public class ViewModel {
             isErrorMessageDisplayed = true;
         }
         setError();
+    }
+
+    public List<String> getLog() {
+        return logger.getLog();
     }
 }
