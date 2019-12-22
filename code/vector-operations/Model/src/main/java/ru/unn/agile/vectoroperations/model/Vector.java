@@ -1,4 +1,5 @@
-package ru.unn.agile.vectors.model;
+package ru.unn.agile.vectoroperations.model;
+
 
 public class Vector {
     private double x;
@@ -74,6 +75,12 @@ public class Vector {
         return new Vector(0, 0, 0).equals(res);
     }
 
+    @Override
+    public String toString() {
+        String stringRepresentation = "(" + this.x + ", " + this.y + ", " + this.z + ")";
+        return stringRepresentation;
+    }
+
     public double getX() {
         return x;
     }
@@ -84,5 +91,69 @@ public class Vector {
 
     public double getZ() {
         return z;
+    }
+
+    public enum Operation {
+        CALCULATE_NORM("Calculate norm") {
+            public String apply(final Vector x, final Vector y) {
+                Double lengthNorm = Vector.getLengthNorm(x);
+                return lengthNorm.toString();
+            }
+        },
+        CALCULATE_SUM("Calculate sum") {
+            public String apply(final Vector x, final Vector y) {
+                Vector sum = Vector.getSum(x, y);
+                return sum.toString();
+            }
+        },
+
+        CALCULATE_DIFF("Calculate diff") {
+            public String apply(final Vector x, final Vector y) {
+                Vector diff = Vector.getDiff(x, y);
+                return diff.toString();
+            }
+        },
+
+        CALCULATE_SCALAR_MULT("Calculate scalar mult") {
+            public String apply(final Vector x, final Vector y) {
+                Double scalarMult = Vector.getScalarMult(x, y);
+                return scalarMult.toString();
+            }
+        },
+
+        CALCULATE_VECTOR_MULT("Calculate vector mult") {
+            public String apply(final Vector x, final Vector y) {
+                Vector vectMult = Vector.getVectMult(x, y);
+                return vectMult.toString();
+            }
+        },
+
+        ESTABLISH_THE_ORTOGONALITY("Establish the ortogonality") {
+            public String apply(final Vector x, final Vector y) {
+                Boolean isOrtogonal = Vector.isOrthogonal(x, y);
+                return isOrtogonal.toString();
+            }
+        },
+
+        ESTABLISH_THE_COMPLANARITY("Establish the complanarity") {
+            public String apply(final Vector x, final Vector y) {
+                Boolean isComplanar = Vector.isComplanar(x, y);
+                return isComplanar.toString();
+            }
+        };
+
+
+        private final String name;
+        Operation(final String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+
+        public abstract String apply(Vector x, Vector y);
+
     }
 }

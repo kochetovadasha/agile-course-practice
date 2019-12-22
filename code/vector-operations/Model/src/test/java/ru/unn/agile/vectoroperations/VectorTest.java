@@ -1,7 +1,7 @@
-package ru.unn.agile.vectors;
+package ru.unn.agile.vectoroperations;
 
 import org.junit.Test;
-import ru.unn.agile.vectors.model.Vector;
+import ru.unn.agile.vectoroperations.model.Vector;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
