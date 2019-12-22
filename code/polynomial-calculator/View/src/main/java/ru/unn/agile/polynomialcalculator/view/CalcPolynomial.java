@@ -45,17 +45,8 @@ public class CalcPolynomial {
 
     private void initTextField(final TextField textField,
                                final Property<String> property) {
-        bindTextFieldProperty(textField, property);
-        setTextFieldTooltip(textField);
-    }
-
-    private void setTextFieldTooltip(final TextField textField) {
-        textField.tooltipProperty().setValue(new Tooltip(pointInputTooltip));
-    }
-
-    private void bindTextFieldProperty(final TextField textField,
-                                       final Property<String> property) {
         textField.textProperty().bindBidirectional(property);
+        textField.tooltipProperty().setValue(new Tooltip(pointInputTooltip));
     }
 
     private void setErrorBorder(final TextField textField, final boolean active) {

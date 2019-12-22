@@ -8,7 +8,6 @@ import ru.unn.agile.polynomialcalculator.model.Polynomial;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
-    private final double eps = 1.0E-10;
     private ViewModel viewModel;
 
     @Before
@@ -25,7 +24,7 @@ public class ViewModelTests {
     public void isAddingValidInput() {
         setInputData("2.5", "1");
         viewModel.addPolynomial();
-        assertEquals(new Polynomial(2.5, 1).getCoef(1), viewModel.getPolynomialsList().get(0).getCoef(1), eps);
+        assertEquals(new Polynomial(2.5, 1).getCoef(1), viewModel.getPolynomialsList().get(0).getCoef(1), 1e-10);
         assertEquals(new Polynomial(2.5, 1).getDegree(), viewModel.getPolynomialsList().get(0).getDegree());
     }
 
@@ -54,7 +53,7 @@ public class ViewModelTests {
         setInputData("2.4", "0");
         viewModel.addPolynomial();
         viewModel.calcPolynomialAdd();
-        assertEquals(3.5, Double.parseDouble(viewModel.getResult()), eps);
+        assertEquals(3.5, Double.parseDouble(viewModel.getResult()), 1e-12);
     }
 
     @Test
