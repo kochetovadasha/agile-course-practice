@@ -19,6 +19,10 @@ public class ViewModelTests {
         return log.get(log.size() - 1);
     }
 
+    public void setViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
         FakeLogger fakeLogger = new FakeLogger();
