@@ -29,11 +29,6 @@ public class CalcPolynomial {
 
     @FXML
     void initialize() {
-        initAddPolynomForm();
-        initControlPanel();
-    }
-
-    private void initAddPolynomForm() {
         initTextField(coeffTextField, viewModel.coeffProperty());
         initTextField(degreeTextField, viewModel.degreeProperty());
 
@@ -44,9 +39,6 @@ public class CalcPolynomial {
                 setErrorBorder(degreeTextField, !viewModel.isPolynomialInputCorrect()));
         addPolynomialButton.setOnAction(e -> viewModel.addPolynomial());
         listPolinomials.itemsProperty().bindBidirectional(viewModel.polynomialsProperty());
-    }
-
-    private void initControlPanel() {
         calcSumPolynomialButton.setOnAction(e -> viewModel.calcPolynomialAdd());
         resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
     }
