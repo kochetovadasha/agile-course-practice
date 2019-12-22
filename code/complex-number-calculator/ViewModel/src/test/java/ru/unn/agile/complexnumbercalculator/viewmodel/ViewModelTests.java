@@ -565,7 +565,7 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2; Re2 = 3; Im2 = 4. Operation: Сложить.";
+        String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). Operation: Сложить. Result: (4 + 6i).";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
 
@@ -593,6 +593,17 @@ public class ViewModelTests {
         List<String> log = viewModel.getLog();
 
         String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2; Degree = 2. Operation: Возвести в степень.";
+        assertThat(log.get(log.size() - 1), containsString(correct));
+    }
+
+    @Test
+    public void canLogThatFirstReWasChanged() {
+        viewModel.setFirstRe("1");
+        viewModel.setFirstRe("2");
+
+        List<String> log = viewModel.getLog();
+
+        String correct = "Updated argument FirstRe from 1 to 2.";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
 }

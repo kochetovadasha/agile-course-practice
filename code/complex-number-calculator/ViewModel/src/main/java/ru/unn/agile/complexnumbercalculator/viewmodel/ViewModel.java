@@ -54,6 +54,7 @@ public class ViewModel {
     public final class LogMessages {
         public static final String OPERATION_WAS_CHANGED = "Operation was changed from ";
         public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
+        public static final String ARGUMENT_WAS_CHANGED = "Updated argument ";
 
         private LogMessages() { }
     }
@@ -88,6 +89,7 @@ public class ViewModel {
     }
 
     public void setFirstRe(final String firstRe) {
+        logger.addToLog(getArgumentWasChangedLogMessage("FirstRe", this.firstRe, firstRe));
         this.firstRe = firstRe;
     }
 
@@ -361,5 +363,12 @@ public class ViewModel {
                 + "; Degree = " + degree
                 + "."
                 + " Operation: " + operations.toString() + ".";
+    }
+
+    private String getArgumentWasChangedLogMessage(String argumentName, String argumentBefore, String argumentAfter) {
+        return LogMessages.ARGUMENT_WAS_CHANGED + argumentName
+                + " from " + argumentBefore
+                + " to " + argumentAfter
+                + ".";
     }
 }
