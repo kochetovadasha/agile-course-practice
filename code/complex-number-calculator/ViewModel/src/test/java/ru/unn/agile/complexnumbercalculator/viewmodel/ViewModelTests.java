@@ -4,7 +4,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
+
 import ru.unn.agile.complexnumbercalculator.viewmodel.ViewModel.Operations;
 
 import java.util.List;
@@ -549,6 +551,21 @@ public class ViewModelTests {
         viewModel.setOperations(Operations.MULTIPLY);
         List<String> log = viewModel.getLog();
 
-        assertEquals("Operation was changed to Умножить", log.get(0));
+        assertThat(log.get(0), containsString("Operation was changed from Сложить to Умножить"));
+    }
+
+    @Test
+    public void canLogThatCalculateButtonWasPressedWithBinaryOperation() {
+        viewModel.setOperations(Operations.ADD);
+        viewModel.setFirstRe("1");
+        viewModel.setFirstIm("2");
+        viewModel.setSecondRe("3");
+        viewModel.setSecondIm("4");
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLog();
+
+        String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2; Re2 = 3; Im2 = 4. Operation: Сложить.";
+        assertThat(log.get(log.size() - 1), containsString(correct));
     }
 }

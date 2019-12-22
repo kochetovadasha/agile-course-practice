@@ -52,7 +52,8 @@ public class ViewModel {
     }
 
     public final class LogMessages {
-        public static final String OPERATION_WAS_CHANGED = "Operation was changed to ";
+        public static final String OPERATION_WAS_CHANGED = "Operation was changed from ";
+        public static final String CALCULATE_WAS_PRESSED = "Calculate. ";
 
         private LogMessages() { }
     }
@@ -128,9 +129,9 @@ public class ViewModel {
     }
 
     public void setOperations(final Operations operation) {
+        logger.addToLog(getChangeOperationLogMessage(operation));
         this.result = "";
         this.operations = operation;
-        logger.addToLog(LogMessages.OPERATION_WAS_CHANGED + operation.toString());
     }
 
     public String getError() {
@@ -179,15 +180,21 @@ public class ViewModel {
                 ComplexNumber z2 = ComplexNumber.createAlgebraicForm(
                         Double.parseDouble(getSecondRe()),
                         Double.parseDouble(getSecondIm()));
-                if (getOperations().equals(Operations.ADD)) {
-                    result = ComplexNumberCalculator.add(z1, z2).toString();
-                } else if (getOperations().equals(Operations.SUBTRACT)) {
-                    result = ComplexNumberCalculator.subtract(z1, z2).toString();
-                } else if (getOperations().equals(Operations.MULTIPLY)) {
-                    result = ComplexNumberCalculator.multiply(z1, z2).toString();
-                } else if (getOperations().equals(Operations.DIVIDE)) {
-                    result = ComplexNumberCalculator.divide(z1, z2).toString();
+                switch (getOperations()) {
+                    case ADD:
+                        result = ComplexNumberCalculator.add(z1, z2).toString();
+                        break;
+                    case SUBTRACT:
+                        result = ComplexNumberCalculator.subtract(z1, z2).toString();
+                        break;
+                    case MULTIPLY:
+                        result = ComplexNumberCalculator.multiply(z1, z2).toString();
+                        break;
+                    case DIVIDE:
+                        result = ComplexNumberCalculator.divide(z1, z2).toString();
+                        break;
                 }
+                logger.addToLog(getCalculateLogMessageWithBinaryOperation());
             } else if (isSecondGroupOperation(getOperations())) {
                 ComplexNumber z = ComplexNumber.createAlgebraicForm(
                         Double.parseDouble(getFirstRe()),
@@ -209,6 +216,7 @@ public class ViewModel {
                 result = ComplexNumberCalculator.conjugation(z).toString();
             }
         }
+
     }
 
     private void hideDegree() {
@@ -320,5 +328,19 @@ public class ViewModel {
 
     public List<String> getLog() {
         return logger.getLog();
+    }
+
+    private String getChangeOperationLogMessage(Operations operation) {
+        return LogMessages.OPERATION_WAS_CHANGED + operations.toString() + " to " + operation.toString();
+    }
+
+    private String getCalculateLogMessageWithBinaryOperation() {
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": Re1 = " + firstRe
+                + "; Im1 = " + firstIm
+                + "; Re2 = " + secondRe
+                + "; Im2 = " + secondIm
+                + "."
+                + " Operation: " + operations.toString() + ".";
     }
 }
