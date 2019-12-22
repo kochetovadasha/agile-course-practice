@@ -565,7 +565,7 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). Operation: Сложить. Result: (4 + 6i).";
+        String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). Operation: Сложить. Result: (4.0 + 6.0i).";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
 
@@ -578,7 +578,7 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2. Operation: Найти сопряженное.";
+        String correct = "Calculate. Argument: (1 + 2i). Operation: Найти сопряженное. Result: (1.0 - 2.0i).";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
 
@@ -592,7 +592,8 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2; Degree = 2. Operation: Возвести в степень.";
+        String correct = "Calculate. Arguments: (1 + 2i), Degree = 2. " +
+                "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
 

@@ -339,30 +339,27 @@ public class ViewModel {
     }
 
     private String getCalculateLogMessageWithBinaryOperation() {
-        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
-                + ": Re1 = " + firstRe
-                + "; Im1 = " + firstIm
-                + "; Re2 = " + secondRe
-                + "; Im2 = " + secondIm
-                + "."
-                + " Operation: " + operations.toString() + ".";
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments: "
+                + "(" + firstRe + " + " + firstIm + "i), "
+                + "(" + secondRe + " + " + secondIm + "i). "
+                + "Operation: " + operations.toString() + ". "
+                + "Result: (" + result + ").";
     }
 
     private String getCalculateLogMessageWithUnaryOperation() {
-        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
-                + ": Re1 = " + firstRe
-                + "; Im1 = " + firstIm
-                + "."
-                + " Operation: " + operations.toString() + ".";
+        return LogMessages.CALCULATE_WAS_PRESSED + "Argument: "
+                + "(" + firstRe + " + " + firstIm + "i). "
+                + "Operation: " + operations.toString() + ". "
+                + "Result: (" + result + ").";
     }
 
     private String getCalculateLogMessageWithParametricOperation() {
-        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
-                + ": Re1 = " + firstRe
-                + "; Im1 = " + firstIm
-                + "; Degree = " + degree
-                + "."
-                + " Operation: " + operations.toString() + ".";
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments: "
+                + "(" + firstRe + " + " + firstIm + "i), "
+                + "Degree = " + degree
+                + ". "
+                + "Operation: " + operations.toString() + ". "
+                + "Result: (" + result + ").";
     }
 
     private String getArgumentWasChangedLogMessage(String argumentName, String argumentBefore, String argumentAfter) {
