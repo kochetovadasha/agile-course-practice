@@ -107,6 +107,7 @@ public class ViewModel {
     }
 
     public void setSecondRe(final String secondRe) {
+        logger.addToLog(getArgumentWasChangedLogMessage("SecondRe", this.secondRe, secondRe));
         this.secondRe = secondRe;
     }
 
