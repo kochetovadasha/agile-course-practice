@@ -104,29 +104,6 @@ public class VectorTest {
         assertEquals(expRes, actRes);
     }
 
-    @Test
-    public void canCalculateNormalizedPositiveVector() {
-        Vector v1 = new Vector(5, 5, 5);
-        Vector actualResult = Vector.getNormalizedVector(v1);
-        double vectorNorm = 8.66;
-        double expectedX = v1.getX() / vectorNorm;
-        double expectedY = v1.getY() / vectorNorm;
-        double expectedZ = v1.getZ() / vectorNorm;
-        Vector expectedResult = new Vector(expectedX, expectedY, expectedZ);
-        assertEquals(expectedResult, actualResult);
-    }
-
-    @Test
-    public void canCalculateNormalizedNegativeVector() {
-        Vector v1 = new Vector(-5, -5, -5);
-        Vector actualResult = Vector.getNormalizedVector(v1);
-        double vectorNorm = 8.66;
-        double expectedX = v1.getX() / vectorNorm;
-        double expectedY = v1.getY() / vectorNorm;
-        double expectedZ = v1.getZ() / vectorNorm;
-        Vector expectedResult = new Vector(expectedX, expectedY, expectedZ);
-        assertEquals(expectedResult, actualResult);
-    }
 
     @Test
     public void canCalculateNormalizedMixedVector() {

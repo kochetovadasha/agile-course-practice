@@ -3,6 +3,7 @@ package ru.unn.agile.vectoroperations.viewmodel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.unn.agile.vectoroperations.model.Vector;
 import ru.unn.agile.vectoroperations.model.Vector.Operation;
 
 import static org.junit.Assert.*;
@@ -38,7 +39,7 @@ public class ViewModelTests {
 
     @Test
     public void canReportBadFormat() {
-        viewModel.x1Property().set("/");
+        viewModel.x0Property().set("/");
         assertEquals(Status.BAD_FORMAT.toString(), viewModel.fieldStatusProperty().get());
     }
 
@@ -56,8 +57,7 @@ public class ViewModelTests {
     @Test
     public void calculateButtonIsDisabledWhenFormatIsBad() {
         setPositiveInputVectors();
-        viewModel.x1Property().set("WHAT");
-
+        viewModel.x0Property().set("WHAT");
         assertTrue(viewModel.calculationDisablingFlagProperty().get());
     }
 
@@ -92,7 +92,7 @@ public class ViewModelTests {
 
     @Test
     public void canSetBadFormatMessage() {
-        viewModel.x1Property().set("/");
+        viewModel.x0Property().set("/");
         assertEquals(Status.BAD_FORMAT.toString(), viewModel.fieldStatusProperty().get());
     }
 
@@ -114,6 +114,64 @@ public class ViewModelTests {
         viewModel.opProperty().set(Operation.CALCULATE_NORMALIZED_VECTOR);
         assertFalse(viewModel.additionalVectorFieldDisablingFlagProperty().get());
     }
+
+    @Test
+    public void canEnableCalculateButtonWhenOnlyOneVector() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_NORMALIZED_VECTOR);
+        assertFalse(viewModel.calculationDisablingFlagProperty().get());
+    }
+
+    @Test
+    public void canCalculateVectorNorm() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        viewModel.calculate();
+        double expected = 3.7416;
+        double actual = Double.parseDouble(viewModel.fieldResultProperty().get());
+        assertEquals(expected, actual, EPS);
+    }
+
+    @Test
+    public void canCalculateNormalizedVector() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_NORMALIZED_VECTOR);
+        viewModel.calculate();
+        Vector expectedVector = new Vector(0.2672612419124244,
+                                           0.5345224838248488,
+                                           0.8017837257372732);
+        String expected = expectedVector.toString();
+        String actual = viewModel.fieldResultProperty().get();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void canCalculateVectorsScalarMult() {
+        setMixedInputVectors();
+        viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
+        viewModel.calculate();
+        String expected = "-32.0";
+        String actual = viewModel.fieldResultProperty().get();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void canCalculateVectorsVectorMult() {
+        setPositiveInputVectors();
+        viewModel.opProperty().set(Operation.CALCULATE_VECTOR_MULT);
+        viewModel.calculate();
+        Vector expectedVector = new Vector(-3.0, -6.0, -3.0);
+        String expected = expectedVector.toString();
+        String actual = viewModel.fieldResultProperty().get();
+        assertEquals(expected, actual);
+    }
+
+    private void setPositiveInputVector() {
+        viewModel.x0Property().set("1");
+        viewModel.y0Property().set("2");
+        viewModel.z0Property().set("3");
+    }
+
     private void setPositiveInputVectors() {
         viewModel.x0Property().set("1");
         viewModel.y0Property().set("2");

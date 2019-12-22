@@ -10,7 +10,6 @@ import ru.unn.agile.vectoroperations.model.Vector;
 import ru.unn.agile.vectoroperations.model.Vector.Operation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ViewModel {
@@ -60,12 +59,7 @@ public class ViewModel {
 
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
-                if (Operation.CALCULATE_NORM.equals(op.get()) ||
-                    Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get())) {
-                    super.bind(x0, y0, z0);
-                } else {
-                    super.bind(x0, y0, z0, x1, y1, z1);
-                }
+                super.bind(x0, y0, z0, x1, y1, z1);
             }
             @Override
             protected boolean computeValue() {
@@ -90,12 +84,17 @@ public class ViewModel {
 
     private Status getInputStatus() {
         Status inputStatus = Status.READY;
-        if (x1.get().isEmpty() || y1.get().isEmpty() || z1.get().isEmpty()
-            || x0.get().isEmpty() || y0.get().isEmpty() || z0.get().isEmpty()) {
+        List<StringProperty> list = new ArrayList<>(List.of(x0, y0, z0));
+        if (!Operation.CALCULATE_NORM.equals(op.get())
+                && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get())) {
+            list.add(x1);
+            list.add(y1);
+            list.add(z1);
+        }
+        if (list.stream().anyMatch(elem -> elem.get().isEmpty())) {
             inputStatus = Status.WAITING;
         }
         try {
-            List<StringProperty> list = Arrays.asList(x0, y0, z0, x1, y1, z1);
             for (var property : list) {
                 if (!property.get().isEmpty()) {
                     Double.parseDouble(property.get());
@@ -161,11 +160,16 @@ public class ViewModel {
         double x1d = Double.parseDouble(x0.get());
         double y1d = Double.parseDouble(y0.get());
         double z1d = Double.parseDouble(z0.get());
-        double x2d = Double.parseDouble(x1.get());
-        double y2d = Double.parseDouble(y1.get());
-        double z2d = Double.parseDouble(z1.get());
         Vector vec1 = new Vector(x1d, y1d, z1d);
-        Vector vec2 = new Vector(x2d, y2d, z2d);
+        Vector vec2 = null;
+        if (!Operation.CALCULATE_NORM.equals(op.get())
+                && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get())) {
+            double x2d = Double.parseDouble(x1.get());
+            double y2d = Double.parseDouble(y1.get());
+            double z2d = Double.parseDouble(z1.get());
+            vec2 = new Vector(x2d, y2d, z2d);
+        }
+
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
