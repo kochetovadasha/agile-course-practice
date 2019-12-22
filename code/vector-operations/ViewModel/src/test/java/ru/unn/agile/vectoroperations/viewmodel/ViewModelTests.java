@@ -74,12 +74,6 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canSetCalculateLInfDistanceOperation() {
-        viewModel.opProperty().set(Operation.CALCULATE_NORM);
-        assertEquals(Operation.CALCULATE_NORM, viewModel.opProperty().get());
-    }
-
-    @Test
     public void canSetReadyMessage() {
         setMixedInputVectors();
         String expected = Status.READY.toString();
@@ -102,6 +96,24 @@ public class ViewModelTests {
         assertEquals(Status.BAD_FORMAT.toString(), viewModel.fieldStatusProperty().get());
     }
 
+    @Test
+    public void canHideAdditionalFieldsByDefault() {
+        assertFalse(viewModel.additionalVectorFieldDisablingFlagProperty().get());
+    }
+
+
+    @Test
+    public void canShowAdditionalFields() {
+        viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
+        assertTrue(viewModel.additionalVectorFieldDisablingFlagProperty().get());
+    }
+
+    @Test
+    public void canHideAdditionalFields() {
+        viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
+        viewModel.opProperty().set(Operation.CALCULATE_NORMALIZED_VECTOR);
+        assertFalse(viewModel.additionalVectorFieldDisablingFlagProperty().get());
+    }
     private void setPositiveInputVectors() {
         viewModel.x0Property().set("1");
         viewModel.y0Property().set("2");

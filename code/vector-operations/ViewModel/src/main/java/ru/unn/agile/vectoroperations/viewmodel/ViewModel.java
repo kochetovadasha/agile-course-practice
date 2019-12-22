@@ -25,6 +25,7 @@ public class ViewModel {
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Operation.values()));
     private final ObjectProperty<Operation> op = new SimpleObjectProperty<>();
     private final BooleanProperty calculationDisablingFlag = new SimpleBooleanProperty();
+    private final BooleanProperty additionalVectorFieldDisablingFlag = new SimpleBooleanProperty();
 
     private final StringProperty fieldResult = new SimpleStringProperty();
     private final StringProperty fieldStatus = new SimpleStringProperty();
@@ -59,16 +60,32 @@ public class ViewModel {
 
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
-                super.bind(x0, y0, z0, x1, y1, z1);
+                if (Operation.CALCULATE_NORM.equals(op.get()) ||
+                    Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get())) {
+                    super.bind(x0, y0, z0);
+                } else {
+                    super.bind(x0, y0, z0, x1, y1, z1);
+                }
             }
             @Override
             protected boolean computeValue() {
                 return getInputStatus() == Status.READY;
             }
         };
+
+        BooleanBinding needShowAdditionalVectorField = new BooleanBinding() {
+            {
+                super.bind(op);
+            }
+            @Override
+            protected boolean computeValue() {
+                return !Operation.CALCULATE_NORM.equals(op.get())
+                        && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get());
+            }
+        };
+
         calculationDisablingFlag.bind(couldCalculate.not());
-
-
+        additionalVectorFieldDisablingFlag.bind(needShowAdditionalVectorField);
     }
 
     private Status getInputStatus() {
@@ -120,6 +137,9 @@ public class ViewModel {
     }
     public BooleanProperty calculationDisablingFlagProperty() {
         return calculationDisablingFlag;
+    }
+    public BooleanProperty additionalVectorFieldDisablingFlagProperty() {
+        return additionalVectorFieldDisablingFlag;
     }
     public final ObservableList<Operation> getOpsList() {
         return opsList.get();
