@@ -89,9 +89,12 @@ public class ViewModel {
     }
 
     public void setFirstRe(final String firstRe) {
-        if (firstRe.equals(this.firstRe)) return;
+        if (firstRe.equals(this.firstRe)) {
+            return;
+        }
 
-        logger.addToLog(getArgumentWasChangedLogMessage("FirstRe", this.firstRe, firstRe));
+        logger.addToLog(getArgumentWasChangedLogMessage("FirstRe",
+                this.firstRe, firstRe));
         this.firstRe = firstRe;
     }
 
@@ -100,9 +103,12 @@ public class ViewModel {
     }
 
     public void setFirstIm(final String firstIm) {
-        if (firstIm.equals(this.firstIm)) return;
+        if (firstIm.equals(this.firstIm)) {
+            return;
+        }
 
-        logger.addToLog(getArgumentWasChangedLogMessage("FirstIm", this.firstIm, firstIm));
+        logger.addToLog(getArgumentWasChangedLogMessage("FirstIm",
+                this.firstIm, firstIm));
         this.firstIm = firstIm;
     }
 
@@ -111,9 +117,12 @@ public class ViewModel {
     }
 
     public void setSecondRe(final String secondRe) {
-        if (secondRe.equals(this.secondRe)) return;
+        if (secondRe.equals(this.secondRe)) {
+            return;
+        }
 
-        logger.addToLog(getArgumentWasChangedLogMessage("SecondRe", this.secondRe, secondRe));
+        logger.addToLog(getArgumentWasChangedLogMessage("SecondRe",
+                this.secondRe, secondRe));
         this.secondRe = secondRe;
     }
 
@@ -122,9 +131,12 @@ public class ViewModel {
     }
 
     public void setSecondIm(final String secondIm) {
-        if (secondIm.equals(this.secondIm)) return;
+        if (secondIm.equals(this.secondIm)) {
+            return;
+        }
 
-        logger.addToLog(getArgumentWasChangedLogMessage("SecondIm", this.secondIm, secondIm));
+        logger.addToLog(getArgumentWasChangedLogMessage("SecondIm",
+                this.secondIm, secondIm));
         this.secondIm = secondIm;
     }
 
@@ -133,7 +145,9 @@ public class ViewModel {
     }
 
     public void setDegree(final String degree) {
-        if (degree.equals(this.degree)) return;
+        if (degree.equals(this.degree)) {
+            return;
+        }
 
         logger.addToLog(getArgumentWasChangedLogMessage("Degree", this.degree, degree));
         this.degree = degree;
@@ -144,7 +158,9 @@ public class ViewModel {
     }
 
     public void setOperations(final Operations operation) {
-        if (operation.equals(this.operations)) return;
+        if (operation.equals(this.operations)) {
+            return;
+        }
 
         logger.addToLog(getChangeOperationLogMessage(operation));
         this.result = "";
@@ -197,19 +213,14 @@ public class ViewModel {
                 ComplexNumber z2 = ComplexNumber.createAlgebraicForm(
                         Double.parseDouble(getSecondRe()),
                         Double.parseDouble(getSecondIm()));
-                switch (getOperations()) {
-                    case ADD:
-                        result = ComplexNumberCalculator.add(z1, z2).toString();
-                        break;
-                    case SUBTRACT:
-                        result = ComplexNumberCalculator.subtract(z1, z2).toString();
-                        break;
-                    case MULTIPLY:
-                        result = ComplexNumberCalculator.multiply(z1, z2).toString();
-                        break;
-                    case DIVIDE:
-                        result = ComplexNumberCalculator.divide(z1, z2).toString();
-                        break;
+                if (getOperations() == Operations.ADD) {
+                    result = ComplexNumberCalculator.add(z1, z2).toString();
+                } else if (getOperations() == Operations.SUBTRACT) {
+                    result = ComplexNumberCalculator.subtract(z1, z2).toString();
+                } else if (getOperations() == Operations.MULTIPLY) {
+                    result = ComplexNumberCalculator.multiply(z1, z2).toString();
+                } else if (getOperations() == Operations.DIVIDE) {
+                    result = ComplexNumberCalculator.divide(z1, z2).toString();
                 }
                 logger.addToLog(getCalculateLogMessageWithBinaryOperation());
             } else if (isSecondGroupOperation(getOperations())) {
@@ -349,8 +360,9 @@ public class ViewModel {
         return logger.getLog();
     }
 
-    private String getChangeOperationLogMessage(Operations operation) {
-        return LogMessages.OPERATION_WAS_CHANGED + operations.toString() + " to " + operation.toString();
+    private String getChangeOperationLogMessage(final Operations operation) {
+        return LogMessages.OPERATION_WAS_CHANGED + operations.toString()
+                + " to " + operation.toString();
     }
 
     private String getCalculateLogMessageWithBinaryOperation() {
@@ -377,7 +389,9 @@ public class ViewModel {
                 + "Result: (" + result + ").";
     }
 
-    private String getArgumentWasChangedLogMessage(String argumentName, String argumentBefore, String argumentAfter) {
+    private String getArgumentWasChangedLogMessage(final String argumentName,
+                                                   final String argumentBefore,
+                                                   final String argumentAfter) {
         return LogMessages.ARGUMENT_WAS_CHANGED + argumentName
                 + " from " + argumentBefore
                 + " to " + argumentAfter

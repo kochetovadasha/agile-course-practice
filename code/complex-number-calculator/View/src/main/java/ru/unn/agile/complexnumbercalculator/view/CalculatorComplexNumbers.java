@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.Vector;
 
 public final class CalculatorComplexNumbers {
     private JPanel mainPanel;
@@ -126,7 +125,6 @@ public final class CalculatorComplexNumbers {
 
         List<String> log = viewModel.getLog();
         String[] items = log.toArray(new String[log.size()]);
-        //Vector items = new Vector(log);
         logList.setListData(items);
     }
 

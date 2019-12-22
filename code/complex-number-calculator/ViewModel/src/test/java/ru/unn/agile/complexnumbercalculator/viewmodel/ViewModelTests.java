@@ -15,7 +15,7 @@ public class ViewModelTests {
     private ViewModel viewModel;
     private static final int ENTER = 10;
 
-    private static String getLastRecord(List<String> log) {
+    private static String getLastRecord(final List<String> log) {
         return log.get(log.size() - 1);
     }
 
@@ -584,7 +584,8 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). Operation: Сложить. Result: (4.0 + 6.0i).";
+        String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). "
+                + "Operation: Сложить. Result: (4.0 + 6.0i).";
         assertThat(getLastRecord(log), containsString(correct));
     }
 
@@ -597,7 +598,8 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Argument: (1 + 2i). Operation: Найти сопряженное. Result: (1.0 - 2.0i).";
+        String correct = "Calculate. Argument: (1 + 2i). "
+                + "Operation: Найти сопряженное. Result: (1.0 - 2.0i).";
         assertThat(getLastRecord(log), containsString(correct));
     }
 
@@ -611,8 +613,8 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        String correct = "Calculate. Arguments: (1 + 2i), Degree = 2. " +
-                "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
+        String correct = "Calculate. Arguments: (1 + 2i), Degree = 2. "
+                + "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
         assertThat(getLastRecord(log), containsString(correct));
     }
 

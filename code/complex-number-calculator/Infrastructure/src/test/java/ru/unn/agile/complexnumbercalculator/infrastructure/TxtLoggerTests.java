@@ -1,6 +1,5 @@
 package ru.unn.agile.complexnumbercalculator.infrastructure;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,18 +10,17 @@ import static org.junit.Assert.fail;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 
 public class TxtLoggerTests {
     private TxtLogger txtLogger;
     private static final String FILENAME = "./TxtLoggerTests-complex-number-calculator.log";
-    private static final ICalendar calendar = new FakeCalendar();
+    private static final ICalendar CALENDAR = new FakeCalendar();
 
     @Before
     public void setUp() {
-        txtLogger = new TxtLogger(FILENAME, calendar);
+        txtLogger = new TxtLogger(FILENAME, CALENDAR);
     }
 
     @Test
