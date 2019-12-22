@@ -4,8 +4,6 @@ import javafx.beans.property.Property;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import ru.unn.agile.polynomialcalculator.model.Polynomial;
 import ru.unn.agile.polynomialcalculator.viewmodel.ViewModel;
 
 public class CalcPolynomial {
