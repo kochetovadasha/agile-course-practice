@@ -18,9 +18,15 @@ public class ViewModel {
     private static final Pattern DEGREE_INPUT_ALLOWED_SYMBOLS =
             Pattern.compile("^[0-9]+$");
 
+    private ListProperty<String> polynomialsListProperty = new SimpleListProperty<>();
+
     private final ObservableList<Polynomial> polynomialsList = FXCollections.observableArrayList();
 
     private final StringProperty result = new SimpleStringProperty();
+
+    public ListProperty<String> polynomialsProperty() {
+        return polynomialsListProperty;
+    }
 
     public boolean isPolynomialInputCorrect() {
         String degree = degree1.get();
@@ -31,8 +37,8 @@ public class ViewModel {
     }
 
     public ViewModel() {
+        polynomialsListProperty.set(FXCollections.observableArrayList());
         clearFormInput();
-
         BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
             {
                 super.bind(degree1, coeff1);
@@ -47,11 +53,13 @@ public class ViewModel {
     public void addPolynomial() {
         var polynomial = parsePolynomial(coeff1, degree1);
         polynomialsList.add(polynomial);
+        polynomialsListProperty.add(polynomial.toString());
         clearFormInput();
     }
 
     public void calcPolynomialAdd() {
         if (polynomialsList.isEmpty()) {
+            result.set("efe");
             return;
         }
         try {
@@ -83,7 +91,7 @@ public class ViewModel {
     public StringProperty coeffProperty() {
         return coeff1;
     }
-    public ObservableList<Polynomial> getpolynomialsList() {
+    public ObservableList<Polynomial> getPolynomialsList() {
         return polynomialsList;
     }
 
