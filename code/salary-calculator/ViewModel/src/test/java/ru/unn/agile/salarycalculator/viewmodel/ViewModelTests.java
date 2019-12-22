@@ -11,7 +11,7 @@ public class ViewModelTests {
     private final double delta = 0.01;
     private ViewModel viewModel;
 
-    public void setExternalViewModel(ViewModel viewModel) {
+    public void setExternalViewModel(final ViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
