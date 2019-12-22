@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public final class CalculatorComplexNumbers {
     private JPanel mainPanel;
@@ -34,6 +35,7 @@ public final class CalculatorComplexNumbers {
     private JPanel calculatePanel;
     private JLabel resultTextLabel;
     private JLabel resultLabel;
+    private JList logList;
 
     private ViewModel viewModel;
 
@@ -120,6 +122,10 @@ public final class CalculatorComplexNumbers {
         calculateButton.setEnabled(viewModel.isCalculateButtonEnabled());
         resultLabel.setText(viewModel.getResult());
         errorLabel.setText(viewModel.getError());
+
+        List<String> log = viewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        logList.setListData(items);
     }
 
     private void bind() {
