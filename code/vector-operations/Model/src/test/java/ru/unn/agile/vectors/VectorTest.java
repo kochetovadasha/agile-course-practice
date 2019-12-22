@@ -24,16 +24,14 @@ public class VectorTest {
     public void canCreateTwoEqualVectorsWithPositiveCoordinates() {
         Vector v1 = new Vector(1, 2, 3);
         Vector v2 = new Vector(1, 2, 3);
-        boolean tmp = Vector.isEqual(v2, v1);
-        assertTrue(tmp);
+        assertEquals(v1, v2);
     }
 
     @Test
     public void canCreateTwoEqualVectorsWithNegativeCoordinates() {
         Vector v1 = new Vector(-1, -2, -3);
         Vector v2 = new Vector(-1, -2, -3);
-        boolean tmp = Vector.isEqual(v2, v1);
-        assertTrue(tmp);
+        assertEquals(v1, v2);
     }
 
     @Test
