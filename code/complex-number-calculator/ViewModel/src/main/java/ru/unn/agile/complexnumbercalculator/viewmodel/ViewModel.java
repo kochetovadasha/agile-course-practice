@@ -50,7 +50,7 @@ public class ViewModel {
         }
     }
 
-    public ViewModel() {
+    public ViewModel(final ILogger logger) throws IllegalArgumentException {
         result = "";
         firstRe = "";
         firstIm = "";
@@ -63,10 +63,6 @@ public class ViewModel {
         isDegreeVisible = false;
         isErrorMessageDisplayed = false;
         isSecondNumberVisible = true;
-    }
-
-    public ViewModel(final ILogger logger) throws IllegalArgumentException {
-        this();
 
         if (logger == null) {
             throw new IllegalArgumentException("Logger parameter can't be null");

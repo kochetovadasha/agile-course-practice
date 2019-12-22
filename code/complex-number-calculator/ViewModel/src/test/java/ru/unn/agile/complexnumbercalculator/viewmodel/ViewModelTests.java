@@ -519,10 +519,19 @@ public class ViewModelTests {
     }
 
     @Test
-    public void canCreateViewModelWithFakeLogger() {
+    public void canCreateViewModelWithLogger() {
         FakeLogger logger = new FakeLogger();
         ViewModel viewModel = new ViewModel(logger);
 
         assertNotNull(viewModel);
+    }
+
+    @Test
+    public void canNotCreateViewModelWithNullLogger() {
+        try {
+            new ViewModel(null);
+        } catch (IllegalArgumentException ex) {
+            assertEquals("Logger parameter can't be null", ex.getMessage());
+        }
     }
 }
