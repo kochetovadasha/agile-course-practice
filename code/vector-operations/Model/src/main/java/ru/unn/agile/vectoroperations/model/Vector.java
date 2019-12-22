@@ -42,20 +42,13 @@ public class Vector {
         return len;
     }
 
-    public static boolean isOrthogonal(final Vector v1, final Vector v2) {
-        double cosAlpha = (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z)
-                            / (getLengthNorm(v1) * getLengthNorm(v2));
-        return ((cosAlpha) == 0);
-    }
-
-    public static Vector getSum(final Vector v1, final Vector v2) {
-        Vector res = new Vector(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
-        return res;
-    }
-
-    public static Vector getDiff(final Vector v1, final Vector v2) {
-        Vector res = new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
-        return res;
+    public static Vector getNormalizedVector(final Vector v1) {
+        double vectorNorm = getLengthNorm(v1);
+        double newX = v1.getX() / vectorNorm;
+        double newY = v1.getY() / vectorNorm;
+        double newZ = v1.getZ() / vectorNorm;
+        Vector newVector = new Vector(newX, newY, newZ);
+        return newVector;
     }
 
     public static double getScalarMult(final Vector v1, final Vector v2) {
@@ -70,10 +63,6 @@ public class Vector {
         return res;
     }
 
-    public static boolean isComplanar(final Vector v1, final Vector v2) {
-        Vector res = getVectMult(v1, v2);
-        return new Vector(0, 0, 0).equals(res);
-    }
 
     @Override
     public String toString() {
@@ -100,17 +89,11 @@ public class Vector {
                 return lengthNorm.toString();
             }
         },
-        CALCULATE_SUM("Calculate sum") {
-            public String apply(final Vector x, final Vector y) {
-                Vector sum = Vector.getSum(x, y);
-                return sum.toString();
-            }
-        },
 
-        CALCULATE_DIFF("Calculate diff") {
+        CALCULATE_NORMALIZED_VECTOR("Calculate normalized vector") {
             public String apply(final Vector x, final Vector y) {
-                Vector diff = Vector.getDiff(x, y);
-                return diff.toString();
+                Vector normalizedVector = Vector.getNormalizedVector(x);
+                return normalizedVector.toString();
             }
         },
 
@@ -125,20 +108,6 @@ public class Vector {
             public String apply(final Vector x, final Vector y) {
                 Vector vectMult = Vector.getVectMult(x, y);
                 return vectMult.toString();
-            }
-        },
-
-        ESTABLISH_THE_ORTOGONALITY("Establish the ortogonality") {
-            public String apply(final Vector x, final Vector y) {
-                Boolean isOrtogonal = Vector.isOrthogonal(x, y);
-                return isOrtogonal.toString();
-            }
-        },
-
-        ESTABLISH_THE_COMPLANARITY("Establish the complanarity") {
-            public String apply(final Vector x, final Vector y) {
-                Boolean isComplanar = Vector.isComplanar(x, y);
-                return isComplanar.toString();
             }
         };
 

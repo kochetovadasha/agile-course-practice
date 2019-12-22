@@ -51,68 +51,6 @@ public class VectorTest {
     }
 
     @Test
-    public void canCheckIsOrtogonal() {
-        Vector v1 = new Vector(0, 1, 0);
-        Vector v2 = new Vector(0, 0, 1);
-        boolean tmp = Vector.isOrthogonal(v2, v1);
-        assertTrue(tmp);
-    }
-
-    @Test
-    public void canAddTwoVectorsWithPositiveCoordinates() {
-        Vector v1 = new Vector(1, 1, 1);
-        Vector v2 = new Vector(2, 2, 2);
-        Vector actRes = new Vector(3, 3, 3);
-        Vector expRes = Vector.getSum(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
-    public void canAddTwoVectorsWithNegativeCoordinates() {
-        Vector v1 = new Vector(-1, -1, -1);
-        Vector v2 = new Vector(-2, -2, -2);
-        Vector actRes = new Vector(-3, -3, -3);
-        Vector expRes = Vector.getSum(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
-    public void canAddTwoVectorsWithDifferentSignCoordinates() {
-        Vector v1 = new Vector(-1, 1, -1);
-        Vector v2 = new Vector(2, -2, 2);
-        Vector actRes = new Vector(1, -1, 1);
-        Vector expRes = Vector.getSum(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
-    public void canDifferenceTwoVectorsWithPositiveCoordinates() {
-        Vector v1 = new Vector(1, 1, 1);
-        Vector v2 = new Vector(2, 2, 2);
-        Vector actRes = new Vector(1, 1, 1);
-        Vector expRes = Vector.getDiff(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
-    public void canDifferenceTwoVectorsWithNegativeCoordinates() {
-        Vector v1 = new Vector(-1, -1, -1);
-        Vector v2 = new Vector(-2, -2, -2);
-        Vector actRes = new Vector(-1, -1, -1);
-        Vector expRes = Vector.getDiff(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
-    public void canDifferenceTwoVectorsWithDifferentSignCoordinates() {
-        Vector v1 = new Vector(-1, 1, -1);
-        Vector v2 = new Vector(2, -2, 2);
-        Vector actRes = new Vector(3, -3, 3);
-        Vector expRes = Vector.getDiff(v2, v1);
-        assertEquals(expRes, actRes);
-    }
-
-    @Test
     public void canDoScalarMulterenceTwoVectorsWithPositiveCoordinates() {
         Vector v1 = new Vector(1, 1, 1);
         Vector v2 = new Vector(2, 2, 2);
@@ -167,19 +105,39 @@ public class VectorTest {
     }
 
     @Test
-    public void canCheckIsComplonarWithComplonarVectors() {
-        Vector v1 = new Vector(1, 1, 1);
-        Vector v2 = new Vector(2, 2, 2);
-        boolean tmp = Vector.isComplanar(v2, v1);
-        assertTrue(tmp);
+    public void canCalculateNormalizedPositiveVector() {
+        Vector v1 = new Vector(5, 5, 5);
+        Vector actualResult = Vector.getNormalizedVector(v1);
+        double vectorNorm = 8.66;
+        double expectedX = v1.getX() / vectorNorm;
+        double expectedY = v1.getY() / vectorNorm;
+        double expectedZ = v1.getZ() / vectorNorm;
+        Vector expectedResult = new Vector(expectedX, expectedY, expectedZ);
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
-    public void canCheckIsComplonarWithNotComplonarVectors() {
-        Vector v1 = new Vector(-1, 1, 1);
-        Vector v2 = new Vector(2, -2, 2);
-        boolean tmp = Vector.isComplanar(v2, v1);
-        assertFalse(tmp);
+    public void canCalculateNormalizedNegativeVector() {
+        Vector v1 = new Vector(-5, -5, -5);
+        Vector actualResult = Vector.getNormalizedVector(v1);
+        double vectorNorm = 8.66;
+        double expectedX = v1.getX() / vectorNorm;
+        double expectedY = v1.getY() / vectorNorm;
+        double expectedZ = v1.getZ() / vectorNorm;
+        Vector expectedResult = new Vector(expectedX, expectedY, expectedZ);
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    public void canCalculateNormalizedMixedVector() {
+        Vector v1 = new Vector(5, -5, 5);
+        Vector actualResult = Vector.getNormalizedVector(v1);
+        double vectorNorm = 8.66;
+        double expectedX = v1.getX() / vectorNorm;
+        double expectedY = v1.getY() / vectorNorm;
+        double expectedZ = v1.getZ() / vectorNorm;
+        Vector expectedResult = new Vector(expectedX, expectedY, expectedZ);
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
