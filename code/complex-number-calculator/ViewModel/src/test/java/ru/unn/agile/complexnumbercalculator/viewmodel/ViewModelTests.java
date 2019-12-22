@@ -557,9 +557,20 @@ public class ViewModelTests {
     @Test
     public void canLogThatOperationWasChanged() {
         viewModel.setOperations(Operations.MULTIPLY);
+
         List<String> log = viewModel.getLog();
 
         assertThat(log.get(0), containsString("Operation was changed from Сложить to Умножить"));
+    }
+
+    @Test
+    public void canNotLogThatOperationWasNotChanged() {
+        viewModel.setOperations(Operations.MULTIPLY);
+        viewModel.setOperations(Operations.MULTIPLY);
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
     }
 
     @Test
@@ -658,5 +669,55 @@ public class ViewModelTests {
 
         String correct = "Updated argument Degree from 1 to 2.";
         assertThat(getLastRecord(log), containsString(correct));
+    }
+
+    @Test
+    public void canNotLogThatFirstReWasNotChanged() {
+        viewModel.setFirstRe("1");
+        viewModel.setFirstRe("1");
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
+    }
+
+    @Test
+    public void canNotLogThatFirstImWasNotChanged() {
+        viewModel.setFirstIm("1");
+        viewModel.setFirstIm("1");
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
+    }
+
+    @Test
+    public void canNotLogThatSecondReWasNotChanged() {
+        viewModel.setSecondRe("2");
+        viewModel.setSecondRe("2");
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
+    }
+
+    @Test
+    public void canNotLogThatSecondImWasNotChanged() {
+        viewModel.setSecondIm("2");
+        viewModel.setSecondIm("2");
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
+    }
+
+    @Test
+    public void canNotLogThatDegreeWasNotChanged() {
+        viewModel.setDegree("1");
+        viewModel.setDegree("1");
+
+        List<String> log = viewModel.getLog();
+
+        assertEquals(1, log.size());
     }
 }

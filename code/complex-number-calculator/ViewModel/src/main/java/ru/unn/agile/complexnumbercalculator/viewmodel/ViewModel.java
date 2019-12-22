@@ -89,6 +89,8 @@ public class ViewModel {
     }
 
     public void setFirstRe(final String firstRe) {
+        if (firstRe.equals(this.firstRe)) return;
+
         logger.addToLog(getArgumentWasChangedLogMessage("FirstRe", this.firstRe, firstRe));
         this.firstRe = firstRe;
     }
@@ -98,6 +100,8 @@ public class ViewModel {
     }
 
     public void setFirstIm(final String firstIm) {
+        if (firstIm.equals(this.firstIm)) return;
+
         logger.addToLog(getArgumentWasChangedLogMessage("FirstIm", this.firstIm, firstIm));
         this.firstIm = firstIm;
     }
@@ -107,6 +111,8 @@ public class ViewModel {
     }
 
     public void setSecondRe(final String secondRe) {
+        if (secondRe.equals(this.secondRe)) return;
+
         logger.addToLog(getArgumentWasChangedLogMessage("SecondRe", this.secondRe, secondRe));
         this.secondRe = secondRe;
     }
@@ -116,6 +122,8 @@ public class ViewModel {
     }
 
     public void setSecondIm(final String secondIm) {
+        if (secondIm.equals(this.secondIm)) return;
+
         logger.addToLog(getArgumentWasChangedLogMessage("SecondIm", this.secondIm, secondIm));
         this.secondIm = secondIm;
     }
@@ -125,6 +133,8 @@ public class ViewModel {
     }
 
     public void setDegree(final String degree) {
+        if (degree.equals(this.degree)) return;
+
         logger.addToLog(getArgumentWasChangedLogMessage("Degree", this.degree, degree));
         this.degree = degree;
     }
@@ -134,6 +144,8 @@ public class ViewModel {
     }
 
     public void setOperations(final Operations operation) {
+        if (operation.equals(this.operations)) return;
+
         logger.addToLog(getChangeOperationLogMessage(operation));
         this.result = "";
         this.operations = operation;
