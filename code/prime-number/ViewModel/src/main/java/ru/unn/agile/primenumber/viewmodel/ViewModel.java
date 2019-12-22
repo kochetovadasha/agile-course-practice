@@ -46,23 +46,29 @@ public class ViewModel {
         return status;
     }
 
-    public void findPrimaryNums() {
-        if (findBtnDisabled.get()) {
-            return;
-        }
-
-        try {
-            PrimeNumberFinder setOfPrimeNums = new PrimeNumberFinder(
-                    Integer.parseInt(fields.get(0).get()), Integer.parseInt(fields.get(1).get()));
-            List<Integer> primeNumsList = setOfPrimeNums.findNumbers();
-            outputField.set(primeNumsList.toString());
-            status.set(Status.SUCCESS.toString());
-        } catch (IllegalArgumentException e) {
-            outputField.set(e.getMessage());
-        }
+    public final List<String> getLog() {
+        return logger.readLog();
     }
 
+    private Logger logger;
+
     public ViewModel() {
+        init();
+    }
+
+    public final void setLogger(final Logger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
+    public ViewModel(final Logger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    private void init() {
         fields.get(0).set("");
         fields.get(1).set("");
         outputField.set("");
@@ -87,6 +93,31 @@ public class ViewModel {
         }
     }
 
+    public void findPrimaryNums() {
+        logger.writeLog(LogTemplates.FIND_WAS_PRESSED);
+
+        if (findBtnDisabled.get()) {
+            return;
+        }
+
+        try {
+            Integer start = Integer.parseInt(fields.get(0).get());
+            Integer end = Integer.parseInt(fields.get(1).get());
+            PrimeNumberFinder setOfPrimeNums = new PrimeNumberFinder(
+                    start, end);
+            List<Integer> primeNumsList = setOfPrimeNums.findNumbers();
+            String result = primeNumsList.toString();
+            outputField.set(result);
+            String successStatus = Status.SUCCESS.toString();
+            status.set(successStatus);
+            logger.writeLog(LogTemplates.STATUS_WAS_UPDATED + successStatus);
+            logger.writeLog(LogTemplates.RESULT_WAS_UPDATED + result);
+        } catch (IllegalArgumentException e) {
+            String message = e.getMessage();
+            outputField.set(message);
+        }
+    }
+
     private Status getInputStatus() {
         Status status = Status.READY;
         if (fields.get(0).get().isEmpty() || fields.get(1).get().isEmpty()) {
@@ -101,6 +132,7 @@ public class ViewModel {
             }
         } catch (NumberFormatException e) {
             status = Status.BAD_FORMAT;
+            logger.writeLog(LogTemplates.INCORRECT_INPUT);
         }
         return status;
     }
@@ -109,8 +141,10 @@ public class ViewModel {
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
-            Status currentStatus = getInputStatus();
-            status.set(currentStatus.toString());
+            logger.writeLog(LogTemplates.INPUT_WAS_UPDATED + newValue);
+            String currentStatus = getInputStatus().toString();
+            status.set(currentStatus);
+            logger.writeLog(LogTemplates.STATUS_WAS_UPDATED + currentStatus);
             if (!currentStatus.equals(Status.SUCCESS)) {
                 outputField.set(status.get());
             }

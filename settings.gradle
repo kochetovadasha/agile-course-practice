@@ -65,6 +65,8 @@ include "code/prime-number/View"
 project(":code/prime-number/View").name = "prime-number-View"
 include "code/prime-number/ViewModel"
 project(":code/prime-number/ViewModel").name = "prime-number-ViewModel"
+include "code/prime-number/Infrastructure"
+project(":code/prime-number/Infrastructure").name = "prime-number-Infrastructure"
 // fractioncalculator
 include "code/fractioncalculator/model"
 project(":code/fractioncalculator/model").name = "fractioncalculator-model"

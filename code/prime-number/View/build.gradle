@@ -14,4 +14,5 @@ javafx {
 
 dependencies {
     compile project(':prime-number-ViewModel')
+    compile project(':prime-number-Infrastructure')
 }
