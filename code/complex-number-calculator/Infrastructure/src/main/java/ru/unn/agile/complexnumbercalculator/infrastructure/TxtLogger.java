@@ -15,16 +15,18 @@ import java.util.Locale;
 public class TxtLogger implements ILogger {
     private final String filename;
     private final BufferedWriter writer;
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private final ICalendar calendar;
+    //private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private static String getCurrentTime() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        return sdf.format(cal.getTime());
-    }
+    //private static String getCurrentTime() {
+    // Calendar cal = Calendar.getInstance();
+    //    SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+    //    return sdf.format(cal.getTime());
+    //}
 
-    public TxtLogger(final String filename) {
+    public TxtLogger(final String filename, final ICalendar calendar) {
         this.filename = filename;
+        this.calendar = calendar;
 
         BufferedWriter logWriter = null;
         try {
@@ -38,7 +40,7 @@ public class TxtLogger implements ILogger {
     @Override
     public void addToLog(String inputString) {
         try {
-            writer.write(getCurrentTime() + " > " + inputString);
+            writer.write(calendar.getTime() + " > " + inputString);
             writer.newLine();
             writer.flush();
         } catch (Exception e) {
