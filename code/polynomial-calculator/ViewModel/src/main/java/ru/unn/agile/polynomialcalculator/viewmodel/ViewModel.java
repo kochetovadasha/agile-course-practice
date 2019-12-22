@@ -65,7 +65,7 @@ public class ViewModel {
         try {
             Polynomial polySum = new Polynomial(0, 0);
             for (Polynomial poly : polynomialsList)  {
-                polySum.plus(poly);
+                polySum = polySum.plus(poly);
             }
             result.set(polySum.toString());
         } catch (IllegalArgumentException e) {
