@@ -36,7 +36,7 @@ public final class CalculatorComplexNumbers {
     private JPanel calculatePanel;
     private JLabel resultTextLabel;
     private JLabel resultLabel;
-    private JList logList;
+    private JList<String> logList;
 
     private ViewModel viewModel;
 
@@ -125,8 +125,8 @@ public final class CalculatorComplexNumbers {
         errorLabel.setText(viewModel.getError());
 
         List<String> log = viewModel.getLog();
-        //String[] items = log.toArray(new String[log.size()]);
-        Vector items = new Vector(log);
+        String[] items = log.toArray(new String[log.size()]);
+        //Vector items = new Vector(log);
         logList.setListData(items);
     }
 
