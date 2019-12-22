@@ -581,4 +581,18 @@ public class ViewModelTests {
         String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2. Operation: Найти сопряженное.";
         assertThat(log.get(log.size() - 1), containsString(correct));
     }
+
+    @Test
+    public void canLogThatCalculateButtonWasPressedWithParametricOperations() {
+        viewModel.setOperations(Operations.POW);
+        viewModel.setFirstRe("1");
+        viewModel.setFirstIm("2");
+        viewModel.setDegree("2");
+        viewModel.calculate();
+
+        List<String> log = viewModel.getLog();
+
+        String correct = "Calculate. Arguments: Re1 = 1; Im1 = 2; Degree = 2. Operation: Возвести в степень.";
+        assertThat(log.get(log.size() - 1), containsString(correct));
+    }
 }

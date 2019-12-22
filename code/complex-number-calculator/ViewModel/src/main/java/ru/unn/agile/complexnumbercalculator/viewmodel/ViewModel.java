@@ -209,6 +209,7 @@ public class ViewModel {
                         result += resultList[i].toString() + "; ";
                     }
                 }
+                logger.addToLog(getCalculateLogMessageWithParametricOperation());
             } else if (getOperations().equals(Operations.CONJUGATION)) {
                 ComplexNumber z = ComplexNumber.createAlgebraicForm(
                         Double.parseDouble(getFirstRe()),
@@ -349,6 +350,15 @@ public class ViewModel {
         return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
                 + ": Re1 = " + firstRe
                 + "; Im1 = " + firstIm
+                + "."
+                + " Operation: " + operations.toString() + ".";
+    }
+
+    private String getCalculateLogMessageWithParametricOperation() {
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": Re1 = " + firstRe
+                + "; Im1 = " + firstIm
+                + "; Degree = " + degree
                 + "."
                 + " Operation: " + operations.toString() + ".";
     }
