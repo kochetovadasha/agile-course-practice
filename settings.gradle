@@ -214,6 +214,8 @@ include "code/range/View"
 project(":code/range/View").name = "range-View"
 include "code/range/ViewModel"
 project(":code/range/ViewModel").name = "range-ViewModel"
+include "code/range/Infrastructure"
+project(":code/range/Infrastructure").name = "range-Infrastructure"
 // Разин Вячеслав
 // binary-search
 include "code/binary-search/Model"

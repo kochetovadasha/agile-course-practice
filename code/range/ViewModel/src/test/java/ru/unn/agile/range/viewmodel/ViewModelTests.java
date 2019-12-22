@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +17,7 @@ public class ViewModelTests {
 
     @Before
     public void setUp() {
-        setViewModel(new ViewModel());
+        viewModel = new ViewModel(new SortingFakeLogger());
     }
 
     @After
@@ -60,6 +61,15 @@ public class ViewModelTests {
     }
 
     @Test
+    public void logContainsActionIncorrectInput() {
+        String input = "word";
+        viewModel.getTxtRange().setValue(input);
+        String message = viewModel.getLog().get(1);
+
+        assertTrue(message.matches(".*" + Actions.INCORRECT_INPUT + input + ".*"));
+    }
+
+    @Test
     public void equalsButtonIsDisabledWithIncorrectRange() {
         viewModel.getTxtRange().setValue("word");
         assertTrue(viewModel.isEqualsButtonDisabled().get());
@@ -90,6 +100,14 @@ public class ViewModelTests {
     }
 
     @Test
+    public void logContainsActionNewRange() {
+        viewModel.getTxtRange().setValue("[1,2]");
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + Actions.NEW_RANGE + "\\[1,2\\]" + ".*"));
+    }
+
+    @Test
     public void getEndPointsButtonIsEnabledWithCorrectRange() {
         viewModel.getTxtRange().setValue("(-1,3)");
         assertFalse(viewModel.isGetEndPointsButtonDisabled().get());
@@ -100,6 +118,15 @@ public class ViewModelTests {
         viewModel.getTxtRange().setValue("(-1,3)");
         viewModel.getTxtInput().setValue("word");
         assertTrue(viewModel.isEqualsButtonDisabled().get());
+    }
+
+    @Test
+    public void logContainsActionNewInput() {
+        String input = "word";
+        viewModel.getTxtInput().setValue(input);
+        String message = viewModel.getLog().get(0);
+
+        assertTrue(message.matches(".*" + Actions.NEW_INPUT + input + ".*"));
     }
 
     @Test
@@ -147,12 +174,30 @@ public class ViewModelTests {
     }
 
     @Test
+    public void logContainsActionGetAllPoints() {
+        viewModel.getTxtRange().setValue("[1,4]");
+        viewModel.getAllPoints();
+        String message = viewModel.getLog().get(1);
+
+        assertTrue(message.matches(".*" + Actions.ALL_POINTS_CHECK + "\\[1,4\\]" + ".*"));
+    }
+
+    @Test
     public void getEndPointsButtonReturnsCorrectResult() {
         viewModel.getTxtRange().setValue("[1,4]");
 
         viewModel.getEndPoints();
 
         assertEquals(Arrays.toString(new int[]{1, 4}), viewModel.getTxtResult().get());
+    }
+
+    @Test
+    public void logContainsActionGetEndPoints() {
+        viewModel.getTxtRange().setValue("[1,4]");
+        viewModel.getEndPoints();
+        String message = viewModel.getLog().get(1);
+
+        assertTrue(message.matches(".*" + Actions.END_POINTS_CHECK + "\\[1,4\\]" + ".*"));
     }
 
     @Test
@@ -163,6 +208,18 @@ public class ViewModelTests {
         viewModel.overlapsRange();
 
         assertEquals(yes, viewModel.getTxtResult().get());
+    }
+
+    @Test
+    public void logContainsActionOverlaps() {
+        viewModel.getTxtRange().setValue("[11,15]");
+        viewModel.getTxtInput().setValue("(9,19)");
+
+        viewModel.overlapsRange();
+        String message = viewModel.getLog().get(2);
+
+        assertTrue(message
+                .matches(".*" + Actions.OVERLAPS_CHECK + "\\[11,15\\] and \\(9,19\\)" + ".*"));
     }
 
     @Test
@@ -186,6 +243,18 @@ public class ViewModelTests {
     }
 
     @Test
+    public void logContainsActionEquals() {
+        viewModel.getTxtRange().setValue("[11,15]");
+        viewModel.getTxtInput().setValue("(9,19)");
+
+        viewModel.equalsRange();
+        String message = viewModel.getLog().get(2);
+
+        assertTrue(message
+                .matches(".*" + Actions.EQUALS_CHECK + "\\[11,15\\] and \\(9,19\\)" + ".*"));
+    }
+
+    @Test
     public void cantEqualsWithAnotherRange() {
         viewModel.getTxtRange().setValue("[11,20]");
         viewModel.getTxtInput().setValue("(11,20)");
@@ -203,6 +272,19 @@ public class ViewModelTests {
         viewModel.containsInput();
 
         assertEquals(yes, viewModel.getTxtResult().get());
+    }
+
+    @Test
+    public void logContainsActionContains() {
+        String input = "10";
+        viewModel.getTxtRange().setValue("[10,11)");
+        viewModel.getTxtInput().setValue(input);
+
+        viewModel.containsInput();
+        String message = viewModel.getLog().get(2);
+
+        assertTrue(message
+                .matches(".*" + Actions.CONTAINS_CHECK + "\\[10,11\\) and " + input + ".*"));
     }
 
     @Test
@@ -254,5 +336,14 @@ public class ViewModelTests {
         assertEquals(no, viewModel.getTxtResult().get());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        new ViewModel(null);
+    }
 
+    @Test
+    public void logIsEmptyIfNothingHappened() {
+        List<String> log = viewModel.getLog();
+        assertTrue(log.isEmpty());
+    }
 }

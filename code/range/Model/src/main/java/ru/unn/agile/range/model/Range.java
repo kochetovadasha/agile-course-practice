@@ -8,6 +8,7 @@ import static ru.unn.agile.range.model.Utils.isRange;
 public class Range {
     private int startingElement;
     private int finiteElement;
+    private String stringPresenter;
 
     public Range(final String rangeString) {
         if (!isRange(rangeString)) {
@@ -27,6 +28,7 @@ public class Range {
         if (startingElement > finiteElement) {
             throw new IllegalArgumentException("No numbers in the given interval!");
         }
+        this.stringPresenter = rangeString;
     }
 
     public boolean containsSet(final int[] set) {
@@ -76,6 +78,11 @@ public class Range {
         }
         Range range = (Range) o;
         return startingElement == range.startingElement && finiteElement == range.finiteElement;
+    }
+
+    @Override
+    public String toString() {
+        return stringPresenter;
     }
 
     @Override
