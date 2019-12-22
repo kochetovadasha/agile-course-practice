@@ -24,11 +24,9 @@ public class CalcPolynomial {
     private Button calcSumPolynomialButton;
 
     @FXML
-    private TableView<Polynomial> tablePolinomials;
+    private ListView<String> listPolinomials;
     @FXML
-    private TableColumn<Polynomial, Double> xColumn;
-    @FXML
-    private TableColumn<Polynomial, Double> yColumn;
+    private TableColumn<String, String> poly;
 
     @FXML
     private TextArea resultTextArea;
@@ -36,31 +34,30 @@ public class CalcPolynomial {
     @FXML
     void initialize() {
         initAddPolynomForm();
-        initTableView();
-        initControlPanel();
+//        initTableView();
+//        initControlPanel();
     }
 
     private void initAddPolynomForm() {
         initTextField(coeffTextField, viewModel.coeffProperty());
         initTextField(degreeTextField, viewModel.degreeProperty());
 
-//        viewModel.yProperty().addListener(obs ->
-//                setErrorBorder(coeffTextField, !viewModel.isPolynomialInputCorrect()));
+        viewModel.coeffProperty().addListener(obs ->
+                setErrorBorder(coeffTextField, !viewModel.isPolynomialInputCorrect()));
 
-//        addPolynomialButton.disableProperty()
-//                .bindBidirectional(viewModel.addingNewPointDisabledProperty());
+        viewModel.degreeProperty().addListener(obs ->
+                setErrorBorder(degreeTextField, !viewModel.isPolynomialInputCorrect()));
         addPolynomialButton.setOnAction(e -> viewModel.addPolynomial());
+        listPolinomials.itemsProperty().bindBidirectional(viewModel.polynomialsProperty());
     }
     private void initTableView() {
-        xColumn.setCellValueFactory(
-                new PropertyValueFactory<Polynomial, Double>("X"));
-        yColumn.setCellValueFactory(
-                new PropertyValueFactory<Polynomial, Double>("Y"));
+//        poly.setCellValueFactory(
+//                new PropertyValueFactory<String, String>("poly"));
     }
 
     private void initControlPanel() {
-        addPolynomialButton.setOnAction(e -> viewModel.calcPolynomialAdd());
-        resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
+//        calcSumPolynomialButton.setOnAction(e -> viewModel.calcPolynomialAdd());
+//        resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
     }
 
     private void initTextField(final TextField textField,
