@@ -24,16 +24,17 @@ public class TxtLoggerTests {
     }
 
     @Test
-    public void canCreateLoggerWithFileName() {
+    public void canCreateLogger() {
+
         assertNotNull(txtLogger);
     }
 
     @Test
-    public void canCreateLogFileOnDisk() {
+    public void canCreateLogFile() {
         try {
             new BufferedReader(new FileReader(FILENAME));
         } catch (FileNotFoundException e) {
-            fail("File " + FILENAME + " wasn't found!");
+            fail("File " + FILENAME + " wasn't create!");
         }
     }
 
