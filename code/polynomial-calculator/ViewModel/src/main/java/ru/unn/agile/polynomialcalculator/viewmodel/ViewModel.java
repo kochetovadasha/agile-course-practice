@@ -59,7 +59,6 @@ public class ViewModel {
 
     public void calcPolynomialAdd() {
         if (polynomialsList.isEmpty()) {
-            result.set("efe");
             return;
         }
         try {
@@ -94,7 +93,6 @@ public class ViewModel {
     public ObservableList<Polynomial> getPolynomialsList() {
         return polynomialsList;
     }
-
     public StringProperty resultProperty() {
         return result;
     }

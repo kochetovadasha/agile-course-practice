@@ -3,7 +3,7 @@ package ru.unn.agile.polynomialcalculator.viewmodel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import ru.unn.agile.polynomialcalculator.model.Point;
+import ru.unn.agile.polynomialcalculator.model.Polynomial;
 
 import static org.junit.Assert.*;
 
@@ -23,98 +23,51 @@ public class ViewModelTests {
 
     @Test
     public void isAddingValidInput() {
-        setInputData("-261.55", "2.645");
-        viewModel.addPoint();
-        assertEquals(new Point(-261.55, 2.645).getX(), viewModel.getPointList().get(0).getX(), eps);
-        assertEquals(new Point(-261.55, 2.645).getY(), viewModel.getPointList().get(0).getY(), eps);
+        setInputData("2.5", "1");
+        viewModel.addPolynomial();
+        assertEquals(new Polynomial(2.5, 1).getCoef(1), viewModel.getPolynomialsList().get(0).getCoef(1), eps);
+        assertEquals(new Polynomial(2.5, 1).getDegree(), viewModel.getPolynomialsList().get(0).getDegree());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void isNotAddedInvalidInput() {
         setInputData("-26vrt1.55", "2..645");
-        viewModel.addPoint();
+        viewModel.addPolynomial();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void isNotAddedEmptyInput() {
         setInputData("", "");
-        viewModel.addPoint();
+        viewModel.addPolynomial();
     }
 
     @Test
-    public void cantCalcAreaWhenPointListIsEmpty() {
-        viewModel.calcArea();
+    public void cantCalcPolynomialWhenPointListIsEmpty() {
+        viewModel.calcPolynomialAdd();
         assertEquals(null, viewModel.getResult());
     }
 
     @Test
-    public void canCalcAreaOfThreePointPolygon() {
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
-        setInputData("0", "1");
-        viewModel.addPoint();
-        viewModel.calcArea();
-        assertEquals(0.5, Double.parseDouble(viewModel.getResult()), eps);
+    public void canCalcPolyOfTwoPolynomials() {
+        setInputData("1.1", "0");
+        viewModel.addPolynomial();
+        setInputData("2.4", "0");
+        viewModel.addPolynomial();
+        viewModel.calcPolynomialAdd();
+        assertEquals(3.5, Double.parseDouble(viewModel.getResult()), eps);
     }
 
     @Test
-    public void isAddPointButtonDisabledForEmptyInput() {
-        setInputData("", "");
-
-        assertTrue(viewModel.isAddingNewPointDisabled());
-    }
-
-    @Test
-    public void isAddPointButtonDisabledForInvalidXInput() {
-        setInputData("256..1", "23");
-
-        assertTrue(viewModel.isAddingNewPointDisabled());
-    }
-
-    @Test
-    public void isAddPointButtonDisabledForInvalidYInput() {
-        setInputData("23", "--235...5");
-
-        assertTrue(viewModel.isAddingNewPointDisabled());
-    }
-
-    @Test
-    public void isFormInputsEmptyAfterAddingNewPoint() {
-        setInputData("-36.516", "-62.52");
-        viewModel.addPoint();
-        assertTrue(viewModel.xProperty().get().isEmpty()
-                && viewModel.yProperty().get().isEmpty()
+    public void isFormInputsEmptyAfterAddingNewPolynomials() {
+        setInputData("-36.516", "3");
+        viewModel.addPolynomial();
+        assertTrue(viewModel.degreeProperty().get().isEmpty()
+                && viewModel.coeffProperty().get().isEmpty()
         );
     }
 
-    @Test
-    public void cantCalcAreaForLessThanThreePointsPolygon() {
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
-        viewModel.calcArea();
-        assertEquals("A polygon must have at least three vertices", viewModel.getResult());
-    }
-
-    @Test
-    public void cantCalcAreaForSelfIntersectingPolygon() {
-        setInputData("1", "1");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "1");
-        viewModel.addPoint();
-        viewModel.calcArea();
-        assertEquals("Sides of polygon must not intersect", viewModel.getResult());
-    }
-
-    private void setInputData(final String x, final String y) {
-        viewModel.xProperty().set(x);
-        viewModel.yProperty().set(y);
+    private void setInputData(final String coeff, final String degree) {
+        viewModel.coeffProperty().set(coeff);
+        viewModel.degreeProperty().set(degree);
     }
 }

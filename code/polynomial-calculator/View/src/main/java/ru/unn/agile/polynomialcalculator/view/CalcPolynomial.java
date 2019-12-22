@@ -22,20 +22,15 @@ public class CalcPolynomial {
     private Button addPolynomialButton;
     @FXML
     private Button calcSumPolynomialButton;
-
     @FXML
     private ListView<String> listPolinomials;
     @FXML
-    private TableColumn<String, String> poly;
-
-    @FXML
-    private TextArea resultTextArea;
+    private Label resultTextArea;
 
     @FXML
     void initialize() {
         initAddPolynomForm();
-//        initTableView();
-//        initControlPanel();
+        initControlPanel();
     }
 
     private void initAddPolynomForm() {
@@ -50,14 +45,10 @@ public class CalcPolynomial {
         addPolynomialButton.setOnAction(e -> viewModel.addPolynomial());
         listPolinomials.itemsProperty().bindBidirectional(viewModel.polynomialsProperty());
     }
-    private void initTableView() {
-//        poly.setCellValueFactory(
-//                new PropertyValueFactory<String, String>("poly"));
-    }
 
     private void initControlPanel() {
-//        calcSumPolynomialButton.setOnAction(e -> viewModel.calcPolynomialAdd());
-//        resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
+        calcSumPolynomialButton.setOnAction(e -> viewModel.calcPolynomialAdd());
+        resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
     }
 
     private void initTextField(final TextField textField,
