@@ -644,4 +644,15 @@ public class ViewModelTests {
         String correct = "Updated argument SecondIm from 2 to 3.";
         assertThat(getLastRecord(log), containsString(correct));
     }
+
+    @Test
+    public void canLogThatDegreeWasChanged() {
+        viewModel.setDegree("1");
+        viewModel.setDegree("2");
+
+        List<String> log = viewModel.getLog();
+
+        String correct = "Updated argument Degree from 1 to 2.";
+        assertThat(getLastRecord(log), containsString(correct));
+    }
 }

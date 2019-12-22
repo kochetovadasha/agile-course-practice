@@ -125,6 +125,7 @@ public class ViewModel {
     }
 
     public void setDegree(final String degree) {
+        logger.addToLog(getArgumentWasChangedLogMessage("Degree", this.degree, degree));
         this.degree = degree;
     }
 
