@@ -116,6 +116,7 @@ public class ViewModel {
     }
 
     public void setSecondIm(final String secondIm) {
+        logger.addToLog(getArgumentWasChangedLogMessage("SecondIm", this.secondIm, secondIm));
         this.secondIm = secondIm;
     }
 
