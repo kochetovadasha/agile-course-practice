@@ -27,6 +27,8 @@ public class ViewModel {
     private String patternDegreePow = "-?(\\d+)";
     private String patternDegreeRoot = "(\\d+)";
 
+    private ILogger logger;
+
     private static final int ENTER = 10;
 
     public enum Operations {
@@ -61,6 +63,16 @@ public class ViewModel {
         isDegreeVisible = false;
         isErrorMessageDisplayed = false;
         isSecondNumberVisible = true;
+    }
+
+    public ViewModel(final ILogger logger) throws IllegalArgumentException {
+        this();
+
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+
     }
 
     public String getResult() {

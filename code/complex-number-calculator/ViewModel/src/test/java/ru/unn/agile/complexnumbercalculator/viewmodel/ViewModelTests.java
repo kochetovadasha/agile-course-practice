@@ -13,7 +13,8 @@ public class ViewModelTests {
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        FakeLogger fakeLogger = new FakeLogger();
+        viewModel = new ViewModel(fakeLogger);
     }
 
     @After
@@ -515,5 +516,13 @@ public class ViewModelTests {
         viewModel.setOperations(Operations.ADD);
 
         assertEquals("", viewModel.getResult());
+    }
+
+    @Test
+    public void canCreateViewModelWithFakeLogger() {
+        FakeLogger logger = new FakeLogger();
+        ViewModel viewModel = new ViewModel(logger);
+
+        assertNotNull(viewModel);
     }
 }
