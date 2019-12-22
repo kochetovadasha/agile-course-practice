@@ -98,7 +98,7 @@ public class ViewModel {
     }
 
     public void setFirstIm(final String firstIm) {
-
+        logger.addToLog(getArgumentWasChangedLogMessage("FirstIm", this.firstIm, firstIm));
         this.firstIm = firstIm;
     }
 

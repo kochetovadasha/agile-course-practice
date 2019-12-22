@@ -15,6 +15,10 @@ public class ViewModelTests {
     private ViewModel viewModel;
     private static final int ENTER = 10;
 
+    private static String getLastRecord(List<String> log) {
+        return log.get(log.size() - 1);
+    }
+
     @Before
     public void setUp() {
         FakeLogger fakeLogger = new FakeLogger();
@@ -566,7 +570,7 @@ public class ViewModelTests {
         List<String> log = viewModel.getLog();
 
         String correct = "Calculate. Arguments: (1 + 2i), (3 + 4i). Operation: Сложить. Result: (4.0 + 6.0i).";
-        assertThat(log.get(log.size() - 1), containsString(correct));
+        assertThat(getLastRecord(log), containsString(correct));
     }
 
     @Test
@@ -579,7 +583,7 @@ public class ViewModelTests {
         List<String> log = viewModel.getLog();
 
         String correct = "Calculate. Argument: (1 + 2i). Operation: Найти сопряженное. Result: (1.0 - 2.0i).";
-        assertThat(log.get(log.size() - 1), containsString(correct));
+        assertThat(getLastRecord(log), containsString(correct));
     }
 
     @Test
@@ -594,7 +598,7 @@ public class ViewModelTests {
 
         String correct = "Calculate. Arguments: (1 + 2i), Degree = 2. " +
                 "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
-        assertThat(log.get(log.size() - 1), containsString(correct));
+        assertThat(getLastRecord(log), containsString(correct));
     }
 
     @Test
@@ -605,6 +609,17 @@ public class ViewModelTests {
         List<String> log = viewModel.getLog();
 
         String correct = "Updated argument FirstRe from 1 to 2.";
-        assertThat(log.get(log.size() - 1), containsString(correct));
+        assertThat(getLastRecord(log), containsString(correct));
+    }
+
+    @Test
+    public void canLogThatFirstImWasChanged() {
+        viewModel.setFirstIm("2");
+        viewModel.setFirstIm("3");
+
+        List<String> log = viewModel.getLog();
+
+        String correct = "Updated argument FirstIm from 2 to 3.";
+        assertThat(getLastRecord(log), containsString(correct));
     }
 }
