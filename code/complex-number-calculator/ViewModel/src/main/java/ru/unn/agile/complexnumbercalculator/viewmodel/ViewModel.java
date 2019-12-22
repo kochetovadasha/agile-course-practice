@@ -214,6 +214,7 @@ public class ViewModel {
                         Double.parseDouble(getFirstRe()),
                         Double.parseDouble(getFirstIm()));
                 result = ComplexNumberCalculator.conjugation(z).toString();
+                logger.addToLog(getCalculateLogMessageWithUnaryOperation());
             }
         }
 
@@ -340,6 +341,14 @@ public class ViewModel {
                 + "; Im1 = " + firstIm
                 + "; Re2 = " + secondRe
                 + "; Im2 = " + secondIm
+                + "."
+                + " Operation: " + operations.toString() + ".";
+    }
+
+    private String getCalculateLogMessageWithUnaryOperation() {
+        return LogMessages.CALCULATE_WAS_PRESSED + "Arguments"
+                + ": Re1 = " + firstRe
+                + "; Im1 = " + firstIm
                 + "."
                 + " Operation: " + operations.toString() + ".";
     }
