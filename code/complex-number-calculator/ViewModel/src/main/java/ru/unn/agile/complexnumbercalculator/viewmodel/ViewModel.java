@@ -51,6 +51,12 @@ public class ViewModel {
         }
     }
 
+    public final class LogMessages {
+        public static final String OPERATION_WAS_CHANGED = "Operation was changed to ";
+
+        private LogMessages() { }
+    }
+
     public ViewModel(final ILogger logger) throws IllegalArgumentException {
         result = "";
         firstRe = "";
@@ -124,6 +130,7 @@ public class ViewModel {
     public void setOperations(final Operations operation) {
         this.result = "";
         this.operations = operation;
+        logger.addToLog(LogMessages.OPERATION_WAS_CHANGED + operation.toString());
     }
 
     public String getError() {

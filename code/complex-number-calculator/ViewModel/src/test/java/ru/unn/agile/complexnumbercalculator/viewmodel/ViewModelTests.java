@@ -543,4 +543,12 @@ public class ViewModelTests {
 
         assertEquals(0, log.size());
     }
+
+    @Test
+    public void canLogThatOperationWasChanged() {
+        viewModel.setOperations(Operations.MULTIPLY);
+        List<String> log = viewModel.getLog();
+
+        assertEquals("Operation was changed to Умножить", log.get(0));
+    }
 }
