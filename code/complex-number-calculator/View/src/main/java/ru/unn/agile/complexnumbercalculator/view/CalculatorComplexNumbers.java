@@ -1,5 +1,7 @@
 package ru.unn.agile.complexnumbercalculator.view;
 
+import ru.unn.agile.complexnumbercalculator.infrastructure.RealCalendar;
+import ru.unn.agile.complexnumbercalculator.infrastructure.TxtLogger;
 import ru.unn.agile.complexnumbercalculator.viewmodel.ViewModel;
 
 import javax.swing.*;
@@ -37,7 +39,12 @@ public final class CalculatorComplexNumbers {
 
     public static void main(final String[] args) {
         JFrame frame = new JFrame("CalculatorComplexNumbers");
-        frame.setContentPane(new CalculatorComplexNumbers(new ViewModel()).mainPanel);
+
+        RealCalendar calendar = new RealCalendar();
+        TxtLogger logger =
+                new TxtLogger("./CalculatorComplexNumbers.log", calendar);
+
+        frame.setContentPane(new CalculatorComplexNumbers(new ViewModel(logger)).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

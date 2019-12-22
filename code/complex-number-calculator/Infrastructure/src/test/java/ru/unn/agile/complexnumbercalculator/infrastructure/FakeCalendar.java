@@ -1,7 +1,5 @@
 package ru.unn.agile.complexnumbercalculator.infrastructure;
 
-import java.util.Date;
-
 public class FakeCalendar implements ICalendar {
     @Override
     public String getTime() {
