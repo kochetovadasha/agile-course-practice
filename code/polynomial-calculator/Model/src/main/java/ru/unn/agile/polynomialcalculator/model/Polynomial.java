@@ -58,7 +58,7 @@ public class Polynomial {
         }
         minus.reduce();
         return minus;
-}
+    }
 
     public Polynomial multiply(final Polynomial that) {
         Polynomial product = new Polynomial(0, this.degree + that.degree);

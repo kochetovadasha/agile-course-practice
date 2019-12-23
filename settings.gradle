@@ -276,5 +276,4 @@ include "code/stack/ViewModel"
 project(":code/stack/ViewModel").name = "stack-ViewModel"
 include "code/stack/Infrastructure"
 project(":code/stack/Infrastructure").name = "stack-Infrastructure"
-include 'polynomialcalculator.model'
 
