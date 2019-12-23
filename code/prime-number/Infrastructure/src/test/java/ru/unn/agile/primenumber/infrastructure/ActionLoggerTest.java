@@ -13,7 +13,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertNotNull;
 
-public class FileLoggerTest {
+public class ActionLoggerTest {
     private static final String FILENAME = "./FileLogger_Tests-lab3.log";
 
     @Test
@@ -65,6 +65,6 @@ public class FileLoggerTest {
         logger.writeLog(logMessage);
 
         String message = logger.readLog().get(0);
-        assertThat(message, matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} ~~~ .*"));
+        assertThat(message, matches("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3} ~~~ .*"));
     }
 }

@@ -14,7 +14,8 @@ import java.util.Locale;
 
 public class ActionLogger implements Logger {
 
-    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
+    private static final String SEPARATOR = " ~~~ ";
     private final String processedFile;
     private final BufferedWriter writer;
 
@@ -60,7 +61,7 @@ public class ActionLogger implements Logger {
     @Override
     public void writeLog(final String logMessage) {
         try {
-            this.writer.write(now() + " ~~~ " + logMessage);
+            this.writer.write(now() + SEPARATOR + logMessage);
             this.writer.newLine();
             this.writer.flush();
         } catch (Exception exception) {
