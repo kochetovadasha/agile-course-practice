@@ -24,8 +24,10 @@ public class ViewModelTests {
     public void isAddingValidInput() {
         setInputData("2.5", "1");
         viewModel.addPolynomial();
-        assertEquals(new Polynomial(2.5, 1).getCoef(1), viewModel.getPolynomialsList().get(0).getCoef(1), 1e-10);
-        assertEquals(new Polynomial(2.5, 1).getDegree(), viewModel.getPolynomialsList().get(0).getDegree());
+        assertEquals(new Polynomial(2.5, 1).getCoef(1),
+                viewModel.getPolynomialsList().get(0).getCoef(1), 1e-10);
+        assertEquals(new Polynomial(2.5, 1).getDegree(),
+                viewModel.getPolynomialsList().get(0).getDegree());
     }
 
     @Test(expected = IllegalArgumentException.class)
