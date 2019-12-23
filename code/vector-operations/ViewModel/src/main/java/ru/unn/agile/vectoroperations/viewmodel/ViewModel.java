@@ -191,13 +191,14 @@ public class ViewModel {
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
-        String logMessage = String.format("Calculate, Args: x0 = %.3f, y0 = %.3f, z0 = %.3f;",
-                                          x1d, y1d, z1d);
-        if (needSecondVector) {
-            logMessage += String.format(" x1 = %.3f, y1 = %.3f, z1 = %.3f;",
-                                        vec2.getX(), vec2.getY(), vec2.getZ());
-        }
-        logMessage += String.format(" Operation: %s", op.get().toString());
+//        String logMessage = String.format("Calculate, Args: x0 = %.3f, y0 = %.3f, z0 = %.3f;",
+//                                          x1d, y1d, z1d);
+//        if (needSecondVector) {
+//            logMessage += String.format(" x1 = %.3f, y1 = %.3f, z1 = %.3f;",
+//                                        vec2.getX(), vec2.getY(), vec2.getZ());
+//        }
+//        logMessage += String.format(" Operation: %s", op.get().toString());
+        String logMessage = "Stub";
         logger.log(logMessage);
     }
 
