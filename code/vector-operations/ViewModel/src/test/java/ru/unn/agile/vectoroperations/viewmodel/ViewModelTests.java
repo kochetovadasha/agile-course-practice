@@ -16,7 +16,7 @@ public class ViewModelTests {
 
     @Before
     public void beforeStart() {
-        viewModel = new ViewModel();
+        viewModel = new ViewModel(new FakeLogger());
     }
 
     @After
@@ -189,6 +189,17 @@ public class ViewModelTests {
         viewModel.x1Property().setValue("/");
         viewModel.opProperty().set(Operation.CALCULATE_NORM);
         assertEquals(Status.READY.toString(), viewModel.fieldStatusProperty().get());
+    }
+
+    @Test
+    public void canCreateViewModelWithFakeLogger() {
+        ViewModel vm = new ViewModel(new FakeLogger());
+        assertNotNull(vm);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canThrowExceptionWhenLoggerIsNull() {
+        ViewModel vm = new ViewModel(null);
     }
 
     private void setPositiveInputVector() {

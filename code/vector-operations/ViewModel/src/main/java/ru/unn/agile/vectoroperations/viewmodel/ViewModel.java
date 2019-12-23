@@ -31,7 +31,13 @@ public class ViewModel {
 
     private final List<ChangeListener> valueChangedListeners = new ArrayList<>();
 
-    public ViewModel() {
+    private ILogger logger;
+
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger param can't be null");
+        }
+        this.logger = logger;
         x0.set("");
         y0.set("");
         z0.set("");
