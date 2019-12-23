@@ -210,7 +210,7 @@ public class ViewModelTests {
         String expectedModifiedLogMessage = expectedLogMessage.replace("(", "\\(")
                                                               .replace(")", "\\)");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedModifiedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedModifiedLogMessage + "(.*)"));
     }
 
     @Test
@@ -219,7 +219,7 @@ public class ViewModelTests {
         int logMessageNumber = 0;
         String expectedLogMessage = "Operation is changed to Calculate vector mult";
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedLogMessage + "(.*)"));
     }
 
     @Test
@@ -231,7 +231,7 @@ public class ViewModelTests {
         String expectedLogMessage = "Calculate, Args: x0 = 1,000, y0 = 2,000, z0 = 3,000;"
                                     + " Operation: Calculate norm";
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedLogMessage + "(.*)"));
     }
 
     @Test
@@ -244,7 +244,7 @@ public class ViewModelTests {
                                     + " x1 = 4,000, y1 = -5,000, z1 = 6,000;"
                                     + " Operation: Calculate scalar mult";
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedLogMessage + "(.*)"));
     }
 
     @Test
