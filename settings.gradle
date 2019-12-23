@@ -163,6 +163,8 @@ include "code/vector-operations/View"
 project(":code/vector-operations/View").name = "vector-operations-View"
 include "code/vector-operations/ViewModel"
 project(":code/vector-operations/ViewModel").name = "vector-operations-ViewModel"
+include "code/vector-operations/Infrastructure"
+project(":code/vector-operations/Infrastructure").name = "vector-operations-Infrastructure"
 // Кучков Иван
 // quadratic equation
 include "code/quadratic-equation/Model"
