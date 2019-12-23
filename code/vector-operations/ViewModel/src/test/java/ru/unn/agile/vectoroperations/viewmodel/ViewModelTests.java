@@ -202,6 +202,31 @@ public class ViewModelTests {
         ViewModel vm = new ViewModel(null);
     }
 
+    @Test
+    public void canWriteCorrectLogWhenOneVectorCalculateOperationExecuted() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        viewModel.calculate();
+        String expectedLogMessage = "Calculate. " +
+                "Args: x0 = 1,000000, y0 = 2,000000, z0 = 3,000000;" +
+                " Operation: Calculate norm";
+        String actualLogMessage = viewModel.getLogMessage().get(0);
+        assertEquals(expectedLogMessage, actualLogMessage);
+    }
+
+    @Test
+    public void canWriteCorrectLogWhenTwoVectorCalculateOperationExecuted() {
+        setMixedInputVectors();
+        viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
+        viewModel.calculate();
+        String expectedLogMessage = "Calculate. " +
+                "Args: x0 = -1,000000, y0 = 2,000000, z0 = -3,000000;" +
+                " x1 = 4,000000, y1 = -5,000000, z1 = 6,000000;" +
+                " Operation: Calculate scalar mult";
+        String actualLogMessage = viewModel.getLogMessage().get(0);
+        assertEquals(expectedLogMessage, actualLogMessage);
+    }
+
     private void setPositiveInputVector() {
         viewModel.x0Property().set("1");
         viewModel.y0Property().set("2");

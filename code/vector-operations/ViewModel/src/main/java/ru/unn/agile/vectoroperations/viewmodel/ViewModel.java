@@ -92,6 +92,10 @@ public class ViewModel {
         additionalVectorFieldDisablingFlag.bind(needShowAdditionalVectorField);
     }
 
+    public List<String> getLogMessage() {
+        return logger.getLog();
+    }
+
     private Status getInputStatus() {
         Status inputStatus = Status.READY;
         List<StringProperty> list = new ArrayList<>(List.of(x0, y0, z0));
@@ -175,8 +179,9 @@ public class ViewModel {
         double z1d = Double.parseDouble(z0.get());
         Vector vec1 = new Vector(x1d, y1d, z1d);
         Vector vec2 = null;
-        if (!Operation.CALCULATE_NORM.equals(op.get())
-                && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get())) {
+        boolean needSecondVector = !Operation.CALCULATE_NORM.equals(op.get())
+                                   && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get());
+        if (needSecondVector) {
             double x2d = Double.parseDouble(x1.get());
             double y2d = Double.parseDouble(y1.get());
             double z2d = Double.parseDouble(z1.get());
@@ -186,6 +191,14 @@ public class ViewModel {
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
+        String logMessage = String.format("Calculate. Args: x0 = %f, y0 = %f, z0 = %f;",
+                                          x1d, y1d, z1d);
+        if (needSecondVector) {
+            logMessage += String.format(" x1 = %f, y1 = %f, z1 = %f;",
+                                        vec2.getX(), vec2.getY(), vec2.getZ());
+        }
+        logMessage += String.format(" Operation: %s", op.get().toString());
+        logger.log(logMessage);
     }
 
     private class ValueChangeListener implements ChangeListener<String> {
