@@ -191,10 +191,10 @@ public class ViewModel {
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
-        String logMessage = String.format("Calculate. Args: x0 = %f, y0 = %f, z0 = %f;",
+        String logMessage = String.format("Calculate. Args: x0 = %.3f, y0 = %.3f, z0 = %.3f;",
                                           x1d, y1d, z1d);
         if (needSecondVector) {
-            logMessage += String.format(" x1 = %f, y1 = %f, z1 = %f;",
+            logMessage += String.format(" x1 = %.3f, y1 = %.3f, z1 = %.3f;",
                                         vec2.getX(), vec2.getY(), vec2.getZ());
         }
         logMessage += String.format(" Operation: %s", op.get().toString());
@@ -206,6 +206,10 @@ public class ViewModel {
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             fieldStatus.set(getInputStatus().toString());
+            String logMessage = String.format("Input is updated: (%s, %s, %s); (%s, %s, %s);",
+                                              x0.get(), y0.get(), z0.get(),
+                                              x1.get(), y1.get(), z1.get());
+            logger.log(logMessage);
         }
     }
 
@@ -213,7 +217,19 @@ public class ViewModel {
         @Override
         public void changed(final ObservableValue<? extends Operation> observable,
                             final Operation oldValue, final Operation newValue) {
+            boolean needClearSecondVector =
+                    (Operation.CALCULATE_SCALAR_MULT.equals(oldValue)
+                    || Operation.CALCULATE_VECTOR_MULT.equals(oldValue))
+                    && (Operation.CALCULATE_NORM.equals(newValue)
+                    || Operation.CALCULATE_NORMALIZED_VECTOR.equals(newValue));
+            if (needClearSecondVector) {
+                x1.setValue("");
+                y1.setValue("");
+                z1.setValue("");
+            }
             fieldStatus.set(getInputStatus().toString());
+            String logMessage = String.format("Operation is changed to %s", newValue.toString());
+            logger.log(logMessage);
         }
     }
 }

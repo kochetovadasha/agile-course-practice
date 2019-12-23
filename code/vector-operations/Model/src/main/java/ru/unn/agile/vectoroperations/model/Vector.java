@@ -66,7 +66,9 @@ public class Vector {
 
     @Override
     public String toString() {
-        String stringRepresentation = "(" + this.x + ", " + this.y + ", " + this.z + ")";
+        String stringRepresentation = "(" + String.format("%.3f", this.x)
+                + ", " + String.format("%.3f", this.y)
+                + ", " + String.format("%.3f", this.z) + ")";
         return stringRepresentation;
     }
 

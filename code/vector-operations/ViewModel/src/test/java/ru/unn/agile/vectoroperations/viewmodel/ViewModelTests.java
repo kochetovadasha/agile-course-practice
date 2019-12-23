@@ -203,28 +203,57 @@ public class ViewModelTests {
     }
 
     @Test
+    public void canWriteCorrectLogWhenVectorFilled() {
+        setPositiveInputVector();
+        int logMessageNumber = 0;
+        String expectedLogMessage = "Input is updated: (1, , ); (, , );";
+        String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
+        assertEquals(expectedLogMessage, actualLogMessage);
+    }
+
+    @Test
+    public void canWriteCorrectLogWhenOperationChanged() {
+        viewModel.opProperty().set(Operation.CALCULATE_VECTOR_MULT);
+        int logMessageNumber = 0;
+        String expectedLogMessage = "Operation is changed to Calculate vector mult";
+        String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
+        assertEquals(expectedLogMessage, actualLogMessage);
+    }
+
+    @Test
     public void canWriteCorrectLogWhenOneVectorCalculateOperationExecuted() {
         setPositiveInputVector();
+        int logMessageNumber = 3;
         viewModel.opProperty().set(Operation.CALCULATE_NORM);
         viewModel.calculate();
-        String expectedLogMessage = "Calculate. " +
-                "Args: x0 = 1,000000, y0 = 2,000000, z0 = 3,000000;" +
-                " Operation: Calculate norm";
-        String actualLogMessage = viewModel.getLogMessage().get(0);
+        String expectedLogMessage = "Calculate. Args: x0 = 1,000, y0 = 2,000, z0 = 3,000;"
+                                    + " Operation: Calculate norm";
+        String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
         assertEquals(expectedLogMessage, actualLogMessage);
     }
 
     @Test
     public void canWriteCorrectLogWhenTwoVectorCalculateOperationExecuted() {
         setMixedInputVectors();
+        int logMessageNumber = 7;
         viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
         viewModel.calculate();
-        String expectedLogMessage = "Calculate. " +
-                "Args: x0 = -1,000000, y0 = 2,000000, z0 = -3,000000;" +
-                " x1 = 4,000000, y1 = -5,000000, z1 = 6,000000;" +
-                " Operation: Calculate scalar mult";
-        String actualLogMessage = viewModel.getLogMessage().get(0);
+        String expectedLogMessage = "Calculate. Args: x0 = -1,000, y0 = 2,000, z0 = -3,000;"
+                                    + " x1 = 4,000, y1 = -5,000, z1 = 6,000;"
+                                    + " Operation: Calculate scalar mult";
+        String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
         assertEquals(expectedLogMessage, actualLogMessage);
+    }
+
+    @Test
+    public void canCleanSecondVectorIfOpChangedFromScalarToNorm() {
+        viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
+        setMixedInputVectors();
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        boolean actualResult = viewModel.x1Property().get().isEmpty()
+                               && viewModel.y1Property().get().isEmpty()
+                               && viewModel.z1Property().get().isEmpty();
+        assertTrue(actualResult);
     }
 
     private void setPositiveInputVector() {
