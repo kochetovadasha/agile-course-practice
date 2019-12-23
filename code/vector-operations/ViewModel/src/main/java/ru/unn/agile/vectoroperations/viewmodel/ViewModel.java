@@ -29,7 +29,7 @@ public class ViewModel {
     private final StringProperty fieldResult = new SimpleStringProperty();
     private final StringProperty fieldStatus = new SimpleStringProperty();
 
-    private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
+    private final List<ChangeListener> valueChangedListeners = new ArrayList<>();
 
     public ViewModel() {
         x0.set("");
@@ -56,10 +56,14 @@ public class ViewModel {
             field.addListener(listener);
             valueChangedListeners.add(listener);
         }
+        final OpChangeListner opListner = new OpChangeListner();
+        op.addListener(opListner);
+        valueChangedListeners.add(opListner);
+
 
         BooleanBinding couldCalculate = new BooleanBinding() {
             {
-                super.bind(x0, y0, z0, x1, y1, z1);
+                super.bind(x0, y0, z0, x1, y1, z1, op);
             }
             @Override
             protected boolean computeValue() {
@@ -146,6 +150,9 @@ public class ViewModel {
     public final boolean getCalculationDisablingFlag() {
         return calculationDisablingFlag.get();
     }
+    public final boolean getAdditionalVectorFieldDisablingFlag() {
+        return additionalVectorFieldDisablingFlag.get();
+    }
     public final String getFieldResult() {
         return fieldResult.get();
     }
@@ -179,6 +186,14 @@ public class ViewModel {
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
+            fieldStatus.set(getInputStatus().toString());
+        }
+    }
+
+    private class OpChangeListner implements ChangeListener<Operation> {
+        @Override
+        public void changed(final ObservableValue<? extends Operation> observable,
+                            final Operation oldValue, final Operation newValue) {
             fieldStatus.set(getInputStatus().toString());
         }
     }

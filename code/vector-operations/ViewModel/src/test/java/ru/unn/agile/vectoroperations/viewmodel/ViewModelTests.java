@@ -166,6 +166,31 @@ public class ViewModelTests {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void canChangeMessageToReadyAfterModeChanging() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_VECTOR_MULT);
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        assertEquals(Status.READY.toString(), viewModel.fieldStatusProperty().get());
+    }
+
+    @Test
+    public void canChangeMessageToWaitingAfterModeChanging() {
+        setPositiveInputVector();
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        viewModel.opProperty().set(Operation.CALCULATE_VECTOR_MULT);
+        assertEquals(Status.WAITING.toString(), viewModel.fieldStatusProperty().get());
+    }
+
+    @Test
+    public void canChangeMessageToReadyAfterModeChangingWithHiddenErrorText() {
+        viewModel.opProperty().set(Operation.CALCULATE_VECTOR_MULT);
+        setPositiveInputVectors();
+        viewModel.x1Property().setValue("/");
+        viewModel.opProperty().set(Operation.CALCULATE_NORM);
+        assertEquals(Status.READY.toString(), viewModel.fieldStatusProperty().get());
+    }
+
     private void setPositiveInputVector() {
         viewModel.x0Property().set("1");
         viewModel.y0Property().set("2");

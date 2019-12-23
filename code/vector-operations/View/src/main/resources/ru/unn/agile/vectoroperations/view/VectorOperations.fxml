@@ -6,29 +6,30 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<!--<?import ru.unn.agile.vectorsdistancescalculator.viewmodel.ViewModel?>-->
-<AnchorPane prefHeight="339.0" prefWidth="243.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.vectorsdistancescalculator.view.VectorsDistancesCalculator">
-<!--    <fx:define>-->
-<!--        <ViewModel fx:id="viewModel" />-->
-<!--    </fx:define>-->
+<?import ru.unn.agile.vectoroperations.viewmodel.ViewModel?>
+
+<AnchorPane prefHeight="339.0" prefWidth="357.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.vectoroperations.view.VectorOperations">
+    <fx:define>
+        <ViewModel fx:id="viewModel" />
+    </fx:define>
     <children>
-        <TextField fx:id="txtX1" layoutX="25.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
-        <TextField fx:id="txtY1" layoutX="93.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
-        <TextField fx:id="txtZ1" layoutX="160.0" layoutY="48.0" prefHeight="25.0" prefWidth="54.0" />
-        <TextField fx:id="txtX2" layoutX="25.0" layoutY="108.0" prefHeight="25.0" prefWidth="54.0" />
-        <TextField fx:id="txtY2" layoutX="93.0" layoutY="108.0" prefHeight="25.0" prefWidth="54.0" />
-        <TextField fx:id="txtZ2" layoutX="160.0" layoutY="108.0" prefHeight="25.0" prefWidth="54.0" />
-        <Button fx:id="buttonCalc" disable="${viewModel.calculationDisabledFlag}" layoutX="25.0" layoutY="281.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="190.0" text="Calculate" />
+        <TextField fx:id="textX0" layoutX="16.0" layoutY="48.0" prefHeight="25.0" prefWidth="90.0" />
+        <TextField fx:id="textY0" layoutX="131.0" layoutY="48.0" prefHeight="25.0" prefWidth="90.0" />
+        <TextField fx:id="textZ0" layoutX="245.0" layoutY="48.0" prefHeight="25.0" prefWidth="90.0" />
+        <TextField fx:id="textX1" layoutX="16.0" layoutY="108.0" prefHeight="25.0" prefWidth="90.0" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <TextField fx:id="textY1" layoutX="131.0" layoutY="108.0" prefHeight="25.0" prefWidth="90.0" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <TextField fx:id="textZ1" layoutX="245.0" layoutY="108.0" prefHeight="25.0" prefWidth="90.0" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <Button fx:id="buttonCalculate" disable="${viewModel.calculationDisablingFlag}" layoutX="17.0" layoutY="281.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="319.0" text="Calculate" />
         <Label contentDisplay="TOP" layoutX="25.0" layoutY="206.0" text="Status:" />
-        <Label layoutX="49.0" layoutY="24.0" text="x" />
-        <Label layoutX="117.0" layoutY="24.0" text="y" />
-        <Label layoutX="184.0" layoutY="24.0" text="z" />
-        <Label layoutX="49.0" layoutY="84.0" text="x" />
-        <Label layoutX="117.0" layoutY="84.0" text="y" />
-        <Label layoutX="184.0" layoutY="84.0" text="z" />
-        <ComboBox fx:id="comboBoxOperation" items="${viewModel.operationList}" layoutX="25.0" layoutY="236.0" prefHeight="25.0" prefWidth="190.0" />
+        <Label layoutX="59.0" layoutY="24.0" text="x" />
+        <Label layoutX="172.0" layoutY="24.0" text="y" />
+        <Label layoutX="289.0" layoutY="24.0" text="z" />
+        <Label layoutX="59.0" layoutY="84.0" text="x" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <Label layoutX="172.0" layoutY="84.0" text="y" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <Label layoutX="289.0" layoutY="84.0" text="z" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
+        <ComboBox fx:id="comboBoxOperations" items="${viewModel.opsList}" layoutX="16.0" layoutY="236.0" prefHeight="25.0" prefWidth="319.0" />
         <Label layoutX="25.0" layoutY="153.0" text="Result:" />
-        <Label fx:id="lbResult" text="${viewModel.resultField}" layoutX="69.0" layoutY="153.0" prefHeight="17.0" prefWidth="140.0" />
-        <Label fx:id="lbStatus" text="${viewModel.statusField}" layoutX="72.0" layoutY="206.0" prefHeight="17.0" prefWidth="140.0" />
+        <Label layoutX="69.0" layoutY="153.0" prefHeight="17.0" prefWidth="265.0" text="${viewModel.fieldResult}"   />
+        <Label layoutX="72.0" layoutY="206.0" prefHeight="17.0" prefWidth="140.0" text="${viewModel.fieldStatus}" />
     </children>
 </AnchorPane>
