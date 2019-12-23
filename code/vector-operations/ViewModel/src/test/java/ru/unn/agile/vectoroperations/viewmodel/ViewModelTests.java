@@ -240,10 +240,12 @@ public class ViewModelTests {
         int logMessageNumber = 3;
         viewModel.opProperty().set(Operation.CALCULATE_NORM);
         viewModel.calculate();
-        String expectedLogMessage = "Calculate.Args:x0=1,000,y0=2,000,z0=3,000;"
+        String expectedLogMessage = "Calculate.Args:(1,000,2,000,3,000);"
                                     + "Operation:Calculate norm";
+        String expectedModifiedLogMessage = expectedLogMessage.replace("(", "\\(")
+                .replace(")", "\\)");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches("(.*)" + expectedLogMessage + "(.*)"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedModifiedLogMessage + "(.*)"));
     }
 
     @Test
@@ -252,11 +254,13 @@ public class ViewModelTests {
         int logMessageNumber = 7;
         viewModel.opProperty().set(Operation.CALCULATE_SCALAR_MULT);
         viewModel.calculate();
-        String expectedLogMessage = "Calculate.Args:x0=-1,000,y0=2,000,z0=-3,000;"
-                                    + "x1=4,000,y1=-5,000,z1=6,000;"
+        String expectedLogMessage = "Calculate.Args:(-1,000,2,000,-3,000);"
+                                    + "(4,000,-5,000,6,000);"
                                     + "Operation:Calculate scalar mult";
+        String expectedModifiedLogMessage = expectedLogMessage.replace("(", "\\(")
+                .replace(")", "\\)");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches("(.*)" + expectedLogMessage + "(.*)"));
+        assertTrue(actualLogMessage.matches("(.*)" + expectedModifiedLogMessage + "(.*)"));
     }
 
 
