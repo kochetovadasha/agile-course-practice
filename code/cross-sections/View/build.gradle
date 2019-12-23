@@ -14,4 +14,5 @@ javafx {
 
 dependencies {
     compile project(':cross-sections-ViewModel')
+    compile project(':cross-sections-Infrastructure')
 }

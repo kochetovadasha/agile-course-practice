@@ -20,6 +20,7 @@ public class ViewModel {
     private final StringProperty sndSectionStartY = new SimpleStringProperty();
     private final StringProperty sndSectionFinishX = new SimpleStringProperty();
     private final StringProperty sndSectionFinishY = new SimpleStringProperty();
+    private Logger logger;
 
     private final List<StringProperty> fields = new ArrayList<StringProperty>() {
         {
@@ -42,6 +43,22 @@ public class ViewModel {
     private final List<ValueChangeListener> valueChangedListeners = new ArrayList<>();
 
     public ViewModel() {
+        initialize();
+    }
+
+    public ViewModel(final Logger logger) {
+        setLogger(logger);
+        initialize();
+    }
+
+    public final void setLogger(final Logger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
+    private void initialize() {
         for (StringProperty field : fields) {
             field.set("");
         }
@@ -70,6 +87,7 @@ public class ViewModel {
     }
 
     public void check() {
+        logger.log(LogMessages.CHECK_PRESSED);
         if (isCheckDisabled()) {
             return;
         }
@@ -82,7 +100,9 @@ public class ViewModel {
         try {
             Section section1 = new Section(a, b);
             Section section2 = new Section(c, d);
-            result.set(CrossChecker.check(section1, section2) ? "Crossed" : "Don't Crossed");
+            String newResult = CrossChecker.check(section1, section2) ? "Crossed" : "Don't Crossed";
+            result.set(newResult);
+            logger.log(LogMessages.RESULT_WAS_PRINTED + newResult);
             status.set(Status.SUCCESS.toString());
         } catch (Exception ex) {
             status.set(ex.getMessage());
@@ -163,11 +183,13 @@ public class ViewModel {
     }
 
     private boolean isInputCorrect(final StringProperty property) {
+        String input = property.get();
         try {
             if (!property.get().isEmpty()) {
-                Integer.parseInt(property.get());
+                Integer.parseInt(input);
             }
         } catch (NumberFormatException nfe) {
+            logger.log(LogMessages.BAD_FORMAT + input);
             return false;
         }
         return true;
@@ -177,10 +199,35 @@ public class ViewModel {
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
-            status.set(getNewStatus().toString());
+            logger.log(LogMessages.NEW_INPUT + newValue);
+            String newStatus = getNewStatus().toString();
+            status.set(newStatus);
+            logger.log(LogMessages.STATUS_WAS_CHANGED + newStatus);
         }
     }
+
+    public List<String> getLog() {
+        List<String> log = new ArrayList<>();
+        try {
+            log = logger.getLog();
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+        return log;
+    }
+
+    static final class LogMessages {
+        private LogMessages() {
+        }
+
+        static final String CHECK_PRESSED = "Check button pressed";
+        static final String STATUS_WAS_CHANGED = "Status was changed to ";
+        static final String BAD_FORMAT = "Incorrect input was entered: ";
+        static final String NEW_INPUT = "New input was entered: ";
+        static final String RESULT_WAS_PRINTED = "Result was printed: ";
+    }
 }
+
 
 enum Status {
     WAITING("Please enter data"),

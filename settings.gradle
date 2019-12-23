@@ -81,6 +81,8 @@ include "code/cross-sections/ViewModel"
 project(":code/cross-sections/ViewModel").name = "cross-sections-ViewModel"
 include "code/cross-sections/View"
 project(":code/cross-sections/View").name = "cross-sections-View"
+include "code/cross-sections/Infrastructure"
+project(":code/cross-sections/Infrastructure").name = "cross-sections-Infrastructure"
 // sorting
 include "code/sorting/Infrastructure"
 project(":code/sorting/Infrastructure").name = "sorting-Infrastructure"
