@@ -232,6 +232,7 @@ public class ViewModelTests {
                                     + " Operation: Calculate norm";
         String expectedModifiedLogMessage = expectedLogMessage.replace(".", "\\.");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
+        System.out.println(actualLogMessage);
         assertTrue(actualLogMessage.matches(".*" + expectedModifiedLogMessage + "$"));
     }
 
