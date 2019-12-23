@@ -13,4 +13,5 @@ javafx {
 
 dependencies {
     compile project(':vector-operations-ViewModel')
+    compile project(':vector-operations-Infrastructure')
 }

@@ -230,8 +230,9 @@ public class ViewModelTests {
         viewModel.calculate();
         String expectedLogMessage = "Calculate. Args: x0 = 1,000, y0 = 2,000, z0 = 3,000;"
                                     + " Operation: Calculate norm";
+        String expectedModifiedLogMessage = expectedLogMessage.replace(".", "\\.");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches(".*" + expectedModifiedLogMessage + "$"));
     }
 
     @Test
@@ -243,8 +244,9 @@ public class ViewModelTests {
         String expectedLogMessage = "Calculate. Args: x0 = -1,000, y0 = 2,000, z0 = -3,000;"
                                     + " x1 = 4,000, y1 = -5,000, z1 = 6,000;"
                                     + " Operation: Calculate scalar mult";
+        String expectedModifiedLogMessage = expectedLogMessage.replace(".", "\\.");
         String actualLogMessage = viewModel.getLogMessage().get(logMessageNumber);
-        assertTrue(actualLogMessage.matches(".*" + expectedLogMessage + "$"));
+        assertTrue(actualLogMessage.matches(".*" + expectedModifiedLogMessage + "$"));
     }
 
     @Test
