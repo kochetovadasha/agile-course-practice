@@ -257,6 +257,10 @@ enum LogMessages {
     INPUT_UPDATE("Input is updated: (%s, %s, %s); (%s, %s, %s);");
 
     private final String name;
-    LogMessages(final String name) {this.name = name;}
-    public String toString() {return name; }
+    LogMessages(final String name) {
+        this.name = name;
+    }
+    public String toString() {
+        return name;
+    }
 }
