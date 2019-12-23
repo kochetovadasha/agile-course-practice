@@ -12,6 +12,8 @@ import ru.unn.agile.vectoroperations.model.Vector.Operation;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.unn.agile.vectoroperations.viewmodel.LogMessages.*;
+
 public class ViewModel {
     private final StringProperty x0 = new SimpleStringProperty();
     private final StringProperty y0 = new SimpleStringProperty();
@@ -191,14 +193,13 @@ public class ViewModel {
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
-//        String logMessage = String.format("Calculate, Args: x0 = %.3f, y0 = %.3f, z0 = %.3f;",
-//                                          x1d, y1d, z1d);
-//        if (needSecondVector) {
-//            logMessage += String.format(" x1 = %.3f, y1 = %.3f, z1 = %.3f;",
-//                                        vec2.getX(), vec2.getY(), vec2.getZ());
-//        }
-//        logMessage += String.format(" Operation: %s", op.get().toString());
-        String logMessage = "Stub";
+        String logMessage = String.format(CALCULATE + "Args:x0=%.3f,y0=%.3f,z0=%.3f;",
+                                          x1d, y1d, z1d);
+        if (needSecondVector) {
+            logMessage += String.format("x1=%.3f,y1=%.3f,z1=%.3f;",
+                                        vec2.getX(), vec2.getY(), vec2.getZ());
+        }
+        logMessage += String.format("Operation:%s", op.get().toString());
         logger.log(logMessage);
     }
 
@@ -207,7 +208,7 @@ public class ViewModel {
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             fieldStatus.set(getInputStatus().toString());
-            String logMessage = String.format("Input is updated: (%s, %s, %s); (%s, %s, %s);",
+            String logMessage = String.format(INPUT_UPDATE.toString(),
                                               x0.get(), y0.get(), z0.get(),
                                               x1.get(), y1.get(), z1.get());
             logger.log(logMessage);
@@ -229,7 +230,7 @@ public class ViewModel {
                 z1.setValue("");
             }
             fieldStatus.set(getInputStatus().toString());
-            String logMessage = String.format("Operation is changed to %s", newValue.toString());
+            String logMessage = String.format(OP_CHANGED.toString(), newValue.toString());
             logger.log(logMessage);
         }
     }
@@ -248,4 +249,14 @@ enum Status {
     public String toString() {
         return name;
     }
+}
+
+enum LogMessages {
+    CALCULATE("Calculate."),
+    OP_CHANGED("Operation is changed to %s"),
+    INPUT_UPDATE("Input is updated: (%s, %s, %s); (%s, %s, %s);");
+
+    private final String name;
+    LogMessages(final String name) {this.name = name;}
+    public String toString() {return name; }
 }
