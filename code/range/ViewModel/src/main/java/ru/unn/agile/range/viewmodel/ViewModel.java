@@ -7,6 +7,7 @@ import javafx.beans.property.StringProperty;
 import ru.unn.agile.range.model.Range;
 import ru.unn.agile.range.model.Utils;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -157,7 +158,13 @@ public class ViewModel {
     }
 
     public final List<String> getLog() {
-        return logger.getLog();
+        List<String> log;
+        try {
+            log = logger.getLog();
+        } catch (NullPointerException ex) {
+            log = new ArrayList<String>();
+        }
+        return log;
     }
 
     private void setRange(final String input) {
