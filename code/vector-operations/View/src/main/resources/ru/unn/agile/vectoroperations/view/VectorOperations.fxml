@@ -29,7 +29,7 @@
         <Label layoutX="289.0" layoutY="84.0" text="z" visible="${viewModel.additionalVectorFieldDisablingFlag}" />
         <ComboBox fx:id="comboBoxOperations" items="${viewModel.opsList}" layoutX="16.0" layoutY="236.0" prefHeight="25.0" prefWidth="319.0" />
         <Label layoutX="25.0" layoutY="153.0" text="Result:" />
-        <Label layoutX="69.0" layoutY="153.0" prefHeight="17.0" prefWidth="265.0" text="${viewModel.fieldResult}"   />
+        <Label layoutX="69.0" layoutY="143.0" prefHeight="58.0" prefWidth="265.0" text="${viewModel.fieldResult}" wrapText="true" />
         <Label layoutX="72.0" layoutY="206.0" prefHeight="17.0" prefWidth="140.0" text="${viewModel.fieldStatus}" />
     </children>
 </AnchorPane>
