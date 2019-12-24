@@ -122,7 +122,7 @@ public class ViewModelTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void canInitEmptyLogger() {
-        viewModel.setLogger(null);
+        viewModel.setAnyLogger(null);
     }
 
     @Test

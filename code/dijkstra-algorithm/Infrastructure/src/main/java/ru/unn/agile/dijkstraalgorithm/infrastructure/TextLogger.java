@@ -16,6 +16,7 @@ public class TextLogger implements ILogger {
     private final String filename;
     private final BufferedWriter writer;
     private static final String DATE_FORMAT_POINT = "yyyy-MM-dd HH:mm:ss";
+    private static final String SEPARATOR = " > ";
 
     private static String now() {
         Calendar cal = Calendar.getInstance();
@@ -38,7 +39,7 @@ public class TextLogger implements ILogger {
     @Override
     public void log(final String s) {
         try {
-            writer.write(now() + " > " + s);
+            writer.write(now() + SEPARATOR + s);
             writer.newLine();
             writer.flush();
         } catch (Exception exc) {

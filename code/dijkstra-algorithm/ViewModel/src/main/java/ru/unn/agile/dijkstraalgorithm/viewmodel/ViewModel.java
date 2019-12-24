@@ -36,37 +36,20 @@ public class ViewModel {
     private ILogger logger;
     private final StringProperty logs = new SimpleStringProperty();
 
-    public final void setLogger(final ILogger logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger parameter can't be null");
-        }
-        this.logger = logger;
-    }
-
     public ViewModel() {
         init();
     }
 
     public ViewModel(final ILogger logger) {
-        setLogger(logger);
+        setAnyLogger(logger);
         init();
     }
 
-    private void init() {
-        clearFormInput();
-
-        BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
-            {
-                super.bind(vertex1, vertex2, weight);
-            }
-            @Override
-            protected boolean computeValue() {
-                return (isVertex1InputCorrect()
-                        && isVertex2InputCorrect()
-                        && isWeightInputCorrect());
-            }
-        };
-        addingNewEdgeDisabled.bind(canCalculateBoolBinding.not());
+    public final void setAnyLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
     }
 
     public void addEdge() {
@@ -102,6 +85,23 @@ public class ViewModel {
     public boolean isWeightInputCorrect() {
         String exprText = weight.get();
         return (WEIGHT_INPUT_ALLOWED_SYMBOLS.matcher(exprText).matches());
+    }
+
+    private void init() {
+        clearFormInput();
+
+        BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
+            {
+                super.bind(vertex1, vertex2, weight);
+            }
+            @Override
+            protected boolean computeValue() {
+                return (isVertex1InputCorrect()
+                        && isVertex2InputCorrect()
+                        && isWeightInputCorrect());
+            }
+        };
+        addingNewEdgeDisabled.bind(canCalculateBoolBinding.not());
     }
 
     public void createGraph() {
@@ -189,6 +189,9 @@ public class ViewModel {
         return logs.get();
     }
     public final List<String> getLogList() {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
         return logger.getLog();
     }
 
@@ -202,49 +205,45 @@ public class ViewModel {
     }
 
     private void logForAddedEdge() {
-        StringBuilder message = new StringBuilder(LogMessages.ADD_EDGE_WAS_PRESSED);
-        message.append("[")
-                .append(vertex1.get())
-                .append(",")
-                .append(vertex2.get())
-                .append(",")
-                .append(weight.get())
-                .append("]");
-        logger.log(message.toString());
+        String message = "%s[%s, %s, %s].";
+        String formatMessage = String.format(message,
+                                            LogMessages.ADD_EDGE_WAS_PRESSED,
+                                            vertex1.get(),
+                                            vertex2.get(),
+                                            weight.get());
+        logger.log(formatMessage.toString());
         updateLogs();
     }
 
     public void onExpressionTextFieldFocusChanged() {
-        StringBuilder message = new StringBuilder(LogMessages.EDITING_INPUT);
-        message.append("[")
-                .append(vertex1.get())
-                .append(",")
-                .append(vertex2.get())
-                .append(",")
-                .append(weight.get())
-                .append("]. ");
+        String message = "%s[%s, %s, %s]. %s";
+        String postfix = "";
 
         if (isVertex1InputCorrect()
                 && isVertex2InputCorrect()
                 && isWeightInputCorrect()) {
-            message.append(LogMessages.CORRECT_INPUT);
+            postfix = LogMessages.CORRECT_INPUT;
         } else {
-            message.append(LogMessages.INCORRECT_INPUT);
+            postfix = LogMessages.INCORRECT_INPUT;
         }
 
-        logger.log(message.toString());
+        String formatMessage = String.format(message,
+                                            LogMessages.EDITING_INPUT,
+                                            vertex1.get(),
+                                            vertex2.get(),
+                                            weight.get(),
+                                            postfix);
+        logger.log(formatMessage.toString());
         updateLogs();
     }
 
     public void onExpressionComboBoxFocusChanged() {
-        StringBuilder message = new StringBuilder(LogMessages.EDITING_INPUT);
-        message.append("[from ")
-                .append(vertexFrom.get())
-                .append(" to ")
-                .append(vertexTo.get())
-                .append("]. ");
-
-        logger.log(message.toString());
+        String message = "%s[from %s to %s].";
+        String formatMessage = String.format(message,
+                                            LogMessages.EDITING_INPUT,
+                                            vertexFrom.get(),
+                                            vertexTo.get());
+        logger.log(formatMessage.toString());
         updateLogs();
     }
 

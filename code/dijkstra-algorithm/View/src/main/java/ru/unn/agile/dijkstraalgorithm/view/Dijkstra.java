@@ -51,7 +51,7 @@ public class Dijkstra {
 
     @FXML
     void initialize() {
-        viewModel.setLogger(new TextLogger("./TextLogger-lab3.log"));
+        viewModel.setAnyLogger(new TextLogger("./TextLogger-lab3.log"));
         initAddEdgeForm();
         initTableView();
         initControlPanel();
