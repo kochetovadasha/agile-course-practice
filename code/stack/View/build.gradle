@@ -13,4 +13,5 @@ javafx {
 
 dependencies {
     compile project(':stack-ViewModel')
+    compile project(':stack-Infrastructure')
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import ru.unn.agile.currencyconverter.viewmodel.CurrencyConverterViewModel?>
+<AnchorPane prefHeight="122.0" prefWidth="368.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.currencyconverter.view.CurrencyConverterView">
+   <fx:define>
+      <CurrencyConverterViewModel fx:id="viewModel" />
+   </fx:define>
+   <TextField fx:id="txtInputCurrency" layoutX="14.0" layoutY="16.0" prefHeight="35.0" prefWidth="149.0" />
+   <TextField fx:id="txtOutputCurrency" editable="false" layoutX="204.0" layoutY="16.0" prefHeight="35.0" prefWidth="149.0" />
+   <Label layoutX="179.0" layoutY="24.0" text="=">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <ComboBox fx:id="cbCurrencyPair" items="${viewModel.currencyPairs}" layoutX="15.0" layoutY="53.0" prefWidth="149.0" />
+   <Button fx:id="btnConvert" layoutX="14.0" layoutY="86.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="341.0" text="Конвертировать" />
+   <Label fx:id="lblError" layoutX="15.0" layoutY="1.0" text="Label" textFill="RED" />
+</AnchorPane>

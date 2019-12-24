@@ -3,6 +3,8 @@ package ru.unn.agile.stack.viewmodel;
 import ru.unn.agile.stack.model.Stack;
 import javafx.beans.property.*;
 
+import java.util.List;
+
 public class ViewModel {
     private Stack<Double> stackDouble;
     private final StringProperty isStackEmptyInfo = new SimpleStringProperty();
@@ -13,7 +15,21 @@ public class ViewModel {
     private final StringProperty status = new SimpleStringProperty();
     private final BooleanProperty popButtonState = new SimpleBooleanProperty();
 
+    private StringProperty textLog = new SimpleStringProperty();
+
+    private ILogger logger;
+
     public ViewModel() {
+        init();
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
+
+        init();
+    }
+
+    private void init() {
         stackDouble = new Stack<Double>();
         isStackEmptyInfo.set(Status.STACK_IS_EMPTY.toString());
         stackSize.set("0");
@@ -21,7 +37,12 @@ public class ViewModel {
         popElement.set("None");
         pushElement.set("");
         status.set(Status.WAITING.toString());
+        textLog.set("");
         popButtonState.set(false);
+    }
+
+    public List<String> getLogList() {
+        return logger.getLog();
     }
 
     public String getIsStackEmptyInfo() {
@@ -84,6 +105,31 @@ public class ViewModel {
         pushElement.set(inputElement);
     }
 
+    public StringProperty textLogProperty() {
+        return textLog;
+    }
+
+    public String getTextLog() {
+        return textLog.get();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+
+    private void writeLog(final String message) {
+        logger.log(message);
+        StringBuilder logMessages = new StringBuilder();
+        List<String> logList = getLogList();
+        for (String log : logList) {
+            logMessages.append(log).append("\n");
+        }
+        textLog.set(logMessages.toString());
+    }
+
 
     private void changeStackProperties() {
         int doubleStackSize = stackDouble.size();
@@ -100,17 +146,22 @@ public class ViewModel {
     }
 
     public void pushNewElement() {
+        String pushElement = getPushElement();
         try {
-            String pushElement = getPushElement();
             if (pushElement.isEmpty()) {
                 status.set(Status.WAITING.toString());
+                writeLog("Pushing element is empty");
             } else {
-                stackDouble.push(Double.parseDouble(pushElement));
+                Double doubleElement = Double.parseDouble(pushElement);
+                stackDouble.push(doubleElement);
                 status.set(Status.READY.toString());
                 changeStackProperties();
+                writeLog("Push element " + doubleElement + " into stack."
+                        + " Size of stack: " + stackDouble.size());
             }
         } catch (NumberFormatException e) {
             status.set(Status.BAD_FORMAT.toString());
+            writeLog("Pushing element " + pushElement + " has invalid format");
         }
     }
 
@@ -120,6 +171,8 @@ public class ViewModel {
         if (!stackDouble.isEmpty()) {
             popElement.set(Double.toString(stackDouble.pop()));
             changeStackProperties();
+            writeLog("Pop element " + getPopElement() + " from stack."
+                    + " Size of stack: " + stackDouble.size());
         }
     }
 }

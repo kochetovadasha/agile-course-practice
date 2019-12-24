@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import ru.unn.agile.binarysearch.viewmodel.ViewModel?>
+<?import javafx.scene.control.TextArea?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.binarysearch.view.Search">
+    <fx:define>
+        <ViewModel fx:id="viewModel" />
+    </fx:define>
+<children>
+    <GridPane layoutX="0.0" layoutY="4.0" prefHeight="200.0" prefWidth="566.0">
+        <children>
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="69.0" text="Input Array" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+            <TextField fx:id="arrayInput" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <TextField fx:id="elementInput" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="75.0" text="Desired Value" textAlignment="CENTER" textOverrun="ELLIPSIS" wrapText="false" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS" />
+            <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <children>
+                    <Label prefWidth="35.0" text="Result" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                    <Label fx:id="labelResult" prefWidth="143.0" text="" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.valignment="CENTER" />
+                </children>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="37.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="202.0" minWidth="10.0" prefWidth="202.0" />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+            </GridPane>
+            <Button fx:id="buttonSearch" alignment="CENTER" defaultButton="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="50.0" prefWidth="155.0" text="Search" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="labelStatus" alignment="TOP_LEFT" prefHeight="53.0" prefWidth="180.0" text="Enter array and key to search" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
+            <Label prefHeight="17.0" prefWidth="44.0" text="Status:" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="BASELINE" />
+        </children>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="124.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="191.0" minWidth="10.0" prefWidth="167.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="206.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints maxHeight="135.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="135.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="123.0" minHeight="10.0" prefHeight="123.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+    </GridPane>
+    <TextArea fx:id="textArea"  layoutX="16.0" layoutY="176.0" prefHeight="250.0" prefWidth="540.0" wrapText="true" />
+</children>
+</AnchorPane>
