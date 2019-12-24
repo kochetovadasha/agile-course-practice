@@ -7,13 +7,14 @@ import ru.unn.agile.polygon.model.Point;
 
 import static org.junit.Assert.*;
 
-public class ViewModelTests {
+public class PolygonAreaCalcViewModelTests {
     private final double eps = 1.0E-10;
-    private ViewModel viewModel;
+
+    private PolygonAreaCalcViewModel viewModel;
 
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        viewModel = new PolygonAreaCalcViewModel();
     }
 
     @After

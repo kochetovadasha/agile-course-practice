@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import ru.unn.agile.polygon.viewmodel.ViewModel?>
+<?import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel?>
 
 <AnchorPane prefHeight="374.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.polygon.view.CalcArea">
     <fx:define>
-        <ViewModel fx:id="viewModel"/>
+        <PolygonAreaCalcViewModel fx:id="viewModel"/>
     </fx:define>
     <children>
         <VBox prefHeight="387.0" prefWidth="303.0">

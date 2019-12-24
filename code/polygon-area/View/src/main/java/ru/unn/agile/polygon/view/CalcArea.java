@@ -6,14 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ru.unn.agile.polygon.model.Point;
-import ru.unn.agile.polygon.viewmodel.ViewModel;
+import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel;
 
 public class CalcArea {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     private final String pointInputTooltip = "Only numbers allowed";
 
     @FXML
-    private ViewModel viewModel;
+    private PolygonAreaCalcViewModel viewModel;
     @FXML
     private TextField xTextField;
     @FXML

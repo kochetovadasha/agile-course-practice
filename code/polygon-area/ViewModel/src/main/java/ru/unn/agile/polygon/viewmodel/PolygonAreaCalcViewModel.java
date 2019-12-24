@@ -7,22 +7,25 @@ import javafx.collections.ObservableList;
 import ru.unn.agile.polygon.model.Polygon;
 import ru.unn.agile.polygon.model.Point;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class ViewModel {
+public class PolygonAreaCalcViewModel {
     private Polygon polygon;
 
     private static final Pattern COORDINATE_INPUT_ALLOWED_SYMBOLS =
             Pattern.compile("^[-+]?[0-9]+\\.?[0-9]*$");
     private final SimpleBooleanProperty addingNewPointDisabled = new SimpleBooleanProperty();
 
+    private final StringProperty logs = new SimpleStringProperty();
     private final StringProperty xCoordinate = new SimpleStringProperty();
     private final StringProperty yCoordinate = new SimpleStringProperty();
     private final ObservableList<Point> pointList = FXCollections.observableArrayList();
 
     private final StringProperty result = new SimpleStringProperty();
+    private ILogger logger;
 
-    public ViewModel() {
+    public PolygonAreaCalcViewModel() {
         clearFormInput();
 
         BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
@@ -35,6 +38,29 @@ public class ViewModel {
             }
         };
         addingNewPointDisabled.bind(canCalculateBoolBinding.not());
+    }
+
+    public PolygonAreaCalcViewModel(final ILogger logger) {
+        setLogger(logger);
+        clearFormInput();
+
+        BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
+            {
+                super.bind(xCoordinate, yCoordinate);
+            }
+            @Override
+            protected boolean computeValue() {
+                return (isCoordinatesInputCorrect());
+            }
+        };
+        addingNewPointDisabled.bind(canCalculateBoolBinding.not());
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can not be null");
+        }
+        this.logger = logger;
     }
 
     public boolean isCoordinatesInputCorrect() {
@@ -102,5 +128,28 @@ public class ViewModel {
     }
     public final boolean isAddingNewPointDisabled() {
         return addingNewPointDisabled.get();
+    }
+
+    public StringProperty logsProperty() {
+        return logs;
+    }
+
+    public final String getLogs() {
+        return logs.get();
+    }
+
+    public final List<String> getLog() {
+        return logger.getLog();
+    }
+
+    final class LogMessages {
+        public static final String CALCULATE_WAS_PRESSED = "Calculating ";
+        public static final String CALCULATION_WAS_SUCCESSFUL = "Calculation completed.";
+        public static final String CALCULATION_WAS_UNSUCCESSFUL = "Calculation failed. Incorrect input";
+        public static final String EDITING_FINISHED = "Updated input. ";
+        public static final String EXPRESSION_IS_VALID = "Expression is valid.";
+        public static final String EXPRESSION_IS_INVALID = "Expression is invalid.";
+
+        private LogMessages() { }
     }
 }
