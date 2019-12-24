@@ -10,8 +10,9 @@ import static org.junit.Assert.*;
 
 public class TxtLoggerTests {
 
-    private final String LOG_FILE_PATH = "./TxtLogger_Tests-lab3_polygon_area_calc.log";
-    private final String DATE_TIME_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} >> .*";
+    private static final String LOG_FILE_PATH = "./TxtLogger_Tests-lab3_polygon_area_calc.log";
+    private static final String DATE_TIME_FORMAT_REGEX =
+            "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} >> .*";
     private TxtLogger txtLogger;
 
     @Before

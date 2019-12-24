@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ILogger {
 
-    void log(String s);
+    void log(String logMessage);
 
     List<String> getLog();
 

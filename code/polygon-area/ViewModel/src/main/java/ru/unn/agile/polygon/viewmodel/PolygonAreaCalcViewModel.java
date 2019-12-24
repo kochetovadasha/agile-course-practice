@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import ru.unn.agile.polygon.model.Polygon;
 import ru.unn.agile.polygon.model.Point;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -68,7 +69,7 @@ public class PolygonAreaCalcViewModel {
         pointList.add(newPoint);
 
         clearCoordinatesFormInput();
-        log(String.format(POINT_ADDED,newPoint.getX(), newPoint.getY()));
+        log(String.format(POINT_ADDED, newPoint.getX(), newPoint.getY()));
     }
 
     public void calculateArea() {
@@ -89,8 +90,10 @@ public class PolygonAreaCalcViewModel {
         }
     }
 
-    private void log(String message) {
-        logger.log(message);
+    private void log(final String message) {
+        if (logger != null) {
+            logger.log(message);
+        }
         updateUiLogs();
     }
 
@@ -142,13 +145,15 @@ public class PolygonAreaCalcViewModel {
     }
 
     private void updateUiLogs() {
-        List<String> fullLog = logger.getLog();
+        List<String> fullLog = getLog();
         String uiLogRecord = String.join("\n", fullLog);
         logsArea.set(uiLogRecord);
     }
 
     public final List<String> getLog() {
-        return logger.getLog();
+        return logger != null
+                ? logger.getLog()
+                : Collections.emptyList();
     }
 
     public final String getLogsArea() {

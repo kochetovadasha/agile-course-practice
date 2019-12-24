@@ -7,7 +7,8 @@ public class PolygonAreaCaclViewModelWithTxtLoggerTests extends PolygonAreaCalcV
 
     @Override
     public void setUp() {
-        TxtLogger realLogger = new TxtLogger("./PolygonAreaCalcViewModel_with_TxtLogger_Tests-lab3.log");
+        TxtLogger realLogger =
+                new TxtLogger("./PolygonAreaCalcViewModel_with_TxtLogger_Tests-lab3.log");
         super.setTestViewModel(new PolygonAreaCalcViewModel(realLogger));
     }
 }

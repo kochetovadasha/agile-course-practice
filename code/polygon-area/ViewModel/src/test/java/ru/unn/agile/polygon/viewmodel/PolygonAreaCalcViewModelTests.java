@@ -136,12 +136,12 @@ public class PolygonAreaCalcViewModelTests {
         assertTrue(message.contains(CALCULATION_FAILED));
     }
 
-    private void addPoint(Point p) {
+    private void addPoint(final Point p) {
         setCoordinates(String.valueOf(p.getX()), String.valueOf(p.getY()));
         viewModel.addPoint();
     }
 
-    private void addPoint(String x,String y) {
+    private void addPoint(final String x, final String y) {
         setCoordinates(x, y);
         viewModel.addPoint();
     }
