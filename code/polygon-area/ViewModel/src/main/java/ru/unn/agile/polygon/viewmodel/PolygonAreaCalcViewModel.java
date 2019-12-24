@@ -10,6 +10,8 @@ import ru.unn.agile.polygon.model.Point;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATE_BUTTON_PRESSED;
+
 public class PolygonAreaCalcViewModel {
     private Polygon polygon;
 
@@ -17,7 +19,7 @@ public class PolygonAreaCalcViewModel {
             Pattern.compile("^[-+]?[0-9]+\\.?[0-9]*$");
     private final SimpleBooleanProperty addingNewPointDisabled = new SimpleBooleanProperty();
 
-    private final StringProperty logs = new SimpleStringProperty();
+    private final StringProperty logsArea = new SimpleStringProperty();
     private final StringProperty xCoordinate = new SimpleStringProperty();
     private final StringProperty yCoordinate = new SimpleStringProperty();
     private final ObservableList<Point> pointList = FXCollections.observableArrayList();
@@ -25,24 +27,13 @@ public class PolygonAreaCalcViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private ILogger logger;
 
-    public PolygonAreaCalcViewModel() {
-        clearFormInput();
-
-        BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
-            {
-                super.bind(xCoordinate, yCoordinate);
-            }
-            @Override
-            protected boolean computeValue() {
-                return (isCoordinatesInputCorrect());
-            }
-        };
-        addingNewPointDisabled.bind(canCalculateBoolBinding.not());
-    }
-
     public PolygonAreaCalcViewModel(final ILogger logger) {
         setLogger(logger);
-        clearFormInput();
+        init();
+    }
+
+    private void init() {
+        clearCoordinatesFormInput();
 
         BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
             {
@@ -54,13 +45,6 @@ public class PolygonAreaCalcViewModel {
             }
         };
         addingNewPointDisabled.bind(canCalculateBoolBinding.not());
-    }
-
-    public final void setLogger(final ILogger logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger can not be null");
-        }
-        this.logger = logger;
     }
 
     public boolean isCoordinatesInputCorrect() {
@@ -76,7 +60,7 @@ public class PolygonAreaCalcViewModel {
         Point newPoint = new Point(x, y);
         pointList.add(newPoint);
 
-        clearFormInput();
+        clearCoordinatesFormInput();
     }
 
     public void calcArea() {
@@ -87,6 +71,7 @@ public class PolygonAreaCalcViewModel {
         Point[] pointArray = pointList.toArray(Point[]::new);
 
         try {
+            log(CALCULATE_BUTTON_PRESSED);
             polygon = new Polygon(pointArray);
             result.setValue(Double.toString(polygon.getArea()));
         } catch (IllegalArgumentException e) {
@@ -94,7 +79,12 @@ public class PolygonAreaCalcViewModel {
         }
     }
 
-    private void clearFormInput() {
+    private void log(String message) {
+        logger.log(message);
+        updateUiLogs();
+    }
+
+    private void clearCoordinatesFormInput() {
         xCoordinate.set("");
         yCoordinate.set("");
     }
@@ -130,26 +120,21 @@ public class PolygonAreaCalcViewModel {
         return addingNewPointDisabled.get();
     }
 
-    public StringProperty logsProperty() {
-        return logs;
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can not be null");
+        }
+        this.logger = logger;
     }
 
-    public final String getLogs() {
-        return logs.get();
+    private void updateUiLogs() {
+        List<String> fullLog = logger.getLog();
+        String uiLogRecord = String.join("\n", fullLog);
+        logsArea.set(uiLogRecord);
     }
 
     public final List<String> getLog() {
         return logger.getLog();
     }
 
-    final class LogMessages {
-        public static final String CALCULATE_WAS_PRESSED = "Calculating ";
-        public static final String CALCULATION_WAS_SUCCESSFUL = "Calculation completed.";
-        public static final String CALCULATION_WAS_UNSUCCESSFUL = "Calculation failed. Incorrect input";
-        public static final String EDITING_FINISHED = "Updated input. ";
-        public static final String EXPRESSION_IS_VALID = "Expression is valid.";
-        public static final String EXPRESSION_IS_INVALID = "Expression is invalid.";
-
-        private LogMessages() { }
-    }
 }

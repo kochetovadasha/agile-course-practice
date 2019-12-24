@@ -5,16 +5,23 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.polygon.model.Point;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATE_BUTTON_PRESSED;
 
 public class PolygonAreaCalcViewModelTests {
     private final double eps = 1.0E-10;
 
     private PolygonAreaCalcViewModel viewModel;
 
+    protected void setTestViewModel(final PolygonAreaCalcViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new PolygonAreaCalcViewModel();
+        viewModel = new PolygonAreaCalcViewModel(new FakeLogger());
     }
 
     @After
@@ -101,6 +108,26 @@ public class PolygonAreaCalcViewModelTests {
         assertEquals("Sides of polygon must not intersect", viewModel.getResult());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void canNotInstantiateViewModelWithNullLogger() {
+        viewModel = new PolygonAreaCalcViewModel(null);
+    }
+
+    @Test
+    public void logAreEmptyOnInit() {
+        assertTrue(getLog().isEmpty());
+    }
+
+    @Test
+    public void logContainsFormattedMessageAfterCalculation() {
+        addPoint("1", "0");
+        addPoint("0", "0");
+        addPoint("0", "1");
+        viewModel.calcArea();
+
+        assertTrue(!getLog().isEmpty() && getLog().get(0).contains(CALCULATE_BUTTON_PRESSED));
+    }
+
     private void addPoint(String x,String y) {
         setCoordinates(x, y);
         viewModel.addPoint();
@@ -109,5 +136,9 @@ public class PolygonAreaCalcViewModelTests {
     private void setCoordinates(final String x, final String y) {
         viewModel.xProperty().set(x);
         viewModel.yProperty().set(y);
+    }
+
+    private List<String> getLog() {
+        return viewModel.getLog();
     }
 }
