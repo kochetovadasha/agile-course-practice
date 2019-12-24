@@ -109,23 +109,36 @@ public class PolygonAreaCalcViewModelTests {
     }
 
     @Test
-    public void logContainsCorrespondingMessageAfterCalculation() {
+    public void logContainsCorrespondingMessageAfterNewPointAdded() {
+        Point p = new Point(1, 0);
+        addPoint(p);
+        String pointAddedMessage = String.format(POINT_ADDED, p.getX(), p.getY());
+        assertTrue(!getLog().isEmpty() && getLog().get(0).contains(pointAddedMessage));
+    }
+
+    @Test
+    public void logContainsCorrespondingMessageAfterCalculationStarted() {
         calculateTriangleArea();
-        assertTrue(!getLog().isEmpty() && getLog().get(0).contains(CALCULATE_BUTTON_PRESSED));
+        assertTrue(!getLog().isEmpty() && getLog().get(3).contains(CALCULATION_STARTED));
     }
 
     @Test
     public void logContainsCorrespondingMessageAfterSuccessfulCalculation() {
         calculateTriangleArea();
-        String message = getLog().get(1);
+        String message = getLog().get(4);
         assertTrue(message.contains(CALCULATION_COMPLETED));
     }
 
     @Test
-    public void logContainsCorrespondingMessageAfterSuccessfulFailed() {
+    public void logContainsCorrespondingMessageAfterCalculationFailed() {
         calculateAreaForSelfIntersectingPolygon();
-        String message = getLog().get(1);
+        String message = getLog().get(5);
         assertTrue(message.contains(CALCULATION_FAILED));
+    }
+
+    private void addPoint(Point p) {
+        setCoordinates(String.valueOf(p.getX()), String.valueOf(p.getY()));
+        viewModel.addPoint();
     }
 
     private void addPoint(String x,String y) {

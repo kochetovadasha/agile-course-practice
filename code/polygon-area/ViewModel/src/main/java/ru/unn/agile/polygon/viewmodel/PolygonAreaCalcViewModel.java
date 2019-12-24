@@ -10,7 +10,9 @@ import ru.unn.agile.polygon.model.Point;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATE_BUTTON_PRESSED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_STARTED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.POINT_ADDED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_COMPLETED;
 import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_FAILED;
 
 public class PolygonAreaCalcViewModel {
@@ -27,6 +29,10 @@ public class PolygonAreaCalcViewModel {
 
     private final StringProperty result = new SimpleStringProperty();
     private ILogger logger;
+
+    public PolygonAreaCalcViewModel() {
+        init();
+    }
 
     public PolygonAreaCalcViewModel(final ILogger logger) {
         setLogger(logger);
@@ -62,6 +68,7 @@ public class PolygonAreaCalcViewModel {
         pointList.add(newPoint);
 
         clearCoordinatesFormInput();
+        log(String.format(POINT_ADDED,newPoint.getX(), newPoint.getY()));
     }
 
     public void calculateArea() {
@@ -72,10 +79,10 @@ public class PolygonAreaCalcViewModel {
         Point[] pointArray = pointList.toArray(Point[]::new);
 
         try {
-            log(CALCULATE_BUTTON_PRESSED);
+            log(CALCULATION_STARTED);
             polygon = new Polygon(pointArray);
             result.setValue(Double.toString(polygon.getArea()));
-            log(CALCULATION_FAILED);
+            log(CALCULATION_COMPLETED);
         } catch (IllegalArgumentException e) {
             result.setValue(e.getMessage());
             log(CALCULATION_FAILED);
@@ -144,4 +151,11 @@ public class PolygonAreaCalcViewModel {
         return logger.getLog();
     }
 
+    public final String getLogsArea() {
+        return logsArea.get();
+    }
+
+    public StringProperty logsAreaProperty() {
+        return logsArea;
+    }
 }

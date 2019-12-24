@@ -14,14 +14,17 @@
 
 <?import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel?>
 
-<AnchorPane prefHeight="374.0" prefWidth="303.0"
+<AnchorPane prefHeight="400.0" prefWidth="300.0"
             xmlns="http://javafx.com/javafx/8.0.172-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.unn.agile.polygon.view.PolygonAreaCalcView">
     <fx:define>
         <PolygonAreaCalcViewModel fx:id="viewModel"/>
     </fx:define>
-    <VBox prefHeight="387.0" prefWidth="303.0">
+    <padding>
+        <Insets bottom="10.0"/>
+    </padding>
+    <VBox prefHeight="400.0" prefWidth="300.0">
         <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
         </padding>
@@ -75,6 +78,5 @@
             <TextArea fx:id="resultTextArea" editable="false" prefHeight="4.0" prefWidth="211.0" wrapText="true"/>
         </HBox>
     </VBox>
-    <TextArea text="${viewModel.logsArea}" editable="false" layoutX="15.0" layoutY="400.0" prefHeight="200.0"
-              prefWidth="275.0" wrapText="true" VBox.vgrow="ALWAYS"/>
+    <TextArea fx:id="areaLog"  text="${viewModel.logsArea}" editable="false" layoutX="15.0" layoutY="400.0" prefHeight="200.0" prefWidth="275.0" wrapText="true" VBox.vgrow="ALWAYS"/>
 </AnchorPane>
