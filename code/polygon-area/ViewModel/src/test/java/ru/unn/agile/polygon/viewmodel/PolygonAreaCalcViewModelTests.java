@@ -32,8 +32,8 @@ public class PolygonAreaCalcViewModelTests {
     @Test
     public void isAddingValidInput() {
         addPoint("-261.55", "2.645");
-        assertEquals(new Point(-261.55, 2.645).getX(), viewModel.getPointList().get(0).getX(), eps);
-        assertEquals(new Point(-261.55, 2.645).getY(), viewModel.getPointList().get(0).getY(), eps);
+        assertTrue(new Point(-261.55, 2.645).getX() == viewModel.getPointList().get(0).getX()
+                && new Point(-261.55, 2.645).getY() == viewModel.getPointList().get(0).getY());
     }
 
     @Test(expected = IllegalArgumentException.class)
