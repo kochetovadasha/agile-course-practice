@@ -5,6 +5,7 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ru.unn.agile.polygon.infrastructure.TxtLogger;
 import ru.unn.agile.polygon.model.Point;
 import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel;
 
@@ -33,7 +34,7 @@ public class PolygonAreaCalcView {
 
     @FXML
     void initialize() {
-        viewModel.setLogger(null); // NPE
+        viewModel.setLogger(new TxtLogger("./TxtLogger-lab3.log"));
         initAddPointForm();
         initTableView();
         initControlPanel();
