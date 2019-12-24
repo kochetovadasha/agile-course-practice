@@ -9,7 +9,9 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 public class TxtLoggerTests {
-    private  final String LOG_FILE_PATH = "./TxtLogger_Tests-lab3_polygon_area_calc.log";
+
+    private final String LOG_FILE_PATH = "./TxtLogger_Tests-lab3_polygon_area_calc.log";
+    private final String DATE_TIME_FORMAT_REGEX = "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} >> .*";
     private TxtLogger txtLogger;
 
     @Before
@@ -34,4 +36,29 @@ public class TxtLoggerTests {
         txtLogger.log(testMessage);
         assertTrue(txtLogger.getLog().get(0).contains(testMessage));
     }
+
+    @Test
+    public void areSeveralLogMessagesAdded() {
+
+        String message1 = "Test log message 1";
+        String message2 = "Test log message 2";
+        String message3 = "Test log message 3";
+
+        txtLogger.log(message1);
+        txtLogger.log(message2);
+        txtLogger.log(message3);
+
+        assertEquals(3, txtLogger.getLog().size());
+
+    }
+
+    @Test
+    public void doesLogMessageHaveDateTimeFormat() {
+        String testMessage = "Test log message";
+        txtLogger.log(testMessage);
+
+        String message = txtLogger.getLog().get(0);
+        assertTrue(message.matches(DATE_TIME_FORMAT_REGEX));
+    }
+
 }
