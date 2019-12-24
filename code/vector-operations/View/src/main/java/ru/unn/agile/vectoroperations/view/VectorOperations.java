@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import ru.unn.agile.vectoroperations.infrastructure.TxtLogger;
 import ru.unn.agile.vectoroperations.model.Vector.Operation;
 import ru.unn.agile.vectoroperations.viewmodel.ViewModel;
 
@@ -31,6 +32,7 @@ public class VectorOperations {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./ViewModelTxt.log"));
         textX0.textProperty().bindBidirectional(viewModel.x0Property());
         textY0.textProperty().bindBidirectional(viewModel.y0Property());
         textZ0.textProperty().bindBidirectional(viewModel.z0Property());

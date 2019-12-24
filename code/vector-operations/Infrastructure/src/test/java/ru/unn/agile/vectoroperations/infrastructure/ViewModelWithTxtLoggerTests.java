@@ -10,4 +10,5 @@ public class ViewModelWithTxtLoggerTests extends ViewModelTests {
             new TxtLogger("./ViewModelTxt.log");
         super.setViewModel(new ViewModel(realLogger));
     }
+
 }

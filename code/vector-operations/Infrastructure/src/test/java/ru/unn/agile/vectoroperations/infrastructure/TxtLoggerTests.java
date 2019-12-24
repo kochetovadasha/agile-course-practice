@@ -1,5 +1,6 @@
 package ru.unn.agile.vectoroperations.infrastructure;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,25 +14,30 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class TxtLoggerTests {
-    private static final String FILE_NAME = "./ViewModelTxt.log";
-    private TxtLogger txtLogger;
+    private static final String NAME_FILE = "./ViewModelTxt.log";
+    private TxtLogger textLogger;
 
     @Before
     public void beforeStart() {
-        txtLogger = new TxtLogger(FILE_NAME);
+        textLogger = new TxtLogger(NAME_FILE);
+    }
+
+    @After
+    public void tearDown() {
+        textLogger = null;
     }
 
     @Test
     public void canCreateLoggerWithFileName() {
-        assertNotNull(txtLogger);
+        assertNotNull(textLogger);
     }
 
     @Test
     public void canCreateLogFileOnDisk() {
         try {
-            new BufferedReader(new FileReader(FILE_NAME));
+            new BufferedReader(new FileReader(NAME_FILE));
         } catch (FileNotFoundException exp) {
-            fail("File " + FILE_NAME + " wasn't found!");
+            fail("File " + NAME_FILE + " wasn't found!");
         }
     }
 
@@ -40,9 +46,9 @@ public class TxtLoggerTests {
         String testMessage = "Yo yo yo! 1483 to the 3 to the 3 to the 6 to the 9,"
                              + " representing the ABQ";
 
-        txtLogger.log(testMessage);
+        textLogger.log(testMessage);
 
-        String logMessage = txtLogger.getLog().get(0);
+        String logMessage = textLogger.getLog().get(0);
         assertTrue(logMessage.matches(".*" + testMessage + "$"));
     }
 
@@ -53,10 +59,10 @@ public class TxtLoggerTests {
         String testMessageTwo = "What up! Leave at the tone";
         int firstMessageIdx = 0;
         int secondMessageIdx = 1;
-        txtLogger.log(testMessageOne);
-        txtLogger.log(testMessageTwo);
+        textLogger.log(testMessageOne);
+        textLogger.log(testMessageTwo);
 
-        List<String> logMessages = txtLogger.getLog();
+        List<String> logMessages = textLogger.getLog();
         String logMessageOne = logMessages.get(firstMessageIdx);
         String logMessageTwo = logMessages.get(secondMessageIdx);
         assertTrue(logMessageOne.matches(".*" + testMessageOne + "$"));

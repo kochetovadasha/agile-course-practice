@@ -21,6 +21,7 @@ public class ViewModel {
     private final StringProperty x1 = new SimpleStringProperty();
     private final StringProperty y1 = new SimpleStringProperty();
     private final StringProperty z1 = new SimpleStringProperty();
+    private StringProperty fieldTextLog = new SimpleStringProperty();
 
     private final ObjectProperty<ObservableList<Operation>> opsList =
             new SimpleObjectProperty<>(FXCollections.observableArrayList(Operation.values()));
@@ -35,63 +36,13 @@ public class ViewModel {
 
     private ILogger logger;
 
+    public ViewModel() {
+        init();
+    }
+
     public ViewModel(final ILogger logger) {
-        if (logger == null) {
-            throw new IllegalArgumentException("Logger param can't be null");
-        }
-        this.logger = logger;
-        x0.set("");
-        y0.set("");
-        z0.set("");
-        x1.set("");
-        y1.set("");
-        z1.set("");
-        op.set(Operation.CALCULATE_NORM);
-        fieldResult.set("");
-        fieldStatus.set(Status.WAITING.toString());
-
-        final List<StringProperty> fields = new ArrayList<>() { {
-            add(x0);
-            add(y0);
-            add(z0);
-            add(x1);
-            add(y1);
-            add(z1);
-        } };
-
-        for (StringProperty field : fields) {
-            final ValueChangeListener listener = new ValueChangeListener();
-            field.addListener(listener);
-            valueChangedListeners.add(listener);
-        }
-        final OpChangeListner opListner = new OpChangeListner();
-        op.addListener(opListner);
-        valueChangedListeners.add(opListner);
-
-
-        BooleanBinding couldCalculate = new BooleanBinding() {
-            {
-                super.bind(x0, y0, z0, x1, y1, z1, op);
-            }
-            @Override
-            protected boolean computeValue() {
-                return getInputStatus() == Status.READY;
-            }
-        };
-
-        BooleanBinding needShowAdditionalVectorField = new BooleanBinding() {
-            {
-                super.bind(op);
-            }
-            @Override
-            protected boolean computeValue() {
-                return !Operation.CALCULATE_NORM.equals(op.get())
-                        && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get());
-            }
-        };
-
-        calculationDisablingFlag.bind(couldCalculate.not());
-        additionalVectorFieldDisablingFlag.bind(needShowAdditionalVectorField);
+        setLogger(logger);
+        init();
     }
 
     public List<String> getLogMessage() {
@@ -141,6 +92,9 @@ public class ViewModel {
     public StringProperty z1Property() {
         return z1;
     }
+    public StringProperty fieldTextLogProperty() {
+        return fieldTextLog;
+    }
     public ObjectProperty<Operation> opProperty() {
         return op;
     }
@@ -171,6 +125,9 @@ public class ViewModel {
     public final String getFieldStatus() {
         return fieldStatus.get();
     }
+    public final String getFieldTextLog() {
+        return fieldTextLog.get();
+    }
 
     public void calculate() {
         if (calculationDisablingFlag.get()) {
@@ -193,14 +150,87 @@ public class ViewModel {
 
         fieldResult.set(String.valueOf(op.get().apply(vec1, vec2)));
         fieldStatus.set(Status.SUCCESS.toString());
-        String logMessage = String.format(CALCULATE + "Args: x0 = %f, y0 = %f, z0 = %f;",
+        String logMessage = String.format(CALCULATE + "Args: x0 = %.3f, y0 = %.3f, z0 = %.3f;",
                                           x1d, y1d, z1d);
         if (needSecondVector) {
-            logMessage += String.format(" x1 = %f, y1 = %f, z1 = %f;",
+            logMessage += String.format(" x1 = %.3f, y1 = %.3f, z1 = %.3f;",
                                         vec2.getX(), vec2.getY(), vec2.getZ());
         }
         logMessage += String.format(" Operation: %s", op.get().toString());
-        logger.log(logMessage);
+        writeInFieldTextLog(logMessage);
+    }
+
+    public void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger param can't be null");
+        }
+        this.logger = logger;
+    }
+
+    private void init() {
+        x0.set("");
+        y0.set("");
+        z0.set("");
+        x1.set("");
+        y1.set("");
+        z1.set("");
+        fieldTextLog.set("");
+        op.set(Operation.CALCULATE_NORM);
+        fieldResult.set("");
+        fieldStatus.set(Status.WAITING.toString());
+
+        final List<StringProperty> fields = new ArrayList<>() { {
+            add(x0);
+            add(y0);
+            add(z0);
+            add(x1);
+            add(y1);
+            add(z1);
+        } };
+
+        for (StringProperty field : fields) {
+            final ValueChangeListener listener = new ValueChangeListener();
+            field.addListener(listener);
+            valueChangedListeners.add(listener);
+        }
+        final OpChangeListner opListner = new OpChangeListner();
+        op.addListener(opListner);
+        valueChangedListeners.add(opListner);
+
+
+        BooleanBinding couldCalculate = new BooleanBinding() {
+            {
+                super.bind(x0, y0, z0, x1, y1, z1, op);
+            }
+            @Override
+            protected boolean computeValue() {
+                return getInputStatus() == Status.READY;
+            }
+        };
+
+        BooleanBinding needShowAdditionalVectorField = new BooleanBinding() {
+            {
+                super.bind(op);
+            }
+            @Override
+            protected boolean computeValue() {
+                return !Operation.CALCULATE_NORM.equals(op.get())
+                        && !Operation.CALCULATE_NORMALIZED_VECTOR.equals(op.get());
+            }
+        };
+
+        calculationDisablingFlag.bind(couldCalculate.not());
+        additionalVectorFieldDisablingFlag.bind(needShowAdditionalVectorField);
+    }
+
+    private void writeInFieldTextLog(final String message) {
+        logger.log(message);
+        StringBuilder logMessages = new StringBuilder();
+        List<String> logList = getLogMessage();
+        for (String log : logList) {
+            logMessages.append(log).append("\n");
+        }
+        fieldTextLog.set(logMessages.toString());
     }
 
     private class ValueChangeListener implements ChangeListener<String> {
@@ -211,7 +241,7 @@ public class ViewModel {
             String logMessage = String.format(INPUT_UPDATE.toString(),
                                               x0.get(), y0.get(), z0.get(),
                                               x1.get(), y1.get(), z1.get());
-            logger.log(logMessage);
+            writeInFieldTextLog(logMessage);
         }
     }
 
@@ -231,7 +261,7 @@ public class ViewModel {
             }
             fieldStatus.set(getInputStatus().toString());
             String logMessage = String.format(OP_CHANGED.toString(), newValue.toString());
-            logger.log(logMessage);
+            writeInFieldTextLog(logMessage);
         }
     }
 }
