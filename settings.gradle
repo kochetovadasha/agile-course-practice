@@ -167,6 +167,8 @@ include "code/complex-number-calculator/View"
 project(":code/complex-number-calculator/View").name = "complex-number-calculator-View"
 include "code/complex-number-calculator/ViewModel"
 project(":code/complex-number-calculator/ViewModel").name = "complex-number-calculator-ViewModel"
+include "code/complex-number-calculator/Infrastructure"
+project(":code/complex-number-calculator/Infrastructure").name = "complex-number-calculator-Infrastructure"
 // Vector Operations
 include "code/lab1-tdd-vector_operations"
 project(":code/lab1-tdd-vector_operations").name = "lab1-tdd-vector_operations-Model"
