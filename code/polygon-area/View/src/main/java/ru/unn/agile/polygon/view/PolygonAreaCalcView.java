@@ -8,7 +8,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ru.unn.agile.polygon.model.Point;
 import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel;
 
-public class CalcArea {
+public class PolygonAreaCalcView {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     private final String pointInputTooltip = "Only numbers allowed";
 
@@ -24,8 +24,6 @@ public class CalcArea {
     private Button calcAreaButton;
 
     @FXML
-    private TableView<Point> tablePoints;
-    @FXML
     private TableColumn<Point, Double> xColumn;
     @FXML
     private TableColumn<Point, Double> yColumn;
@@ -35,6 +33,7 @@ public class CalcArea {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(null); // NPE
         initAddPointForm();
         initTableView();
         initControlPanel();
@@ -54,10 +53,8 @@ public class CalcArea {
         addPointButton.setOnAction(e -> viewModel.addPoint());
     }
     private void initTableView() {
-        xColumn.setCellValueFactory(
-                new PropertyValueFactory<Point, Double>("X"));
-        yColumn.setCellValueFactory(
-                new PropertyValueFactory<Point, Double>("Y"));
+        xColumn.setCellValueFactory(new PropertyValueFactory<>("X"));
+        yColumn.setCellValueFactory(new PropertyValueFactory<>("Y"));
     }
 
     private void initControlPanel() {
