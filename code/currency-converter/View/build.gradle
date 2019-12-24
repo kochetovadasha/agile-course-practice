@@ -14,4 +14,5 @@ javafx {
 
 dependencies {
     compile project(':currency-converter-ViewModel')
+    compile project(':currency-converter-Infrastructure')
 }

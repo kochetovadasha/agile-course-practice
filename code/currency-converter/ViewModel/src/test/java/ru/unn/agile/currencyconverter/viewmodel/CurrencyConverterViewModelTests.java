@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.currencyconverter.model.CurrencyPair;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class CurrencyConverterViewModelTests {
@@ -13,7 +15,13 @@ public class CurrencyConverterViewModelTests {
 
     @Before
     public void setUp() {
-        viewModel = new CurrencyConverterViewModel();
+        if (viewModel == null) {
+            viewModel = new CurrencyConverterViewModel(new SimpleLogger());
+        }
+    }
+
+    public void setExternalViewModel(final CurrencyConverterViewModel viewModel) {
+        this.viewModel = viewModel;
     }
 
     @After
@@ -208,5 +216,55 @@ public class CurrencyConverterViewModelTests {
         viewModel.getCurrencyPair().set(CurrencyPair.RUBLE_TO_EURO);
 
         assertEquals("", viewModel.getOutputCurrency().get());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void canInitLoggerWithNull() {
+        viewModel.setLogger(null);
+    }
+
+    @Test
+    public void logIsEmptyInTheBeginning() {
+        List<String> log = viewModel.getLogList();
+
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void logContainsMessageThatInputCorrectAfterConversion() {
+        viewModel.getInputCurrency().set("2");
+
+        viewModel.convert();
+        String message = viewModel.getLogList().get(0);
+
+        assertTrue(message.matches(".*Input is correct!.*"));
+    }
+
+    @Test
+    public void logContainsMessageWithConvertedValueAfterConversion() {
+        viewModel.getInputCurrency().set("2");
+
+        viewModel.convert();
+        String message = viewModel.getLogList().get(1);
+
+        assertTrue(message.matches(".*RUBLE_TO_DOLLAR.*=>.*"));
+    }
+
+    @Test
+    public void logContainsCorrectMessageAfterWrongInput() {
+        viewModel.getInputCurrency().set("string");
+
+        String message = viewModel.getLogList().get(0);
+
+        assertTrue(message.matches(".*Input is incorrect!.*"));
+    }
+
+    @Test
+    public void logContainsInputArgumentsAfterAddingEdge() {
+        viewModel.getCurrencyPair().set(CurrencyPair.DOLLAR_TO_EURO);
+
+        String message = viewModel.getLogList().get(0);
+
+        assertTrue(message.matches(".*Convert .* was changed by .*"));
     }
 }

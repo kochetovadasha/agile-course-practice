@@ -1,10 +1,8 @@
 package ru.unn.agile.currencyconverter.view;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import ru.unn.agile.currencyconverter.infrastructure.TxtLogger;
 import ru.unn.agile.currencyconverter.model.CurrencyPair;
 import ru.unn.agile.currencyconverter.viewmodel.CurrencyConverterViewModel;
 
@@ -21,6 +19,8 @@ public class CurrencyConverterView {
     private ComboBox<CurrencyPair> cbCurrencyPair;
     @FXML
     private Button btnConvert;
+    @FXML
+    private TextArea logArea;
 
     @FXML
     void initialize() {
@@ -30,6 +30,8 @@ public class CurrencyConverterView {
         cbCurrencyPair.valueProperty().bindBidirectional(viewModel.getCurrencyPair());
         btnConvert.disableProperty().bindBidirectional(viewModel.isConvertButtonDisabled());
         btnConvert.setOnAction(event -> viewModel.convert());
+        viewModel.setLogger(new TxtLogger("./OperationLog.log"));
+        logArea.textProperty().bindBidirectional(viewModel.getLog());
     }
 
 }
