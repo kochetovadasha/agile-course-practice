@@ -3,13 +3,20 @@ package ru.unn.agile.range.model;
 import java.util.Arrays;
 import java.util.Objects;
 
+import static ru.unn.agile.range.model.Utils.isRange;
+
 public class Range {
     private int startingElement;
     private int finiteElement;
+    private String stringPresenter;
 
     public Range(final String rangeString) {
+        if (!isRange(rangeString)) {
+            throw new IllegalArgumentException("Incorrect Input!");
+        }
+
         String trimRangeString = rangeString.trim();
-        String[] sentences = trimRangeString.split("[\\[(,\\s\\])]+");
+        String[] sentences = trimRangeString.split("[\\[(,\\])]+");
         startingElement = Integer.parseInt(sentences[1]);
         finiteElement = Integer.parseInt(sentences[2]);
         if (trimRangeString.startsWith("(")) {
@@ -21,6 +28,7 @@ public class Range {
         if (startingElement > finiteElement) {
             throw new IllegalArgumentException("No numbers in the given interval!");
         }
+        this.stringPresenter = rangeString;
     }
 
     public boolean containsSet(final int[] set) {
@@ -44,9 +52,9 @@ public class Range {
         return points;
     }
 
-    public boolean containRange(final Range range) {
+    public boolean containsRange(final Range range) {
         return this.startingElement <= range.startingElement
-            && this.finiteElement >= range.finiteElement;
+                && this.finiteElement >= range.finiteElement;
     }
 
     public int[] endPoints() {
@@ -70,6 +78,11 @@ public class Range {
         }
         Range range = (Range) o;
         return startingElement == range.startingElement && finiteElement == range.finiteElement;
+    }
+
+    @Override
+    public String toString() {
+        return stringPresenter;
     }
 
     @Override

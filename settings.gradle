@@ -65,6 +65,8 @@ include "code/prime-number/View"
 project(":code/prime-number/View").name = "prime-number-View"
 include "code/prime-number/ViewModel"
 project(":code/prime-number/ViewModel").name = "prime-number-ViewModel"
+include "code/prime-number/Infrastructure"
+project(":code/prime-number/Infrastructure").name = "prime-number-Infrastructure"
 // fractioncalculator
 include "code/fractioncalculator/model"
 project(":code/fractioncalculator/model").name = "fractioncalculator-model"
@@ -79,6 +81,8 @@ include "code/cross-sections/ViewModel"
 project(":code/cross-sections/ViewModel").name = "cross-sections-ViewModel"
 include "code/cross-sections/View"
 project(":code/cross-sections/View").name = "cross-sections-View"
+include "code/cross-sections/Infrastructure"
+project(":code/cross-sections/Infrastructure").name = "cross-sections-Infrastructure"
 // sorting
 include "code/sorting/Infrastructure"
 project(":code/sorting/Infrastructure").name = "sorting-Infrastructure"
@@ -95,6 +99,8 @@ include "code/string-calculator/viewmodel"
 project(":code/string-calculator/viewmodel").name = "string-calculator-viewmodel"
 include "code/string-calculator/view"
 project(":code/string-calculator/view").name = "string-calculator-view"
+include "code/string-calculator/infrastructure"
+project(":code/string-calculator/infrastructure").name = "string-calculator-infrastructure"
 // Карев Борис
 include "code/length-converter/Model"
 project(":code/length-converter/Model").name = "length-converter-Model"
@@ -176,6 +182,8 @@ include "code/triangle/ViewModel"
 project(":code/triangle/ViewModel").name = "triangle-ViewModel"
 include "code/triangle/View"
 project(":code/triangle/View").name = "triangle-View"
+include "code/triangle/Infrastructure"
+project(":code/triangle/Infrastructure").name = "triangle-Infrastructure"
 // statistics-calculation
 include "code/statistics-calculation/Model"
 project(":code/statistics-calculation/Model").name = "statistics-calculation-Model"
@@ -198,10 +206,14 @@ project(":code/bit-array/View").name = "bit-array-View"
 include "code/bit-array/ViewModel"
 project(":code/bit-array/ViewModel").name = "bit-array-ViewModel"
 // Нечесанов Владимир
-// Овчарук Олег
-include "code/polynomialcalculator"
-project(":code/polynomialcalculator").name = "polynomialcalculator"
-// Петров Кирилл
+// Петров Кирилл - polynomialcalculator
+include "code/polynomial-calculator/Model"
+project(":code/polynomial-calculator/Model").name = "polynomial-calculator-model"
+include "code/polynomial-calculator/View"
+project(":code/polynomial-calculator/View").name = "polynomial-calculator-view"
+include "code/polynomial-calculator/ViewModel"
+project(":code/polynomial-calculator/ViewModel").name = "polynomial-calculator-viewmodel"
+// Петров Кирил
 include "code/interpolationsearch"
 project(":code/interpolationsearch").name = "interpolationsearch"
 // Повеликин Ростислав
@@ -210,6 +222,12 @@ project(":code/red-black-tree").name = "red-black-tree-Model"
 // Попков Кирилл
 include "code/range/Model"
 project(":code/range/Model").name = "range-Model"
+include "code/range/View"
+project(":code/range/View").name = "range-View"
+include "code/range/ViewModel"
+project(":code/range/ViewModel").name = "range-ViewModel"
+include "code/range/Infrastructure"
+project(":code/range/Infrastructure").name = "range-Infrastructure"
 // Разин Вячеслав
 // binary-search
 include "code/binary-search/Model"

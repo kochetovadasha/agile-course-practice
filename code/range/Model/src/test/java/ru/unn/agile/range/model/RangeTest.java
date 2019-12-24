@@ -10,7 +10,7 @@ public class RangeTest {
 
     @Test
     public void containsIntegerValue() {
-        Range range = new Range("  [  10 , 11 )   ");
+        Range range = new Range("[10,11)");
 
         assertTrue(range.containsValue(10));
     }
@@ -36,7 +36,7 @@ public class RangeTest {
 
     @Test
     public void notContainsSetWhenOneElementContains() {
-        Range range = new Range(" [ 10 , 15 ) ");
+        Range range = new Range("[10,15)");
 
         assertFalse(range.containsSet(new int[]{10, 16}));
     }
@@ -75,28 +75,28 @@ public class RangeTest {
     public void cantContainRangeWithLargerEndElement() {
         Range range = new Range("[10,15)");
 
-        assertFalse(range.containRange(new Range("[9,16]")));
+        assertFalse(range.containsRange(new Range("[9,16]")));
     }
 
     @Test
     public void cantContainRangeWithLesserStartElement() {
         Range range = new Range("[10,15)");
 
-        assertFalse(range.containRange(new Range("[9,13]")));
+        assertFalse(range.containsRange(new Range("[9,13]")));
     }
 
     @Test
     public void cantContainLargerRange() {
         Range range = new Range("[10,15)");
 
-        assertFalse(range.containRange(new Range("[11,16]")));
+        assertFalse(range.containsRange(new Range("[11,16]")));
     }
 
     @Test
     public void canContainLesserRange() {
         Range range = new Range("[10,15)");
 
-        assertTrue(range.containRange(new Range("[11,13]")));
+        assertTrue(range.containsRange(new Range("[11,13]")));
     }
 
     @Test
