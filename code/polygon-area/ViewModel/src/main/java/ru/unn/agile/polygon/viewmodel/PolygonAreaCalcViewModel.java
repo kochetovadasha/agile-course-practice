@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATE_BUTTON_PRESSED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_FAILED;
 
 public class PolygonAreaCalcViewModel {
     private Polygon polygon;
@@ -63,7 +64,7 @@ public class PolygonAreaCalcViewModel {
         clearCoordinatesFormInput();
     }
 
-    public void calcArea() {
+    public void calculateArea() {
         if (pointList.isEmpty()) {
             return;
         }
@@ -74,8 +75,10 @@ public class PolygonAreaCalcViewModel {
             log(CALCULATE_BUTTON_PRESSED);
             polygon = new Polygon(pointArray);
             result.setValue(Double.toString(polygon.getArea()));
+            log(CALCULATION_FAILED);
         } catch (IllegalArgumentException e) {
             result.setValue(e.getMessage());
+            log(CALCULATION_FAILED);
         }
     }
 
@@ -87,6 +90,10 @@ public class PolygonAreaCalcViewModel {
     private void clearCoordinatesFormInput() {
         xCoordinate.set("");
         yCoordinate.set("");
+    }
+
+    public void clearPointList() {
+        pointList.clear();
     }
 
     private double parseCoordinate(final StringProperty coordinate) {

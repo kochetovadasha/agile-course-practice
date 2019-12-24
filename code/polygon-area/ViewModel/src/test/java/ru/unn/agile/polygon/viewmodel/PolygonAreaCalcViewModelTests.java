@@ -8,7 +8,7 @@ import ru.unn.agile.polygon.model.Point;
 import java.util.List;
 
 import static org.junit.Assert.*;
-import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATE_BUTTON_PRESSED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.*;
 
 public class PolygonAreaCalcViewModelTests {
     private final double eps = 1.0E-10;
@@ -48,37 +48,31 @@ public class PolygonAreaCalcViewModelTests {
 
     @Test
     public void cantCalcAreaWhenPointListIsEmpty() {
-        viewModel.calcArea();
+        viewModel.calculateArea();
         assertNull(viewModel.getResult());
     }
 
     @Test
-    public void canCalcAreaOfThreePointPolygon() {
-        addPoint("1", "0");
-        addPoint("0", "0");
-        addPoint("0", "1");
-        viewModel.calcArea();
+    public void canCalcAreaOfTriangle() {
+        calculateTriangleArea();
         assertEquals(0.5, Double.parseDouble(viewModel.getResult()), eps);
     }
 
     @Test
     public void isAddPointButtonDisabledForEmptyInput() {
         setCoordinates("", "");
-
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
     @Test
     public void isAddPointButtonDisabledForInvalidXInput() {
         setCoordinates("256..1", "23");
-
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
     @Test
     public void isAddPointButtonDisabledForInvalidYInput() {
         setCoordinates("23", "--235...5");
-
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
@@ -91,20 +85,16 @@ public class PolygonAreaCalcViewModelTests {
     }
 
     @Test
-    public void cantCalcAreaForLessThanThreePointsPolygon() {
+    public void canNotCalculateAreaForLessThanThreePointsPolygon() {
         addPoint("1", "0");
         addPoint("0", "0");
-        viewModel.calcArea();
+        viewModel.calculateArea();
         assertEquals("A polygon must have at least three vertices", viewModel.getResult());
     }
 
     @Test
-    public void cantCalcAreaForSelfIntersectingPolygon() {
-        addPoint("1", "1");
-        addPoint("0", "0");
-        addPoint("1", "0");
-        addPoint("0", "1");
-        viewModel.calcArea();
+    public void canNotCalculateAreaForSelfIntersectingPolygon() {
+        calculateAreaForSelfIntersectingPolygon();
         assertEquals("Sides of polygon must not intersect", viewModel.getResult());
     }
 
@@ -119,18 +109,45 @@ public class PolygonAreaCalcViewModelTests {
     }
 
     @Test
-    public void logContainsFormattedMessageAfterCalculation() {
-        addPoint("1", "0");
-        addPoint("0", "0");
-        addPoint("0", "1");
-        viewModel.calcArea();
-
+    public void logContainsCorrespondingMessageAfterCalculation() {
+        calculateTriangleArea();
         assertTrue(!getLog().isEmpty() && getLog().get(0).contains(CALCULATE_BUTTON_PRESSED));
+    }
+
+    @Test
+    public void logContainsCorrespondingMessageAfterSuccessfulCalculation() {
+        calculateTriangleArea();
+        String message = getLog().get(1);
+        assertTrue(message.contains(CALCULATION_COMPLETED));
+    }
+
+    @Test
+    public void logContainsCorrespondingMessageAfterSuccessfulFailed() {
+        calculateAreaForSelfIntersectingPolygon();
+        String message = getLog().get(1);
+        assertTrue(message.contains(CALCULATION_FAILED));
     }
 
     private void addPoint(String x,String y) {
         setCoordinates(x, y);
         viewModel.addPoint();
+    }
+
+    private void calculateTriangleArea() {
+        viewModel.clearPointList();
+        addPoint("1", "0");
+        addPoint("0", "0");
+        addPoint("0", "1");
+        viewModel.calculateArea();
+    }
+
+    private void calculateAreaForSelfIntersectingPolygon() {
+        viewModel.clearPointList();
+        addPoint("1", "1");
+        addPoint("0", "0");
+        addPoint("1", "0");
+        addPoint("0", "1");
+        viewModel.calculateArea();
     }
 
     private void setCoordinates(final String x, final String y) {

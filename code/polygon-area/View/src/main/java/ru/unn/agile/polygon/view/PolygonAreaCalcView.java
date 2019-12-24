@@ -59,7 +59,7 @@ public class PolygonAreaCalcView {
     }
 
     private void initControlPanel() {
-        calcAreaButton.setOnAction(e -> viewModel.calcArea());
+        calcAreaButton.setOnAction(e -> viewModel.calculateArea());
         resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
     }
 
