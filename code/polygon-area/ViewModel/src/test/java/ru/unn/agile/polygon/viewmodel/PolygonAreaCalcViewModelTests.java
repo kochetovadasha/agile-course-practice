@@ -24,67 +24,60 @@ public class PolygonAreaCalcViewModelTests {
 
     @Test
     public void isAddingValidInput() {
-        setInputData("-261.55", "2.645");
-        viewModel.addPoint();
+        addPoint("-261.55", "2.645");
         assertEquals(new Point(-261.55, 2.645).getX(), viewModel.getPointList().get(0).getX(), eps);
         assertEquals(new Point(-261.55, 2.645).getY(), viewModel.getPointList().get(0).getY(), eps);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void isNotAddedInvalidInput() {
-        setInputData("-26vrt1.55", "2..645");
-        viewModel.addPoint();
+        addPoint("-26vrt1.55", "2..645");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void isNotAddedEmptyInput() {
-        setInputData("", "");
-        viewModel.addPoint();
+        addPoint("", "");
     }
 
     @Test
     public void cantCalcAreaWhenPointListIsEmpty() {
         viewModel.calcArea();
-        assertEquals(null, viewModel.getResult());
+        assertNull(viewModel.getResult());
     }
 
     @Test
     public void canCalcAreaOfThreePointPolygon() {
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
-        setInputData("0", "1");
-        viewModel.addPoint();
+        addPoint("1", "0");
+        addPoint("0", "0");
+        addPoint("0", "1");
         viewModel.calcArea();
         assertEquals(0.5, Double.parseDouble(viewModel.getResult()), eps);
     }
 
     @Test
     public void isAddPointButtonDisabledForEmptyInput() {
-        setInputData("", "");
+        setCoordinates("", "");
 
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
     @Test
     public void isAddPointButtonDisabledForInvalidXInput() {
-        setInputData("256..1", "23");
+        setCoordinates("256..1", "23");
 
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
     @Test
     public void isAddPointButtonDisabledForInvalidYInput() {
-        setInputData("23", "--235...5");
+        setCoordinates("23", "--235...5");
 
         assertTrue(viewModel.isAddingNewPointDisabled());
     }
 
     @Test
     public void isFormInputsEmptyAfterAddingNewPoint() {
-        setInputData("-36.516", "-62.52");
-        viewModel.addPoint();
+        addPoint("-36.516", "-62.52");
         assertTrue(viewModel.xProperty().get().isEmpty()
                 && viewModel.yProperty().get().isEmpty()
         );
@@ -92,29 +85,28 @@ public class PolygonAreaCalcViewModelTests {
 
     @Test
     public void cantCalcAreaForLessThanThreePointsPolygon() {
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
+        addPoint("1", "0");
+        addPoint("0", "0");
         viewModel.calcArea();
         assertEquals("A polygon must have at least three vertices", viewModel.getResult());
     }
 
     @Test
     public void cantCalcAreaForSelfIntersectingPolygon() {
-        setInputData("1", "1");
-        viewModel.addPoint();
-        setInputData("0", "0");
-        viewModel.addPoint();
-        setInputData("1", "0");
-        viewModel.addPoint();
-        setInputData("0", "1");
-        viewModel.addPoint();
+        addPoint("1", "1");
+        addPoint("0", "0");
+        addPoint("1", "0");
+        addPoint("0", "1");
         viewModel.calcArea();
         assertEquals("Sides of polygon must not intersect", viewModel.getResult());
     }
 
-    private void setInputData(final String x, final String y) {
+    private void addPoint(String x,String y) {
+        setCoordinates(x, y);
+        viewModel.addPoint();
+    }
+
+    private void setCoordinates(final String x, final String y) {
         viewModel.xProperty().set(x);
         viewModel.yProperty().set(y);
     }
