@@ -198,6 +198,8 @@ include "code/queue/View"
 project(":code/queue/View").name = "queue-View"
 include "code/queue/ViewModel"
 project(":code/queue/ViewModel").name = "queue-ViewModel"
+include "code/queue/Infrastructure"
+project(":code/queue/Infrastructure").name = "queue-Infrastructure"
 // Нестеров Александр - Bit-array
 include "code/bit-array/Model"
 project(":code/bit-array/Model").name = "bit-array-Model"

@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import ru.unn.agile.queue.infrastructure.TxtLogger;
 import ru.unn.agile.queue.viewmodel.ViewModel;
 
 public class Queue {
@@ -31,6 +32,7 @@ public class Queue {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./Stack.log"));
         queueNewElement.textProperty().bindBidirectional(viewModel.queueElementProperty());
         queueResult.textProperty().bindBidirectional(viewModel.queueResultProperty());
         status.textProperty().bindBidirectional(viewModel.queueStatusProperty());
