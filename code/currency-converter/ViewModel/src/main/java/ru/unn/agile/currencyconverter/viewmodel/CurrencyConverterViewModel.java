@@ -45,8 +45,7 @@ public class CurrencyConverterViewModel {
         inputCurrency.addListener((observable, oldValue, newValue) -> onInput(newValue));
 
         currencyPair.addListener((observable, oldValue, newValue) -> {
-            addToLog("Convert " + oldValue + " was changed by " + newValue);
-            onTypeChange();
+            onTypeChange(oldValue, newValue);
         });
     }
 
@@ -93,25 +92,35 @@ public class CurrencyConverterViewModel {
         value = CurrencyConverter.convert(getCurrencyPair().get(), value);
         outputCurrency.set(String.format("%s", value));
         addToLog(getCurrencyPair().getValue() + ": "
-                + inputCurrency.get() + " => " + outputCurrency.get());
+                + inputCurrency.get() + LogMessages.CONVERT_TO + outputCurrency.get());
     }
 
     private void onInput(final String newValue) {
         boolean isDouble = newValue.matches("\\d+(\\.\\d+)?");
         btnDisabled.set(newValue.isEmpty());
         if (!isDouble && !newValue.isEmpty()) {
-            error.set("Incorrect Currency");
-            addToLog("Input is incorrect!");
+            error.set(LogMessages.INCORRECT_INPUT);
+            addToLog(LogMessages.INCORRECT_INPUT);
             btnDisabled.set(true);
         } else {
             error.set("");
-            addToLog("Input is correct!");
+            addToLog(LogMessages.CORRECT_INPUT);
         }
         outputCurrency.set("");
     }
 
-    private void onTypeChange() {
+    private void onTypeChange(final CurrencyPair oldValue, final CurrencyPair newValue) {
+        addToLog(oldValue + LogMessages.CHANGED_BY + newValue);
         outputCurrency.set("");
     }
 
+    static final class LogMessages {
+        private LogMessages() {
+        }
+
+        static final String CORRECT_INPUT = "Input is correct!";
+        static final String INCORRECT_INPUT = "Input is incorrect!";
+        static final String CHANGED_BY = " was changed by ";
+        static final String CONVERT_TO = " => ";
+    }
 }

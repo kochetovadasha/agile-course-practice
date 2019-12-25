@@ -73,7 +73,8 @@ public class CurrencyConverterViewModelTests {
     public void hasErrorAfterIncorrectInput() {
         viewModel.getInputCurrency().set("word");
 
-        assertEquals("Incorrect Currency", viewModel.getError().get());
+        assertEquals(CurrencyConverterViewModel.LogMessages.INCORRECT_INPUT,
+                viewModel.getError().get());
     }
 
     @Test
@@ -237,7 +238,8 @@ public class CurrencyConverterViewModelTests {
         viewModel.convert();
         String message = viewModel.getLogList().get(0);
 
-        assertTrue(message.matches(".*Input is correct!.*"));
+        assertTrue(message.matches(".*"
+                + CurrencyConverterViewModel.LogMessages.CORRECT_INPUT + ".*"));
     }
 
     @Test
@@ -247,7 +249,9 @@ public class CurrencyConverterViewModelTests {
         viewModel.convert();
         String message = viewModel.getLogList().get(1);
 
-        assertTrue(message.matches(".*RUBLE_TO_DOLLAR.*=>.*"));
+        assertTrue(message.matches(".*"
+                + CurrencyPair.RUBLE_TO_DOLLAR.toString() + ".*"
+                + CurrencyConverterViewModel.LogMessages.CONVERT_TO + ".*"));
     }
 
     @Test
@@ -256,7 +260,8 @@ public class CurrencyConverterViewModelTests {
 
         String message = viewModel.getLogList().get(0);
 
-        assertTrue(message.matches(".*Input is incorrect!.*"));
+        assertTrue(message.matches(".*"
+                + CurrencyConverterViewModel.LogMessages.INCORRECT_INPUT + ".*"));
     }
 
     @Test
@@ -265,6 +270,7 @@ public class CurrencyConverterViewModelTests {
 
         String message = viewModel.getLogList().get(0);
 
-        assertTrue(message.matches(".*Convert .* was changed by .*"));
+        assertTrue(message.matches(".*"
+                + CurrencyConverterViewModel.LogMessages.CHANGED_BY  + ".*"));
     }
 }
