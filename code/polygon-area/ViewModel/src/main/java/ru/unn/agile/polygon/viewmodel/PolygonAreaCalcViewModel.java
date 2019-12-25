@@ -7,23 +7,41 @@ import javafx.collections.ObservableList;
 import ru.unn.agile.polygon.model.Polygon;
 import ru.unn.agile.polygon.model.Point;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Pattern;
 
-public class ViewModel {
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_STARTED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.POINT_ADDED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_COMPLETED;
+import static ru.unn.agile.polygon.viewmodel.LogMessages.CALCULATION_FAILED;
+
+public class PolygonAreaCalcViewModel {
     private Polygon polygon;
 
     private static final Pattern COORDINATE_INPUT_ALLOWED_SYMBOLS =
             Pattern.compile("^[-+]?[0-9]+\\.?[0-9]*$");
     private final SimpleBooleanProperty addingNewPointDisabled = new SimpleBooleanProperty();
 
+    private final StringProperty logsArea = new SimpleStringProperty();
     private final StringProperty xCoordinate = new SimpleStringProperty();
     private final StringProperty yCoordinate = new SimpleStringProperty();
     private final ObservableList<Point> pointList = FXCollections.observableArrayList();
 
     private final StringProperty result = new SimpleStringProperty();
+    private ILogger logger;
 
-    public ViewModel() {
-        clearFormInput();
+    public PolygonAreaCalcViewModel() {
+        init();
+    }
+
+    public PolygonAreaCalcViewModel(final ILogger logger) {
+        setLogger(logger);
+        init();
+    }
+
+    private void init() {
+        clearCoordinatesFormInput();
 
         BooleanBinding canCalculateBoolBinding = new BooleanBinding() {
             {
@@ -50,10 +68,11 @@ public class ViewModel {
         Point newPoint = new Point(x, y);
         pointList.add(newPoint);
 
-        clearFormInput();
+        clearCoordinatesFormInput();
+        log(String.format(POINT_ADDED, newPoint.getX(), newPoint.getY()));
     }
 
-    public void calcArea() {
+    public void calculateArea() {
         if (pointList.isEmpty()) {
             return;
         }
@@ -61,16 +80,30 @@ public class ViewModel {
         Point[] pointArray = pointList.toArray(Point[]::new);
 
         try {
+            log(CALCULATION_STARTED);
             polygon = new Polygon(pointArray);
             result.setValue(Double.toString(polygon.getArea()));
+            log(CALCULATION_COMPLETED);
         } catch (IllegalArgumentException e) {
             result.setValue(e.getMessage());
+            log(CALCULATION_FAILED);
         }
     }
 
-    private void clearFormInput() {
+    private void log(final String message) {
+        if (logger != null) {
+            logger.log(message);
+        }
+        updateUiLogs();
+    }
+
+    private void clearCoordinatesFormInput() {
         xCoordinate.set("");
         yCoordinate.set("");
+    }
+
+    public void clearPointList() {
+        pointList.clear();
     }
 
     private double parseCoordinate(final StringProperty coordinate) {
@@ -102,5 +135,32 @@ public class ViewModel {
     }
     public final boolean isAddingNewPointDisabled() {
         return addingNewPointDisabled.get();
+    }
+
+    public final void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can not be null");
+        }
+        this.logger = logger;
+    }
+
+    private void updateUiLogs() {
+        List<String> fullLog = getLog();
+        String uiLogRecord = String.join("\n", fullLog);
+        logsArea.set(uiLogRecord);
+    }
+
+    public final List<String> getLog() {
+        return logger != null
+                ? logger.getLog()
+                : Collections.emptyList();
+    }
+
+    public final String getLogsArea() {
+        return logsArea.get();
+    }
+
+    public StringProperty logsAreaProperty() {
+        return logsArea;
     }
 }

@@ -276,6 +276,8 @@ include "code/polygon-area/View"
 project(":code/polygon-area/View").name = "polygon-area-View"
 include "code/polygon-area/ViewModel"
 project(":code/polygon-area/ViewModel").name = "polygon-area-ViewModel"
+include "code/polygon-area/Infrastructure"
+project(":code/polygon-area/Infrastructure").name = "polygon-area-Infrastructure"
 // Федорова Дарья
 include "code/currency-converter/Model"
 project(":code/currency-converter/Model").name = "currency-converter-Model"

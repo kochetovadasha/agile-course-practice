@@ -5,15 +5,16 @@ import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ru.unn.agile.polygon.infrastructure.TxtLogger;
 import ru.unn.agile.polygon.model.Point;
-import ru.unn.agile.polygon.viewmodel.ViewModel;
+import ru.unn.agile.polygon.viewmodel.PolygonAreaCalcViewModel;
 
-public class CalcArea {
+public class PolygonAreaCalcView {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     private final String pointInputTooltip = "Only numbers allowed";
 
     @FXML
-    private ViewModel viewModel;
+    private PolygonAreaCalcViewModel viewModel;
     @FXML
     private TextField xTextField;
     @FXML
@@ -24,8 +25,6 @@ public class CalcArea {
     private Button calcAreaButton;
 
     @FXML
-    private TableView<Point> tablePoints;
-    @FXML
     private TableColumn<Point, Double> xColumn;
     @FXML
     private TableColumn<Point, Double> yColumn;
@@ -35,6 +34,7 @@ public class CalcArea {
 
     @FXML
     void initialize() {
+        viewModel.setLogger(new TxtLogger("./TxtLogger-lab3.log"));
         initAddPointForm();
         initTableView();
         initControlPanel();
@@ -54,14 +54,12 @@ public class CalcArea {
         addPointButton.setOnAction(e -> viewModel.addPoint());
     }
     private void initTableView() {
-        xColumn.setCellValueFactory(
-                new PropertyValueFactory<Point, Double>("X"));
-        yColumn.setCellValueFactory(
-                new PropertyValueFactory<Point, Double>("Y"));
+        xColumn.setCellValueFactory(new PropertyValueFactory<>("X"));
+        yColumn.setCellValueFactory(new PropertyValueFactory<>("Y"));
     }
 
     private void initControlPanel() {
-        calcAreaButton.setOnAction(e -> viewModel.calcArea());
+        calcAreaButton.setOnAction(e -> viewModel.calculateArea());
         resultTextArea.textProperty().bindBidirectional(viewModel.resultProperty());
     }
 
