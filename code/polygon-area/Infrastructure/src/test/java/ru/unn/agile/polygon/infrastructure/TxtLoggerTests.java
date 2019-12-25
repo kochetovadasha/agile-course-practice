@@ -26,9 +26,9 @@ public class TxtLoggerTests {
     }
 
     @Test
-    public void isLogFileCreated() {
-        File f = new File(LOG_FILE_PATH);
-        assertTrue(f.exists() && !f.isDirectory());
+    public void isLogFileCreatedByLogger() {
+        File logFile = new TxtLogger(LOG_FILE_PATH);
+        assertTrue(logFile.exists() && !logFile.isDirectory());
     }
 
     @Test
