@@ -66,6 +66,6 @@ public class TextLoggerTests {
         textLogger.log(checkMessage);
 
         String message = textLogger.getLog().get(0);
-        assertThat(message, matchesPattern("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2} > .*"));
+        assertThat(message, matchesPattern("^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} > .*"));
     }
 }
