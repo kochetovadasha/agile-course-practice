@@ -283,6 +283,8 @@ include "code/currency-converter/View"
 project(":code/currency-converter/View").name = "currency-converter-View"
 include "code/currency-converter/ViewModel"
 project(":code/currency-converter/ViewModel").name = "currency-converter-ViewModel"
+include "code/currency-converter/Infrastructure"
+project(":code/currency-converter/Infrastructure").name = "currency-converter-Infrastructure"
 // datastructure-set
 include "code/datastructure-set/Model"
 project(":code/datastructure-set/Model").name = "datastructure-set-Model"
