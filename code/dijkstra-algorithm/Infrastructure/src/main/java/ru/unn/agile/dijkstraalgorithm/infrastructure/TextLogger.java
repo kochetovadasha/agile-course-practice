@@ -15,7 +15,7 @@ import java.util.Locale;
 public class TextLogger implements ILogger {
     private final String filename;
     private final BufferedWriter writer;
-    private static final String DATE_FORMAT_POINT = "yyyy-MM-dd HH:mm:ss";
+    private static final String DATE_FORMAT_POINT = "yyyy-MM-dd HH:mm:ss.SSS";
     private static final String SEPARATOR = " > ";
 
     private static String now() {

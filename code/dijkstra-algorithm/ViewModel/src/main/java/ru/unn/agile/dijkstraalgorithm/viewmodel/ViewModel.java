@@ -108,8 +108,10 @@ public class ViewModel {
         StringBuilder message = new StringBuilder(LogMessages.CREATE_GRAPH_WAS_PRESSED);
         if (edgeList.isEmpty()) {
             message.append(" unsuccessfully. List of edges is empty");
-            logger.log(message.toString());
-            updateLogs();
+            if (logger != null) {
+                logger.log(message.toString());
+                updateLogs();
+            }
             return;
         }
 
@@ -121,8 +123,10 @@ public class ViewModel {
         updateVertexList();
 
         message.append(" successfully.");
-        logger.log(message.toString());
-        updateLogs();
+        if (logger != null) {
+            logger.log(message.toString());
+            updateLogs();
+        }
     }
 
     private void updateVertexList() {
@@ -136,15 +140,19 @@ public class ViewModel {
         StringBuilder messageCalculate = new StringBuilder(LogMessages.CALCULATE_WAS_PRESSED);
         if (toPath == null || fromPath == null) {
             messageCalculate.append("unsuccessfully. Check From and To vertexes.");
-            logger.log(messageCalculate.toString());
-            updateLogs();
+            if (logger != null) {
+                logger.log(messageCalculate.toString());
+                updateLogs();
+            }
             return;
         }
 
         graph.calculate(fromPath);
         messageCalculate.append("successfully.");
-        logger.log(messageCalculate.toString());
-        updateLogs();
+        if (logger != null) {
+            logger.log(messageCalculate.toString());
+            updateLogs();
+        }
 
         resultPath.setValue(graph.getPath(toPath));
     }
@@ -211,8 +219,10 @@ public class ViewModel {
                                             vertex1.get(),
                                             vertex2.get(),
                                             weight.get());
-        logger.log(formatMessage.toString());
-        updateLogs();
+        if (logger != null) {
+            logger.log(formatMessage.toString());
+            updateLogs();
+        }
     }
 
     public void onExpressionTextFieldFocusChanged() {
@@ -233,8 +243,10 @@ public class ViewModel {
                                             vertex2.get(),
                                             weight.get(),
                                             postfix);
-        logger.log(formatMessage.toString());
-        updateLogs();
+        if (logger != null) {
+            logger.log(formatMessage.toString());
+            updateLogs();
+        }
     }
 
     public void onExpressionComboBoxFocusChanged() {
@@ -243,8 +255,10 @@ public class ViewModel {
                                             LogMessages.EDITING_INPUT,
                                             vertexFrom.get(),
                                             vertexTo.get());
-        logger.log(formatMessage.toString());
-        updateLogs();
+        if (logger != null) {
+            logger.log(formatMessage.toString());
+            updateLogs();
+        }
     }
 
     final class LogMessages {
