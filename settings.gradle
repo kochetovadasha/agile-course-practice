@@ -174,8 +174,14 @@ project(":code/complex-number-calculator/ViewModel").name = "complex-number-calc
 include "code/complex-number-calculator/Infrastructure"
 project(":code/complex-number-calculator/Infrastructure").name = "complex-number-calculator-Infrastructure"
 // Vector Operations
-include "code/lab1-tdd-vector_operations"
-project(":code/lab1-tdd-vector_operations").name = "lab1-tdd-vector_operations-Model"
+include "code/vector-operations/Model"
+project(":code/vector-operations/Model").name = "vector-operations-Model"
+include "code/vector-operations/View"
+project(":code/vector-operations/View").name = "vector-operations-View"
+include "code/vector-operations/ViewModel"
+project(":code/vector-operations/ViewModel").name = "vector-operations-ViewModel"
+include "code/vector-operations/Infrastructure"
+project(":code/vector-operations/Infrastructure").name = "vector-operations-Infrastructure"
 // Кучков Иван
 // quadratic equation
 include "code/quadratic-equation/Model"
