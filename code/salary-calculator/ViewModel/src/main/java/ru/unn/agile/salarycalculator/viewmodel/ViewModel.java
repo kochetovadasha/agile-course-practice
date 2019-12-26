@@ -139,12 +139,13 @@ public class ViewModel {
 
     public String getLogs() {
         List<String> logs = logger.getLog();
-        String outputLog = "";
+        StringBuilder outputLog = new StringBuilder("");
         for (String log : logs) {
-            outputLog += (log + "\n");
+            outputLog.append(log);
+            outputLog.append("\n");
         }
 
-        return outputLog;
+        return outputLog.toString();
     }
 
     private boolean isWorkedHoursCorrect() {
