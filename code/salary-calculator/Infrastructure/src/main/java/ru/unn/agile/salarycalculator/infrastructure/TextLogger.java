@@ -11,6 +11,7 @@ public class TextLogger implements ILogger {
     private final ArrayList<String> logsList;
     private final String filename;
     private final BufferedWriter writer;
+    private final String LOG_PREFIX = "> ";
 
     public TextLogger(final String filename) {
         this.filename = filename;
@@ -30,7 +31,7 @@ public class TextLogger implements ILogger {
     public void log(final String s) {
         try {
             if (!s.isEmpty()) {
-                writer.write(" > " + s);
+                writer.write(LOG_PREFIX + s);
                 writer.newLine();
                 writer.flush();
 
