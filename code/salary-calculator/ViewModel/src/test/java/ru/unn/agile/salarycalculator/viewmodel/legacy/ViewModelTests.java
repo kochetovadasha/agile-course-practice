@@ -149,7 +149,6 @@ public class ViewModelTests {
         viewModel.setSalary("10000");
         viewModel.setCountMonth("5");
         viewModel.setCountYear("2000");
-ё
         viewModel.setWorkedHours("10");
         viewModel.checkCountFields();
 
