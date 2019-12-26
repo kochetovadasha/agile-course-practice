@@ -8,6 +8,7 @@ import ru.unn.agile.salarycalculator.viewmodel.legacy.ViewModel.Status;
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
+    private final double delta = 0.01;
     private ViewModel viewModel;
 
     @Before
@@ -126,7 +127,7 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("15660", viewModel.getResult());
+        assertEquals("15660,0", viewModel.getResult(), delta);
     }
 
     @Test
@@ -141,7 +142,7 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("18383.48", viewModel.getResult());
+        assertEquals("18383.48", viewModel.getResult(), delta);
     }
 
     @Test
@@ -154,7 +155,7 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("472.83", viewModel.getResult());
+        assertEquals("472.83", viewModel.getResult(), delta);
     }
 
 
