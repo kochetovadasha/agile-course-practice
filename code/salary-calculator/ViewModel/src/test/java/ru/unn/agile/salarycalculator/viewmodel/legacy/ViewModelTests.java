@@ -127,7 +127,7 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("15660.0", viewModel.getResult());
+        assertEquals("15830.2", viewModel.getResult());
     }
 
     @Test
@@ -142,7 +142,7 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("18383.48", viewModel.getResult());
+        assertEquals("18383.5", viewModel.getResult());
     }
 
     @Test
