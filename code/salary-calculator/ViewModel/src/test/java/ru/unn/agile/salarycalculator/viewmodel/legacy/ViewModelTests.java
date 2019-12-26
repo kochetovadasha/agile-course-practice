@@ -117,23 +117,23 @@ public class ViewModelTests {
 
     @Test
     public void checkResultWithNormalParameters() {
-        viewModel.setSalary("10000");
-        viewModel.setWorkedHours("145");
-        viewModel.setCountMonth("5");
-        viewModel.setCountYear("2014");
+        viewModel.setSalary("18000");
+        viewModel.setWorkedHours("185");
+        viewModel.setCountMonth("10");
+        viewModel.setCountYear("2019");
 
         viewModel.checkCountFields();
 
         viewModel.calculateSalary();
 
-        assertEquals("7281.52", viewModel.getResult());
+        assertEquals("15660", viewModel.getResult());
     }
 
     @Test
     public void checkResultWithOvertime() {
-        viewModel.setSalary("10000");
-        viewModel.setCountMonth("5");
-        viewModel.setCountYear("2014");
+        viewModel.setSalary("18000");
+        viewModel.setCountMonth("10");
+        viewModel.setCountYear("2019");
 
         viewModel.setWorkedHours("200");
 
@@ -141,15 +141,15 @@ public class ViewModelTests {
 
         viewModel.calculateSalary();
 
-        assertEquals("10213.04", viewModel.getResult());
+        assertEquals("18383.48", viewModel.getResult());
     }
 
     @Test
     public void checkResultWithLessTime() {
-        viewModel.setSalary("10000");
-        viewModel.setCountMonth("5");
-        viewModel.setCountYear("2014");
-        viewModel.setWorkedHours("10");
+        viewModel.setSalary("18000");
+        viewModel.setCountMonth("10");
+        viewModel.setCountYear("2019");
+        viewModel.setWorkedHours("160");
         viewModel.checkCountFields();
 
         viewModel.calculateSalary();
