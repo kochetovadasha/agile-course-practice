@@ -89,7 +89,7 @@ public class ViewModel {
     }
 
     private String getMoneyFormatInCashValue(final SalaryCalculator countPeriod) {
-        return String.format(Locale.ROOT, "%.2f", countPeriod.calculateSalaryWithNDS());
+        return String.format(Locale.ROOT, "%.1f", countPeriod.calculateSalaryWithNDS());
     }
 
     public boolean isCalculateButtonEnable() {
