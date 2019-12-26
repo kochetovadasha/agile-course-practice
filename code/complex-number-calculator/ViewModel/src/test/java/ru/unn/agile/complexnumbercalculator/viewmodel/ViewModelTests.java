@@ -560,8 +560,7 @@ public class ViewModelTests {
 
         List<String> log = viewModel.getLog();
 
-        assertThat(log.get(0),
-            containsString("Operation was changed from Сложить to Умножить"));
+        assertThat(log.get(0), containsString("Operation was changed from Сложить to Умножить"));
     }
 
     @Test
@@ -615,7 +614,7 @@ public class ViewModelTests {
         List<String> log = viewModel.getLog();
 
         String correct = "Calculate. Arguments: (1 + 2i), Degree = 2. "
-            + "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
+                + "Operation: Возвести в степень. Result: (-3.0 + 4.000000000000002i).";
         assertThat(getLastRecord(log), containsString(correct));
     }
 
